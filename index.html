@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resilient Compiler | Intelligent Error Recovery & Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                    <line x1="12" y1="2" x2="12" y2="22"></line>
+                </svg>
+            </div>
+            <div class="brand-info">
+                <h1 class="brand-title">Resilient Compiler</h1>
+                <p class="brand-subtitle">Intelligent Error Recovery &amp; Full Pipeline Compiler</p>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <div class="sample-picker">
+                <label for="sampleSelect" class="sample-label">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    Sample Program:
+                </label>
+                <select id="sampleSelect" class="form-select">
+                    <option value="fibonacci">Fibonacci Sequence (While Loop &amp; Output)</option>
+                    <option value="syntax_recovery">Intelligent Error Recovery (4 Errors Repaired)</option>
+                    <option value="missing_delimiter">Missing Delimiter ')' Recovery</option>
+                    <option value="constant_folding">Constant Folding &amp; Propagation</option>
+                    <option value="nested_scopes">Nested Scope Shadowing</option>
+                    <option value="arithmetic_demo">Operator Precedence &amp; Logic</option>
+                    <option value="semantic_undeclared">Semantic Rejection: Undeclared Variable</option>
+                    <option value="semantic_type_mismatch">Semantic Rejection: Type Mismatch</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div id="backendBadge" class="status-badge checking">
+                <span class="badge-dot"></span>
+                <span class="badge-text">Connecting...</span>
+            </div>
+            <button id="compileBtn" class="btn btn-primary" title="Compile &amp; Execute (Ctrl+Enter)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                Compile &amp; Run
+            </button>
+            <button id="clearBtn" class="btn btn-secondary" title="Reset Editor">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                Clear
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace-container">
+        <!-- Left Panel: Code Editor -->
+        <section class="editor-pane">
+            <div class="pane-header">
+                <div class="pane-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                        <line x1="9" y1="20" x2="15" y2="20"></line>
+                        <line x1="12" y1="4" x2="12" y2="20"></line>
+                    </svg>
+                    Source Code
+                    <span class="lang-tag">C-subset</span>
+                </div>
+                <div class="editor-meta">
+                    <span id="cursorPos">Ln 1, Col 1</span>
+                    <span id="charCount">0 chars</span>
+                </div>
+            </div>
+
+            <div class="editor-wrapper">
+                <div id="lineNumbers" class="line-numbers">1</div>
+                <textarea id="codeEditor" class="code-textarea" spellcheck="false" placeholder="// Enter source code here or select a sample program..."></textarea>
+            </div>
+
+            <!-- Quick Demo Pills -->
+            <div class="quick-samples">
+                <span class="quick-title">Quick Demos:</span>
+                <button class="pill-btn" data-sample="fibonacci">Fibonacci</button>
+                <button class="pill-btn highlight" data-sample="syntax_recovery">Syntax Recovery</button>
+                <button class="pill-btn" data-sample="constant_folding">Optimizer</button>
+                <button class="pill-btn" data-sample="nested_scopes">Scopes</button>
+                <button class="pill-btn" data-sample="semantic_undeclared">Semantic Check</button>
+            </div>
+        </section>
+
+        <!-- Right Panel: Compiler Pipeline Workbench -->
+        <section class="results-pane">
+            <div class="pane-header tabs-header">
+                <nav class="tabs-nav" id="pipelineTabs">
+                    <button class="tab-btn active" data-tab="recovery">
+                        <span class="tab-icon">⚡</span>
+                        Recovery Report
+                        <span id="recoveryBadge" class="tab-badge zero">0</span>
+                    </button>
+                    <button class="tab-btn" data-tab="ast">
+                        <span class="tab-icon">🌳</span>
+                        AST
+                    </button>
+                    <button class="tab-btn" data-tab="symbols">
+                        <span class="tab-icon">🏷️</span>
+                        Symbol Table
+                    </button>
+                    <button class="tab-btn" data-tab="tac">
+                        <span class="tab-icon">⚙️</span>
+                        TAC IR
+                    </button>
+                    <button class="tab-btn" data-tab="opt">
+                        <span class="tab-icon">🚀</span>
+                        Optimized TAC
+                    </button>
+                    <button class="tab-btn" data-tab="target">
+                        <span class="tab-icon">🔢</span>
+                        Bytecode
+                    </button>
+                    <button class="tab-btn" data-tab="vm">
+                        <span class="tab-icon">🖥️</span>
+                        VM Console
+                    </button>
+                    <button class="tab-btn" data-tab="raw">
+                        <span class="tab-icon">📜</span>
+                        Raw Output
+                    </button>
+                </nav>
+
+                <div class="tab-actions">
+                    <button id="copyOutputBtn" class="btn btn-icon" title="Copy Tab Content">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content Panels -->
+            <div class="tab-contents">
+                <!-- Loading Overlay -->
+                <div id="loadingOverlay" class="loading-overlay hidden">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Compiling and executing pipeline...</p>
+                </div>
+
+                <!-- 1. Recovery Tab -->
+                <div class="tab-panel active" id="tab-recovery">
+                    <div class="panel-banner" id="recoveryBanner">
+                        <span class="banner-title">Error Recovery Status:</span>
+                        <span id="recoverySummary">No compilation run yet.</span>
+                    </div>
+                    <div id="recoveryContent" class="code-output recovery-output">
+                        <p class="placeholder-text">Click <strong>Compile &amp; Run</strong> to trigger syntax recovery and analysis.</p>
+                    </div>
+                </div>
+
+                <!-- 2. AST Tab -->
+                <div class="tab-panel" id="tab-ast">
+                    <div id="astContent" class="code-output tree-output">
+                        <p class="placeholder-text">Abstract Syntax Tree will be generated upon compilation.</p>
+                    </div>
+                </div>
+
+                <!-- 3. Symbols & Semantics Tab -->
+                <div class="tab-panel" id="tab-symbols">
+                    <div id="symbolsContent" class="code-output table-output">
+                        <p class="placeholder-text">Symbol table and scope hierarchy will appear here.</p>
+                    </div>
+                </div>
+
+                <!-- 4. Three-Address Code Tab -->
+                <div class="tab-panel" id="tab-tac">
+                    <div id="tacContent" class="code-output tac-output">
+                        <p class="placeholder-text">Linear Three-Address Code intermediate representation.</p>
+                    </div>
+                </div>
+
+                <!-- 5. Optimized TAC Tab -->
+                <div class="tab-panel" id="tab-opt">
+                    <div id="optContent" class="code-output opt-output">
+                        <p class="placeholder-text">Constant folded and propagated intermediate representation.</p>
+                    </div>
+                </div>
+
+                <!-- 6. Target Bytecode Tab -->
+                <div class="tab-panel" id="tab-target">
+                    <div id="targetContent" class="code-output bytecode-output">
+                        <p class="placeholder-text">Disassembled stack-based Virtual Machine instructions.</p>
+                    </div>
+                </div>
+
+                <!-- 7. Virtual Machine Console Tab -->
+                <div class="tab-panel" id="tab-vm">
+                    <div class="vm-console-wrapper">
+                        <div class="console-header">
+                            <span class="console-dot red"></span>
+                            <span class="console-dot yellow"></span>
+                            <span class="console-dot green"></span>
+                            <span class="console-title">VM Execution Terminal</span>
+                        </div>
+                        <div id="vmContent" class="console-screen">
+                            <p class="placeholder-text">Virtual Machine execution output will be printed here.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Raw Output Tab -->
+                <div class="tab-panel" id="tab-raw">
+                    <pre id="rawContent" class="code-output raw-output">Raw compiler output stream will appear here.</pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pipeline Architecture Section -->
+    <section class="architecture-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Compiler Pipeline Architecture</h2>
+                <p>Complete 7-stage academic compiler design with intelligent recovery and virtual machine execution</p>
+            </div>
+
+            <div class="pipeline-grid">
+                <div class="pipeline-card">
+                    <div class="card-step">01</div>
+                    <div class="card-icon">🔤</div>
+                    <h3>Lexical Analysis</h3>
+                    <p>Scans source text into typed tokens with precise line and column coordinate tracking.</p>
+                    <span class="card-badge">Lexer.cpp</span>
+                </div>
+
+                <div class="pipeline-card highlight">
+                    <div class="card-step">02</div>
+                    <div class="card-icon">⚡</div>
+                    <h3>Intelligent Recovery</h3>
+                    <p>Context-aware recovery scorer compares insertion, deletion, and panic-mode with 1-token lookahead.</p>
+                    <span class="card-badge">RecoveryScorer.cpp</span>
+                </div>
+
+                <div class="pipeline-card">
+                    <div class="card-step">03</div>
+                    <div class="card-icon">🌳</div>
+                    <h3>AST Construction</h3>
+                    <p>Builds object-oriented syntax tree with recursive descent, null-safety, and visual indentation.</p>
+                    <span class="card-badge">AST.cpp</span>
+                </div>
+
+                <div class="pipeline-card">
+                    <div class="card-step">04</div>
+                    <div class="card-icon">🏷️</div>
+                    <h3>Semantic Analysis</h3>
+                    <p>Hierarchical scope stack checks variable declarations, type compatibility, and variable shadowing.</p>
+                    <span class="card-badge">SymbolTable.cpp</span>
+                </div>
+
+                <div class="pipeline-card">
+                    <div class="card-step">05</div>
+                    <div class="card-icon">⚙️</div>
+                    <h3>Intermediate Code (TAC)</h3>
+                    <p>Translates statements and control flow into clean Three-Address Code with temporaries and labels.</p>
+                    <span class="card-badge">IRGenerator.cpp</span>
+                </div>
+
+                <div class="pipeline-card">
+                    <div class="card-step">06</div>
+                    <div class="card-icon">🚀</div>
+                    <h3>Optimization</h3>
+                    <p>Performs compile-time constant folding, local constant propagation, and dead code elimination.</p>
+                    <span class="card-badge">Optimizer.cpp</span>
+                </div>
+
+                <div class="pipeline-card">
+                    <div class="card-step">07</div>
+                    <div class="card-icon">🖥️</div>
+                    <h3>Virtual Machine</h3>
+                    <p>Translates TAC to stack bytecode and executes the program on an internal VM operand store.</p>
+                    <span class="card-badge">VM.cpp</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Footer -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <strong>Resilient Compiler</strong> — College Compiler Design Project
+                <span class="separator">|</span>
+                Built with C++17 &amp; Vanilla Web Frontend
+            </div>
+            <div class="footer-right">
+                <span>Executable: <code>resilientc.exe</code></span>
+                <span class="separator">|</span>
+                <span>Port: <code>8080</code></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

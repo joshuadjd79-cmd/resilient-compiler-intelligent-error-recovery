@@ -1,0 +1,4 @@
+int a = 10;
+@#$% illegal garbage tokens here ;
+int b = 20;
+b = b + a;

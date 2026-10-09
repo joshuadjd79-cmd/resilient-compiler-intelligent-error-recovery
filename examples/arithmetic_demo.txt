@@ -1,0 +1,9 @@
+int x = 15;
+float y = 4.5;
+float result = x + y * 2.0;
+
+if (result >= 20.0 && x != 0) {
+    result = result / 2.0;
+} else {
+    result = 0.0;
+}
