@@ -162,6 +162,12 @@
                     <p class="loading-text">Compiling and executing pipeline...</p>
                 </div>
 
+                <!-- GitHub Pages Interactive Demo Notice Banner -->
+                <div id="demoNoticeBanner" class="demo-banner hidden">
+                    <span id="demoNoticeText">⚡ <strong>GitHub Pages Demo Mode:</strong> Viewing full compiler pipeline simulation. To compile custom code live, run <code>start_compiler_ui.bat</code> locally.</span>
+                    <button id="closeDemoBanner" class="btn-close" title="Dismiss banner">&times;</button>
+                </div>
+
                 <!-- 1. Recovery Tab -->
                 <div class="tab-panel active" id="tab-recovery">
                     <div class="panel-banner" id="recoveryBanner">
@@ -315,6 +321,46 @@
         </div>
     </footer>
 
+    <!-- Offline / GitHub Pages Custom Code Modal -->
+    <div id="offlineModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-blue);">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    Live C++ Compiler Backend Notice
+                </h3>
+                <button id="closeModalBtn" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>You are viewing this web IDE hosted on <strong>GitHub Pages</strong>, which is a static web host and cannot execute native Windows C++ binaries (<code>resilientc.exe</code>) in the cloud.</p>
+                <div style="margin-top: 14px;">
+                    <strong style="color: var(--text-primary);">To compile your own custom code with the real C++ compiler:</strong>
+                    <div class="modal-step">
+                        Double-click <strong>start_compiler_ui.bat</strong> in your project folder
+                    </div>
+                    <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+                        This automatically launches the local Python backend on <code>http://localhost:8080</code> with full live C++ compilation.
+                    </p>
+                </div>
+                <div style="margin-top: 14px;">
+                    <strong style="color: var(--text-primary);">In this web demo right now:</strong>
+                    <p style="margin-top: 4px;">
+                        You can select any of the <strong>8 pre-compiled test algorithms</strong> (e.g. <em>Intelligent Error Recovery</em>, <em>Fibonacci</em>, <em>Missing Delimiter</em>) and click <strong>Compile & Run</strong> to interactively explore all compiler phases!
+                    </p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="modalLoadSampleBtn" class="btn btn-primary">Load Error Recovery Demo</button>
+                <button id="modalDismissBtn" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="demo_db.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

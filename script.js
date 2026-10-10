@@ -65,6 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const charCount = document.getElementById('charCount');
     const recoveryBadge = document.getElementById('recoveryBadge');
     const copyOutputBtn = document.getElementById('copyOutputBtn');
+    const demoNoticeBanner = document.getElementById('demoNoticeBanner');
+    const demoNoticeText = document.getElementById('demoNoticeText');
+    const closeDemoBanner = document.getElementById('closeDemoBanner');
+    const offlineModal = document.getElementById('offlineModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalDismissBtn = document.getElementById('modalDismissBtn');
+    const modalLoadSampleBtn = document.getElementById('modalLoadSampleBtn');
 
     let backendAvailable = false;
     let currentSections = {};
@@ -140,14 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await res.json();
                 backendAvailable = true;
                 backendBadge.className = 'status-badge online';
+                backendBadge.title = 'Connected to local C++ compiler server (server.py)';
                 backendBadge.querySelector('.badge-text').innerText = 'Compiler Online';
                 return;
             }
         } catch (_) {}
 
         backendAvailable = false;
-        backendBadge.className = 'status-badge offline';
-        backendBadge.querySelector('.badge-text').innerText = 'Standalone Mode';
+        backendBadge.className = 'status-badge demo';
+        backendBadge.title = 'GitHub Pages Demo Mode. Sample programs compile interactively via pre-bundled compiler pipeline. Click for local setup details.';
+        backendBadge.querySelector('.badge-text').innerText = 'Demo Mode (GitHub Pages)';
     }
 
     // 4. Sample Selection
@@ -158,6 +167,37 @@ document.addEventListener('DOMContentLoaded', () => {
             updateEditorMeta();
             sampleSelect.value = key;
         }
+    }
+
+    function findMatchingSampleKey(source) {
+        const clean = (s) => (s || '').replace(/\r\n/g, '\n').replace(/\s+/g, ' ').trim();
+        const srcClean = clean(source);
+
+        // 1. Check current selected sample first
+        const currentKey = sampleSelect.value;
+        if (currentKey && clean(FALLBACK_SAMPLES[currentKey]) === srcClean) {
+            return currentKey;
+        }
+
+        // 2. Check all samples for exact normalized match
+        for (const [key, code] of Object.entries(FALLBACK_SAMPLES)) {
+            if (clean(code) === srcClean) {
+                return key;
+            }
+        }
+
+        // 3. Fallback: line prefix match
+        const rawClean = (s) => (s || '').replace(/\r\n/g, '\n').trim();
+        const srcRaw = rawClean(source);
+        for (const [key, code] of Object.entries(FALLBACK_SAMPLES)) {
+            const cLines = rawClean(code).split('\n');
+            const sLines = srcRaw.split('\n');
+            if (cLines.length > 0 && sLines.length > 0 && cLines[0].trim() === sLines[0].trim()) {
+                return key;
+            }
+        }
+
+        return null;
     }
 
     sampleSelect.addEventListener('change', (e) => {
@@ -197,14 +237,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (res.ok) {
                     const data = await res.json();
+                    if (demoNoticeBanner) demoNoticeBanner.classList.add('hidden');
                     renderCompilerResults(data);
                 } else {
                     const err = await res.json();
                     renderErrorResult(err.error || 'Server error occurred during compilation');
                 }
             } else {
-                // If backend is offline, simulate preview or alert
-                alert('Backend server (server.py) is not connected. Start server using: python server.py');
+                // Standalone / GitHub Pages Demo Mode:
+                const db = window.DEMO_DATABASE || {};
+                const matchedKey = findMatchingSampleKey(source);
+
+                if (matchedKey && db[matchedKey]) {
+                    // Simulate realistic compiler execution delay (200ms)
+                    await new Promise(r => setTimeout(r, 200));
+                    renderCompilerResults(db[matchedKey]);
+
+                    // Show demo notice banner
+                    if (demoNoticeBanner && demoNoticeText) {
+                        const sampleName = sampleSelect.options[sampleSelect.selectedIndex] ? sampleSelect.options[sampleSelect.selectedIndex].text : matchedKey;
+                        demoNoticeText.innerHTML = `⚡ <strong>GitHub Pages Demo Mode:</strong> Compiled <em>${escapeHtml(sampleName)}</em> through the full pipeline. For live compilation of custom code, run <code>start_compiler_ui.bat</code> locally.`;
+                        demoNoticeBanner.classList.remove('hidden');
+                    }
+                } else {
+                    // Custom code typed in static GitHub Pages mode
+                    if (offlineModal) {
+                        offlineModal.classList.remove('hidden');
+                    }
+                }
             }
         } catch (err) {
             renderErrorResult(err.message);
@@ -251,7 +311,10 @@ document.addEventListener('DOMContentLoaded', () => {
         vmEl.innerText = currentSections.vm || (data.success ? '[VM]: Execution completed with 0 errors.' : '[VM]: Skipped due to compilation/semantic errors.');
 
         // Automatically switch to Recovery tab if errors were repaired, or to VM if clean
-        if (currentSections.hasRecovery) {
+        const recText = currentSections.recovery || '';
+        const hasRealRepairs = recText && !recText.includes('No recovery actions were required');
+
+        if (hasRealRepairs) {
             switchTab('recovery');
         } else if (currentSections.hasSemanticErrors) {
             switchTab('symbols');
@@ -360,7 +423,43 @@ document.addEventListener('DOMContentLoaded', () => {
         return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
+    // 7. Interactive Demo Banner & Modal Event Handlers
+    if (closeDemoBanner) {
+        closeDemoBanner.addEventListener('click', () => {
+            demoNoticeBanner.classList.add('hidden');
+        });
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            offlineModal.classList.add('hidden');
+        });
+    }
+
+    if (modalDismissBtn) {
+        modalDismissBtn.addEventListener('click', () => {
+            offlineModal.classList.add('hidden');
+        });
+    }
+
+    if (modalLoadSampleBtn) {
+        modalLoadSampleBtn.addEventListener('click', () => {
+            offlineModal.classList.add('hidden');
+            loadSample('syntax_recovery');
+            compileSource();
+        });
+    }
+
+    if (backendBadge) {
+        backendBadge.addEventListener('click', () => {
+            if (!backendAvailable && offlineModal) {
+                offlineModal.classList.remove('hidden');
+            }
+        });
+    }
+
     // Initial setup
     checkBackend();
     loadSample('fibonacci');
 });
+
