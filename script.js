@@ -394,12 +394,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Base API URL: Supports both http://localhost:8080 and direct file:/// viewing
+    const API_BASE = (window.location.protocol === 'http:' || window.location.protocol === 'https:')
+        ? (window.location.port === '8080' ? '' : 'http://localhost:8080')
+        : 'http://localhost:8080';
+
     // =========================================================================
     // 3. Backend Health Check
     // =========================================================================
     async function checkBackend() {
         try {
-            const res = await fetch('/api/status', { method: 'GET' });
+            const res = await fetch(`${API_BASE}/api/status`, { method: 'GET' });
             if (res.ok) {
                 const data = await res.json();
                 backendOnline = true;
@@ -487,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (backendOnline) {
                 // Call live local Python server with C++ compiler
-                const res = await fetch('/api/compile', {
+                const res = await fetch(`${API_BASE}/api/compile`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ source, flag: '--all' })
@@ -1057,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             if (backendOnline) {
-                const res = await fetch('/api/tests');
+                const res = await fetch(`${API_BASE}/api/tests`);
                 if (res.ok) {
                     const data = await res.json();
                     renderTestResults(data);
