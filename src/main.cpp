@@ -17,6 +17,41 @@
 #include "vm/VM.h"
 #include "vm/CodeGenerator.h"
 
+static const char* getTokenTypeName(TokenType type) {
+    switch (type) {
+        case TokenType::INT: return "INT";
+        case TokenType::FLOAT: return "FLOAT";
+        case TokenType::BOOL: return "BOOL";
+        case TokenType::IF: return "IF";
+        case TokenType::ELSE: return "ELSE";
+        case TokenType::WHILE: return "WHILE";
+        case TokenType::PRINT: return "PRINT";
+        case TokenType::IDENTIFIER: return "IDENTIFIER";
+        case TokenType::NUMBER: return "NUMBER";
+        case TokenType::PLUS: return "PLUS";
+        case TokenType::MINUS: return "MINUS";
+        case TokenType::MULTIPLY: return "MULTIPLY";
+        case TokenType::DIVIDE: return "DIVIDE";
+        case TokenType::MODULO: return "MODULO";
+        case TokenType::ASSIGN: return "ASSIGN";
+        case TokenType::EQUAL: return "EQUAL";
+        case TokenType::NOT_EQUAL: return "NOT_EQUAL";
+        case TokenType::LESS: return "LESS";
+        case TokenType::GREATER: return "GREATER";
+        case TokenType::LESS_EQUAL: return "LESS_EQUAL";
+        case TokenType::GREATER_EQUAL: return "GREATER_EQUAL";
+        case TokenType::AND: return "AND";
+        case TokenType::OR: return "OR";
+        case TokenType::LEFT_PAREN: return "LEFT_PAREN";
+        case TokenType::RIGHT_PAREN: return "RIGHT_PAREN";
+        case TokenType::LEFT_BRACE: return "LEFT_BRACE";
+        case TokenType::RIGHT_BRACE: return "RIGHT_BRACE";
+        case TokenType::SEMICOLON: return "SEMICOLON";
+        case TokenType::END_OF_FILE: return "END_OF_FILE";
+        default: return "UNKNOWN";
+    }
+}
+
 int main(int argc, char* argv[]) {
     std::cout << "========================================================\n";
     std::cout << " Resilient Compiler with Intelligent Error Recovery   \n";
@@ -35,6 +70,7 @@ int main(int argc, char* argv[]) {
     }
 
     bool showAll     = flags.count("--all") > 0;
+    bool showTokens  = showAll || flags.count("--tokens") > 0;
     bool showAst     = showAll || flags.count("--ast") > 0;
     bool showSymbols = showAll || flags.count("--symbols") > 0;
     bool showTac     = showAll || flags.count("--tac") > 0;
@@ -43,7 +79,8 @@ int main(int argc, char* argv[]) {
     bool runVm       = showAll || flags.count("--run") > 0;
 
     // If no specific flag was given, enable standard full-pipeline output
-    if (!showAst && !showSymbols && !showTac && !showOpt && !showTarget && !runVm) {
+    if (!showTokens && !showAst && !showSymbols && !showTac && !showOpt && !showTarget && !runVm) {
+        showTokens = true;
         showAst = true;
         showSymbols = true;
         showTac = true;
@@ -102,6 +139,16 @@ int main(int argc, char* argv[]) {
     catch (const std::exception& error) {
         std::cout << "Fatal Compilation Error: " << error.what() << "\n";
         return 1;
+    }
+
+    // 2b. Lexical Tokens Stream
+    if (showTokens) {
+        std::cout << "\n=== Lexical Tokens (" << tokens.size() << " tokens) ===\n";
+        for (std::size_t i = 0; i < tokens.size(); ++i) {
+            std::cout << "[" << i << "] Line " << tokens[i].line << ", Col " << tokens[i].column
+                      << " | Type: " << getTokenTypeName(tokens[i].type)
+                      << " | Lexeme: '" << tokens[i].lexeme << "'\n";
+        }
     }
 
     // 3. Abstract Syntax Tree

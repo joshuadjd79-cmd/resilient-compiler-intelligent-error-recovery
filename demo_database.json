@@ -2,137 +2,3185 @@
   "fibonacci": {
     "success": true,
     "exitCode": 0,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\examples\\fibonacci.txt\n\n=== Source Code ===\nint count = 6;\nint t1 = 0;\nint t2 = 1;\nint next = 0;\n\nwhile (count > 0) {\n    print t1;\n    next = t1 + t2;\n    t1 = t2;\n    t2 = next;\n    count = count - 1;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (52 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int count\n    Literal: 6\n  Declaration: int t1\n    Literal: 0\n  Declaration: int t2\n    Literal: 1\n  Declaration: int next\n    Literal: 0\n  While\n    Condition\n      Binary Expression: >\n        Identifier: count\n        Literal: 0\n    Body\n      Block\n        Print\n          Identifier: t1\n        Assignment: next\n          Binary Expression: +\n            Identifier: t1\n            Identifier: t2\n        Assignment: t1\n          Identifier: t2\n        Assignment: t2\n          Identifier: next\n        Assignment: count\n          Binary Expression: -\n            Identifier: count\n            Literal: 1\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\ncount           int       0       L0:0        \nt1              int       0       L0:0        \nt2              int       0       L0:0        \nnext            int       0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    count = 6\n    t1 = 0\n    t2 = 1\n    next = 0\nL0:\n    _t0 = count > 0\n    ifFalse _t0 goto L1\n    print t1\n    _t1 = t1 + t2\n    next = _t1\n    t1 = t2\n    t2 = next\n    _t2 = count - 1\n    count = _t2\n    goto L0\nL1:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 0\n  Constant Operands Propagated   : 0\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 0\n\n=== Optimized Three-Address Code ===\n    count = 6\n    t1 = 0\n    t2 = 1\n    next = 0\nL0:\n    _t0 = count > 0\n    ifFalse _t0 goto L1\n    print t1\n    _t1 = t1 + t2\n    next = _t1\n    t1 = t2\n    t2 = next\n    _t2 = count - 1\n    count = _t2\n    goto L0\nL1:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   6\n0001:  STORE_VAR    count\n0002:  PUSH_CONST   0\n0003:  STORE_VAR    t1\n0004:  PUSH_CONST   1\n0005:  STORE_VAR    t2\n0006:  PUSH_CONST   0\n0007:  STORE_VAR    next\n0008:  LOAD_VAR     count\n0009:  PUSH_CONST   0\n0010:  GT\n0011:  STORE_VAR    _t0\n0012:  LOAD_VAR     _t0\n0013:  JUMP_IF_ZERO ->0033\n0014:  LOAD_VAR     t1\n0015:  PRINT\n0016:  LOAD_VAR     t1\n0017:  LOAD_VAR     t2\n0018:  ADD\n0019:  STORE_VAR    _t1\n0020:  LOAD_VAR     _t1\n0021:  STORE_VAR    next\n0022:  LOAD_VAR     t2\n0023:  STORE_VAR    t1\n0024:  LOAD_VAR     next\n0025:  STORE_VAR    t2\n0026:  LOAD_VAR     count\n0027:  PUSH_CONST   1\n0028:  SUB\n0029:  STORE_VAR    _t2\n0030:  LOAD_VAR     _t2\n0031:  STORE_VAR    count\n0032:  JUMP         ->0008\n0033:  HALT\n\n=== Virtual Machine Execution ===\n[VM Output] 0\n[VM Output] 1\n[VM Output] 1\n[VM Output] 2\n[VM Output] 3\n[VM Output] 5\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ncount           0           \nt1              8           \nt2              13          \nnext            13          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: examples/fibonacci.txt\n\n=== Source Code ===\nint count = 6;\nint t1 = 0;\nint t2 = 1;\nint next = 0;\n\nwhile (count > 0) {\n    print t1;\n    next = t1 + t2;\n    t1 = t2;\n    t2 = next;\n    count = count - 1;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (52 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Lexical Tokens (52 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'count'\n[2] Line 1, Col 11 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 13 | Type: NUMBER | Lexeme: '6'\n[4] Line 1, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: INT | Lexeme: 'int'\n[6] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 't1'\n[7] Line 2, Col 8 | Type: ASSIGN | Lexeme: '='\n[8] Line 2, Col 10 | Type: NUMBER | Lexeme: '0'\n[9] Line 2, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[10] Line 3, Col 1 | Type: INT | Lexeme: 'int'\n[11] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 't2'\n[12] Line 3, Col 8 | Type: ASSIGN | Lexeme: '='\n[13] Line 3, Col 10 | Type: NUMBER | Lexeme: '1'\n[14] Line 3, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[15] Line 4, Col 1 | Type: INT | Lexeme: 'int'\n[16] Line 4, Col 5 | Type: IDENTIFIER | Lexeme: 'next'\n[17] Line 4, Col 10 | Type: ASSIGN | Lexeme: '='\n[18] Line 4, Col 12 | Type: NUMBER | Lexeme: '0'\n[19] Line 4, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[20] Line 6, Col 1 | Type: WHILE | Lexeme: 'while'\n[21] Line 6, Col 7 | Type: LEFT_PAREN | Lexeme: '('\n[22] Line 6, Col 8 | Type: IDENTIFIER | Lexeme: 'count'\n[23] Line 6, Col 14 | Type: GREATER | Lexeme: '>'\n[24] Line 6, Col 16 | Type: NUMBER | Lexeme: '0'\n[25] Line 6, Col 17 | Type: RIGHT_PAREN | Lexeme: ')'\n[26] Line 6, Col 19 | Type: LEFT_BRACE | Lexeme: '{'\n[27] Line 7, Col 5 | Type: PRINT | Lexeme: 'print'\n[28] Line 7, Col 11 | Type: IDENTIFIER | Lexeme: 't1'\n[29] Line 7, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[30] Line 8, Col 5 | Type: IDENTIFIER | Lexeme: 'next'\n[31] Line 8, Col 10 | Type: ASSIGN | Lexeme: '='\n[32] Line 8, Col 12 | Type: IDENTIFIER | Lexeme: 't1'\n[33] Line 8, Col 15 | Type: PLUS | Lexeme: '+'\n[34] Line 8, Col 17 | Type: IDENTIFIER | Lexeme: 't2'\n[35] Line 8, Col 19 | Type: SEMICOLON | Lexeme: ';'\n[36] Line 9, Col 5 | Type: IDENTIFIER | Lexeme: 't1'\n[37] Line 9, Col 8 | Type: ASSIGN | Lexeme: '='\n[38] Line 9, Col 10 | Type: IDENTIFIER | Lexeme: 't2'\n[39] Line 9, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[40] Line 10, Col 5 | Type: IDENTIFIER | Lexeme: 't2'\n[41] Line 10, Col 8 | Type: ASSIGN | Lexeme: '='\n[42] Line 10, Col 10 | Type: IDENTIFIER | Lexeme: 'next'\n[43] Line 10, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[44] Line 11, Col 5 | Type: IDENTIFIER | Lexeme: 'count'\n[45] Line 11, Col 11 | Type: ASSIGN | Lexeme: '='\n[46] Line 11, Col 13 | Type: IDENTIFIER | Lexeme: 'count'\n[47] Line 11, Col 19 | Type: MINUS | Lexeme: '-'\n[48] Line 11, Col 21 | Type: NUMBER | Lexeme: '1'\n[49] Line 11, Col 22 | Type: SEMICOLON | Lexeme: ';'\n[50] Line 12, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[51] Line 13, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int count\n    Literal: 6\n  Declaration: int t1\n    Literal: 0\n  Declaration: int t2\n    Literal: 1\n  Declaration: int next\n    Literal: 0\n  While\n    Condition\n      Binary Expression: >\n        Identifier: count\n        Literal: 0\n    Body\n      Block\n        Print\n          Identifier: t1\n        Assignment: next\n          Binary Expression: +\n            Identifier: t1\n            Identifier: t2\n        Assignment: t1\n          Identifier: t2\n        Assignment: t2\n          Identifier: next\n        Assignment: count\n          Binary Expression: -\n            Identifier: count\n            Literal: 1\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\ncount           int       0       L0:0        \nt1              int       0       L0:0        \nt2              int       0       L0:0        \nnext            int       0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    count = 6\n    t1 = 0\n    t2 = 1\n    next = 0\nL0:\n    _t0 = count > 0\n    ifFalse _t0 goto L1\n    print t1\n    _t1 = t1 + t2\n    next = _t1\n    t1 = t2\n    t2 = next\n    _t2 = count - 1\n    count = _t2\n    goto L0\nL1:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 0\n  Constant Operands Propagated   : 0\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 0\n\n=== Optimized Three-Address Code ===\n    count = 6\n    t1 = 0\n    t2 = 1\n    next = 0\nL0:\n    _t0 = count > 0\n    ifFalse _t0 goto L1\n    print t1\n    _t1 = t1 + t2\n    next = _t1\n    t1 = t2\n    t2 = next\n    _t2 = count - 1\n    count = _t2\n    goto L0\nL1:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   6\n0001:  STORE_VAR    count\n0002:  PUSH_CONST   0\n0003:  STORE_VAR    t1\n0004:  PUSH_CONST   1\n0005:  STORE_VAR    t2\n0006:  PUSH_CONST   0\n0007:  STORE_VAR    next\n0008:  LOAD_VAR     count\n0009:  PUSH_CONST   0\n0010:  GT\n0011:  STORE_VAR    _t0\n0012:  LOAD_VAR     _t0\n0013:  JUMP_IF_ZERO ->0033\n0014:  LOAD_VAR     t1\n0015:  PRINT\n0016:  LOAD_VAR     t1\n0017:  LOAD_VAR     t2\n0018:  ADD\n0019:  STORE_VAR    _t1\n0020:  LOAD_VAR     _t1\n0021:  STORE_VAR    next\n0022:  LOAD_VAR     t2\n0023:  STORE_VAR    t1\n0024:  LOAD_VAR     next\n0025:  STORE_VAR    t2\n0026:  LOAD_VAR     count\n0027:  PUSH_CONST   1\n0028:  SUB\n0029:  STORE_VAR    _t2\n0030:  LOAD_VAR     _t2\n0031:  STORE_VAR    count\n0032:  JUMP         ->0008\n0033:  HALT\n\n=== Virtual Machine Execution ===\n[VM Output] 0\n[VM Output] 1\n[VM Output] 1\n[VM Output] 2\n[VM Output] 3\n[VM Output] 5\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ncount           0           \nt1              8           \nt2              13          \nnext            13          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
     "sections": {
       "status": "Lexer  : SUCCESS (52 tokens generated)\nParser : SUCCESS",
       "recovery": "Status: Clean compilation. No recovery actions were required.",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'count'\n[2] Line 1, Col 11 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 13 | Type: NUMBER | Lexeme: '6'\n[4] Line 1, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: INT | Lexeme: 'int'\n[6] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 't1'\n[7] Line 2, Col 8 | Type: ASSIGN | Lexeme: '='\n[8] Line 2, Col 10 | Type: NUMBER | Lexeme: '0'\n[9] Line 2, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[10] Line 3, Col 1 | Type: INT | Lexeme: 'int'\n[11] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 't2'\n[12] Line 3, Col 8 | Type: ASSIGN | Lexeme: '='\n[13] Line 3, Col 10 | Type: NUMBER | Lexeme: '1'\n[14] Line 3, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[15] Line 4, Col 1 | Type: INT | Lexeme: 'int'\n[16] Line 4, Col 5 | Type: IDENTIFIER | Lexeme: 'next'\n[17] Line 4, Col 10 | Type: ASSIGN | Lexeme: '='\n[18] Line 4, Col 12 | Type: NUMBER | Lexeme: '0'\n[19] Line 4, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[20] Line 6, Col 1 | Type: WHILE | Lexeme: 'while'\n[21] Line 6, Col 7 | Type: LEFT_PAREN | Lexeme: '('\n[22] Line 6, Col 8 | Type: IDENTIFIER | Lexeme: 'count'\n[23] Line 6, Col 14 | Type: GREATER | Lexeme: '>'\n[24] Line 6, Col 16 | Type: NUMBER | Lexeme: '0'\n[25] Line 6, Col 17 | Type: RIGHT_PAREN | Lexeme: ')'\n[26] Line 6, Col 19 | Type: LEFT_BRACE | Lexeme: '{'\n[27] Line 7, Col 5 | Type: PRINT | Lexeme: 'print'\n[28] Line 7, Col 11 | Type: IDENTIFIER | Lexeme: 't1'\n[29] Line 7, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[30] Line 8, Col 5 | Type: IDENTIFIER | Lexeme: 'next'\n[31] Line 8, Col 10 | Type: ASSIGN | Lexeme: '='\n[32] Line 8, Col 12 | Type: IDENTIFIER | Lexeme: 't1'\n[33] Line 8, Col 15 | Type: PLUS | Lexeme: '+'\n[34] Line 8, Col 17 | Type: IDENTIFIER | Lexeme: 't2'\n[35] Line 8, Col 19 | Type: SEMICOLON | Lexeme: ';'\n[36] Line 9, Col 5 | Type: IDENTIFIER | Lexeme: 't1'\n[37] Line 9, Col 8 | Type: ASSIGN | Lexeme: '='\n[38] Line 9, Col 10 | Type: IDENTIFIER | Lexeme: 't2'\n[39] Line 9, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[40] Line 10, Col 5 | Type: IDENTIFIER | Lexeme: 't2'\n[41] Line 10, Col 8 | Type: ASSIGN | Lexeme: '='\n[42] Line 10, Col 10 | Type: IDENTIFIER | Lexeme: 'next'\n[43] Line 10, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[44] Line 11, Col 5 | Type: IDENTIFIER | Lexeme: 'count'\n[45] Line 11, Col 11 | Type: ASSIGN | Lexeme: '='\n[46] Line 11, Col 13 | Type: IDENTIFIER | Lexeme: 'count'\n[47] Line 11, Col 19 | Type: MINUS | Lexeme: '-'\n[48] Line 11, Col 21 | Type: NUMBER | Lexeme: '1'\n[49] Line 11, Col 22 | Type: SEMICOLON | Lexeme: ';'\n[50] Line 12, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[51] Line 13, Col 1 | Type: END_OF_FILE | Lexeme: ''",
       "ast": "Program\n  Declaration: int count\n    Literal: 6\n  Declaration: int t1\n    Literal: 0\n  Declaration: int t2\n    Literal: 1\n  Declaration: int next\n    Literal: 0\n  While\n    Condition\n      Binary Expression: >\n        Identifier: count\n        Literal: 0\n    Body\n      Block\n        Print\n          Identifier: t1\n        Assignment: next\n          Binary Expression: +\n            Identifier: t1\n            Identifier: t2\n        Assignment: t1\n          Identifier: t2\n        Assignment: t2\n          Identifier: next\n        Assignment: count\n          Binary Expression: -\n            Identifier: count\n            Literal: 1",
       "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\ncount           int       0       L0:0        \nt1              int       0       L0:0        \nt2              int       0       L0:0        \nnext            int       0       L0:0",
       "tac": "count = 6\n    t1 = 0\n    t2 = 1\n    next = 0\nL0:\n    _t0 = count > 0\n    ifFalse _t0 goto L1\n    print t1\n    _t1 = t1 + t2\n    next = _t1\n    t1 = t2\n    t2 = next\n    _t2 = count - 1\n    count = _t2\n    goto L0\nL1:",
       "opt": "Constant Operations Folded     : 0\n  Constant Operands Propagated   : 0\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 0\n\n=== Optimized Three-Address Code ===\n    count = 6\n    t1 = 0\n    t2 = 1\n    next = 0\nL0:\n    _t0 = count > 0\n    ifFalse _t0 goto L1\n    print t1\n    _t1 = t1 + t2\n    next = _t1\n    t1 = t2\n    t2 = next\n    _t2 = count - 1\n    count = _t2\n    goto L0\nL1:",
       "target": "0000:  PUSH_CONST   6\n0001:  STORE_VAR    count\n0002:  PUSH_CONST   0\n0003:  STORE_VAR    t1\n0004:  PUSH_CONST   1\n0005:  STORE_VAR    t2\n0006:  PUSH_CONST   0\n0007:  STORE_VAR    next\n0008:  LOAD_VAR     count\n0009:  PUSH_CONST   0\n0010:  GT\n0011:  STORE_VAR    _t0\n0012:  LOAD_VAR     _t0\n0013:  JUMP_IF_ZERO ->0033\n0014:  LOAD_VAR     t1\n0015:  PRINT\n0016:  LOAD_VAR     t1\n0017:  LOAD_VAR     t2\n0018:  ADD\n0019:  STORE_VAR    _t1\n0020:  LOAD_VAR     _t1\n0021:  STORE_VAR    next\n0022:  LOAD_VAR     t2\n0023:  STORE_VAR    t1\n0024:  LOAD_VAR     next\n0025:  STORE_VAR    t2\n0026:  LOAD_VAR     count\n0027:  PUSH_CONST   1\n0028:  SUB\n0029:  STORE_VAR    _t2\n0030:  LOAD_VAR     _t2\n0031:  STORE_VAR    count\n0032:  JUMP         ->0008\n0033:  HALT",
       "vm": "[VM Output] 0\n[VM Output] 1\n[VM Output] 1\n[VM Output] 2\n[VM Output] 3\n[VM Output] 5\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ncount           0           \nt1              8           \nt2              13          \nnext            13          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
-      "hasRecovery": true,
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "count"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 11,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 13,
+          "type": "NUMBER",
+          "lexeme": "6"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "t1"
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 8,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 10,
+          "type": "NUMBER",
+          "lexeme": "0"
+        },
+        {
+          "index": 9,
+          "line": 2,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 10,
+          "line": 3,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 11,
+          "line": 3,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "t2"
+        },
+        {
+          "index": 12,
+          "line": 3,
+          "column": 8,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 13,
+          "line": 3,
+          "column": 10,
+          "type": "NUMBER",
+          "lexeme": "1"
+        },
+        {
+          "index": 14,
+          "line": 3,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 15,
+          "line": 4,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 16,
+          "line": 4,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "next"
+        },
+        {
+          "index": 17,
+          "line": 4,
+          "column": 10,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 18,
+          "line": 4,
+          "column": 12,
+          "type": "NUMBER",
+          "lexeme": "0"
+        },
+        {
+          "index": 19,
+          "line": 4,
+          "column": 13,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 20,
+          "line": 6,
+          "column": 1,
+          "type": "WHILE",
+          "lexeme": "while"
+        },
+        {
+          "index": 21,
+          "line": 6,
+          "column": 7,
+          "type": "LEFT_PAREN",
+          "lexeme": "("
+        },
+        {
+          "index": 22,
+          "line": 6,
+          "column": 8,
+          "type": "IDENTIFIER",
+          "lexeme": "count"
+        },
+        {
+          "index": 23,
+          "line": 6,
+          "column": 14,
+          "type": "GREATER",
+          "lexeme": ">"
+        },
+        {
+          "index": 24,
+          "line": 6,
+          "column": 16,
+          "type": "NUMBER",
+          "lexeme": "0"
+        },
+        {
+          "index": 25,
+          "line": 6,
+          "column": 17,
+          "type": "RIGHT_PAREN",
+          "lexeme": ")"
+        },
+        {
+          "index": 26,
+          "line": 6,
+          "column": 19,
+          "type": "LEFT_BRACE",
+          "lexeme": "{"
+        },
+        {
+          "index": 27,
+          "line": 7,
+          "column": 5,
+          "type": "PRINT",
+          "lexeme": "print"
+        },
+        {
+          "index": 28,
+          "line": 7,
+          "column": 11,
+          "type": "IDENTIFIER",
+          "lexeme": "t1"
+        },
+        {
+          "index": 29,
+          "line": 7,
+          "column": 13,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 30,
+          "line": 8,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "next"
+        },
+        {
+          "index": 31,
+          "line": 8,
+          "column": 10,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 32,
+          "line": 8,
+          "column": 12,
+          "type": "IDENTIFIER",
+          "lexeme": "t1"
+        },
+        {
+          "index": 33,
+          "line": 8,
+          "column": 15,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 34,
+          "line": 8,
+          "column": 17,
+          "type": "IDENTIFIER",
+          "lexeme": "t2"
+        },
+        {
+          "index": 35,
+          "line": 8,
+          "column": 19,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 36,
+          "line": 9,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "t1"
+        },
+        {
+          "index": 37,
+          "line": 9,
+          "column": 8,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 38,
+          "line": 9,
+          "column": 10,
+          "type": "IDENTIFIER",
+          "lexeme": "t2"
+        },
+        {
+          "index": 39,
+          "line": 9,
+          "column": 12,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 40,
+          "line": 10,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "t2"
+        },
+        {
+          "index": 41,
+          "line": 10,
+          "column": 8,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 42,
+          "line": 10,
+          "column": 10,
+          "type": "IDENTIFIER",
+          "lexeme": "next"
+        },
+        {
+          "index": 43,
+          "line": 10,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 44,
+          "line": 11,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "count"
+        },
+        {
+          "index": 45,
+          "line": 11,
+          "column": 11,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 46,
+          "line": 11,
+          "column": 13,
+          "type": "IDENTIFIER",
+          "lexeme": "count"
+        },
+        {
+          "index": 47,
+          "line": 11,
+          "column": 19,
+          "type": "MINUS",
+          "lexeme": "-"
+        },
+        {
+          "index": 48,
+          "line": 11,
+          "column": 21,
+          "type": "NUMBER",
+          "lexeme": "1"
+        },
+        {
+          "index": 49,
+          "line": 11,
+          "column": 22,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 50,
+          "line": 12,
+          "column": 1,
+          "type": "RIGHT_BRACE",
+          "lexeme": "}"
+        },
+        {
+          "index": 51,
+          "line": 13,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [],
+      "recoveryTotalCost": 0,
+      "symbolsList": [
+        {
+          "name": "count",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "t1",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "t2",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "next",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 0,
+        "propagated": 0,
+        "deadEliminated": 0,
+        "total": 0
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "6"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "count"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "0"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "t1"
+        },
+        {
+          "address": "0004",
+          "opcode": "PUSH_CONST",
+          "arg": "1"
+        },
+        {
+          "address": "0005",
+          "opcode": "STORE_VAR",
+          "arg": "t2"
+        },
+        {
+          "address": "0006",
+          "opcode": "PUSH_CONST",
+          "arg": "0"
+        },
+        {
+          "address": "0007",
+          "opcode": "STORE_VAR",
+          "arg": "next"
+        },
+        {
+          "address": "0008",
+          "opcode": "LOAD_VAR",
+          "arg": "count"
+        },
+        {
+          "address": "0009",
+          "opcode": "PUSH_CONST",
+          "arg": "0"
+        },
+        {
+          "address": "0010",
+          "opcode": "GT",
+          "arg": ""
+        },
+        {
+          "address": "0011",
+          "opcode": "STORE_VAR",
+          "arg": "_t0"
+        },
+        {
+          "address": "0012",
+          "opcode": "LOAD_VAR",
+          "arg": "_t0"
+        },
+        {
+          "address": "0013",
+          "opcode": "JUMP_IF_ZERO",
+          "arg": "->0033"
+        },
+        {
+          "address": "0014",
+          "opcode": "LOAD_VAR",
+          "arg": "t1"
+        },
+        {
+          "address": "0015",
+          "opcode": "PRINT",
+          "arg": ""
+        },
+        {
+          "address": "0016",
+          "opcode": "LOAD_VAR",
+          "arg": "t1"
+        },
+        {
+          "address": "0017",
+          "opcode": "LOAD_VAR",
+          "arg": "t2"
+        },
+        {
+          "address": "0018",
+          "opcode": "ADD",
+          "arg": ""
+        },
+        {
+          "address": "0019",
+          "opcode": "STORE_VAR",
+          "arg": "_t1"
+        },
+        {
+          "address": "0020",
+          "opcode": "LOAD_VAR",
+          "arg": "_t1"
+        },
+        {
+          "address": "0021",
+          "opcode": "STORE_VAR",
+          "arg": "next"
+        },
+        {
+          "address": "0022",
+          "opcode": "LOAD_VAR",
+          "arg": "t2"
+        },
+        {
+          "address": "0023",
+          "opcode": "STORE_VAR",
+          "arg": "t1"
+        },
+        {
+          "address": "0024",
+          "opcode": "LOAD_VAR",
+          "arg": "next"
+        },
+        {
+          "address": "0025",
+          "opcode": "STORE_VAR",
+          "arg": "t2"
+        },
+        {
+          "address": "0026",
+          "opcode": "LOAD_VAR",
+          "arg": "count"
+        },
+        {
+          "address": "0027",
+          "opcode": "PUSH_CONST",
+          "arg": "1"
+        },
+        {
+          "address": "0028",
+          "opcode": "SUB",
+          "arg": ""
+        },
+        {
+          "address": "0029",
+          "opcode": "STORE_VAR",
+          "arg": "_t2"
+        },
+        {
+          "address": "0030",
+          "opcode": "LOAD_VAR",
+          "arg": "_t2"
+        },
+        {
+          "address": "0031",
+          "opcode": "STORE_VAR",
+          "arg": "count"
+        },
+        {
+          "address": "0032",
+          "opcode": "JUMP",
+          "arg": "->0008"
+        },
+        {
+          "address": "0033",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [
+        "0",
+        "1",
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "vmVariables": [
+        {
+          "name": "count",
+          "value": "0"
+        },
+        {
+          "name": "t1",
+          "value": "8"
+        },
+        {
+          "name": "t2",
+          "value": "13"
+        },
+        {
+          "name": "next",
+          "value": "13"
+        }
+      ],
+      "hasRecovery": false,
       "hasSemanticErrors": false
-    }
-  },
-  "arithmetic_demo": {
-    "success": true,
-    "exitCode": 0,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\examples\\arithmetic_demo.txt\n\n=== Source Code ===\nint x = 15;\nfloat y = 4.5;\nfloat result = x + y * 2.0;\n\nif (result >= 20.0 && x != 0) {\n    result = result / 2.0;\n} else {\n    result = 0.0;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (45 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 15\n  Declaration: float y\n    Literal: 4.5\n  Declaration: float result\n    Binary Expression: +\n      Identifier: x\n      Binary Expression: *\n        Identifier: y\n        Literal: 2.0\n  If\n    Condition\n      Binary Expression: &&\n        Binary Expression: >=\n          Identifier: result\n          Literal: 20.0\n        Binary Expression: !=\n          Identifier: x\n          Literal: 0\n    Then\n      Block\n        Assignment: result\n          Binary Expression: /\n            Identifier: result\n            Literal: 2.0\n    Else\n      Block\n        Assignment: result\n          Literal: 0.0\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               float     0       L0:0        \nresult          float     0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 15\n    y = 4.5\n    _t0 = y * 2.0\n    _t1 = x + _t0\n    result = _t1\n    _t2 = result >= 20.0\n    _t3 = x != 0\n    _t4 = _t2 && _t3\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 5\n  Constant Operands Propagated   : 8\n  Dead Instructions Eliminated   : 4\n  Total Optimizations Applied    : 17\n\n=== Optimized Three-Address Code ===\n    x = 15\n    y = 4.5\n    result = 24.0\n    _t4 = 1\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   15\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   4.5\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   24\n0005:  STORE_VAR    result\n0006:  PUSH_CONST   1\n0007:  STORE_VAR    _t4\n0008:  LOAD_VAR     _t4\n0009:  JUMP_IF_ZERO ->0017\n0010:  LOAD_VAR     result\n0011:  PUSH_CONST   2\n0012:  DIV\n0013:  STORE_VAR    _t5\n0014:  LOAD_VAR     _t5\n0015:  STORE_VAR    result\n0016:  JUMP         ->0019\n0017:  PUSH_CONST   0\n0018:  STORE_VAR    result\n0019:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nx               15          \ny               4.5         \nresult          12          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
-    "sections": {
-      "status": "Lexer  : SUCCESS (45 tokens generated)\nParser : SUCCESS",
-      "recovery": "Status: Clean compilation. No recovery actions were required.",
-      "ast": "Program\n  Declaration: int x\n    Literal: 15\n  Declaration: float y\n    Literal: 4.5\n  Declaration: float result\n    Binary Expression: +\n      Identifier: x\n      Binary Expression: *\n        Identifier: y\n        Literal: 2.0\n  If\n    Condition\n      Binary Expression: &&\n        Binary Expression: >=\n          Identifier: result\n          Literal: 20.0\n        Binary Expression: !=\n          Identifier: x\n          Literal: 0\n    Then\n      Block\n        Assignment: result\n          Binary Expression: /\n            Identifier: result\n            Literal: 2.0\n    Else\n      Block\n        Assignment: result\n          Literal: 0.0",
-      "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               float     0       L0:0        \nresult          float     0       L0:0",
-      "tac": "x = 15\n    y = 4.5\n    _t0 = y * 2.0\n    _t1 = x + _t0\n    result = _t1\n    _t2 = result >= 20.0\n    _t3 = x != 0\n    _t4 = _t2 && _t3\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:",
-      "opt": "Constant Operations Folded     : 5\n  Constant Operands Propagated   : 8\n  Dead Instructions Eliminated   : 4\n  Total Optimizations Applied    : 17\n\n=== Optimized Three-Address Code ===\n    x = 15\n    y = 4.5\n    result = 24.0\n    _t4 = 1\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:",
-      "target": "0000:  PUSH_CONST   15\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   4.5\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   24\n0005:  STORE_VAR    result\n0006:  PUSH_CONST   1\n0007:  STORE_VAR    _t4\n0008:  LOAD_VAR     _t4\n0009:  JUMP_IF_ZERO ->0017\n0010:  LOAD_VAR     result\n0011:  PUSH_CONST   2\n0012:  DIV\n0013:  STORE_VAR    _t5\n0014:  LOAD_VAR     _t5\n0015:  STORE_VAR    result\n0016:  JUMP         ->0019\n0017:  PUSH_CONST   0\n0018:  STORE_VAR    result\n0019:  HALT",
-      "vm": "=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nx               15          \ny               4.5         \nresult          12          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
-      "hasRecovery": true,
-      "hasSemanticErrors": false
-    }
+    },
+    "source": "int count = 6;\nint t1 = 0;\nint t2 = 1;\nint next = 0;\n\nwhile (count > 0) {\n    print t1;\n    next = t1 + t2;\n    t1 = t2;\n    t2 = next;\n    count = count - 1;\n}\n"
   },
   "syntax_recovery": {
     "success": true,
     "exitCode": 0,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\tests\\05_multiple_errors.txt\n\n=== Source Code ===\nint a = ;\nfloat b = 25;;\nif (b > 10 {\n    b = b + 5;\n    a = 99\n}\nwhile (a > 0) {\n    a = a - 1;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (41 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report (4 recovery actions) ===\n[1] [INSERTION] Inserted missing '0' at line 1, column 9\n    Recovery Cost : 2 | Confidence: MEDIUM\n    Rationale     : Missing expression after '='; inserted default literal '0'\n[2] [DELETION] Deleted unexpected token ';' at line 2, column 14\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Deleted redundant semicolon ';'\n[3] [INSERTION] Inserted missing ')' at line 3, column 12\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ')' before block delimiter '{'\n[4] [INSERTION] Inserted missing ';' at line 6, column 1\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ';' before next statement token '}'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 5\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int a\n    Literal: 0\n  Declaration: float b\n    Literal: 25\n  If\n    Condition\n      Binary Expression: >\n        Identifier: b\n        Literal: 10\n    Then\n      Block\n        Assignment: b\n          Binary Expression: +\n            Identifier: b\n            Literal: 5\n        Assignment: a\n          Literal: 99\n  While\n    Condition\n      Binary Expression: >\n        Identifier: a\n        Literal: 0\n    Body\n      Block\n        Assignment: a\n          Binary Expression: -\n            Identifier: a\n            Literal: 1\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\na               int       0       L0:0        \nb               float     0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    a = 0\n    b = 25\n    _t0 = b > 10\n    ifFalse _t0 goto L1\n    _t1 = b + 5\n    b = _t1\n    a = 99\nL1:\nL2:\n    _t2 = a > 0\n    ifFalse _t2 goto L3\n    _t3 = a - 1\n    a = _t3\n    goto L2\nL3:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 1\n  Constant Operands Propagated   : 1\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    a = 0\n    b = 25\n    _t0 = 1\n    ifFalse _t0 goto L1\n    _t1 = b + 5\n    b = _t1\n    a = 99\nL1:\nL2:\n    _t2 = a > 0\n    ifFalse _t2 goto L3\n    _t3 = a - 1\n    a = _t3\n    goto L2\nL3:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   0\n0001:  STORE_VAR    a\n0002:  PUSH_CONST   25\n0003:  STORE_VAR    b\n0004:  PUSH_CONST   1\n0005:  STORE_VAR    _t0\n0006:  LOAD_VAR     _t0\n0007:  JUMP_IF_ZERO ->0016\n0008:  LOAD_VAR     b\n0009:  PUSH_CONST   5\n0010:  ADD\n0011:  STORE_VAR    _t1\n0012:  LOAD_VAR     _t1\n0013:  STORE_VAR    b\n0014:  PUSH_CONST   99\n0015:  STORE_VAR    a\n0016:  LOAD_VAR     a\n0017:  PUSH_CONST   0\n0018:  GT\n0019:  STORE_VAR    _t2\n0020:  LOAD_VAR     _t2\n0021:  JUMP_IF_ZERO ->0029\n0022:  LOAD_VAR     a\n0023:  PUSH_CONST   1\n0024:  SUB\n0025:  STORE_VAR    _t3\n0026:  LOAD_VAR     _t3\n0027:  STORE_VAR    a\n0028:  JUMP         ->0016\n0029:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\na               0           \nb               30          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/05_multiple_errors.txt\n\n=== Source Code ===\nint a = ;\nfloat b = 25;;\nif (b > 10 {\n    b = b + 5;\n    a = 99\n}\nwhile (a > 0) {\n    a = a - 1;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (41 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report (4 recovery actions) ===\n[1] [INSERTION] Inserted missing '0' at line 1, column 9\n    Recovery Cost : 2 | Confidence: MEDIUM\n    Rationale     : Missing expression after '='; inserted default literal '0'\n[2] [DELETION] Deleted unexpected token ';' at line 2, column 14\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Deleted redundant semicolon ';'\n[3] [INSERTION] Inserted missing ')' at line 3, column 12\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ')' before block delimiter '{'\n[4] [INSERTION] Inserted missing ';' at line 6, column 1\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ';' before next statement token '}'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 5\n\n=== Lexical Tokens (41 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: SEMICOLON | Lexeme: ';'\n[4] Line 2, Col 1 | Type: FLOAT | Lexeme: 'float'\n[5] Line 2, Col 7 | Type: IDENTIFIER | Lexeme: 'b'\n[6] Line 2, Col 9 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 11 | Type: NUMBER | Lexeme: '25'\n[8] Line 2, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 2, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[10] Line 3, Col 1 | Type: IF | Lexeme: 'if'\n[11] Line 3, Col 4 | Type: LEFT_PAREN | Lexeme: '('\n[12] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'b'\n[13] Line 3, Col 7 | Type: GREATER | Lexeme: '>'\n[14] Line 3, Col 9 | Type: NUMBER | Lexeme: '10'\n[15] Line 3, Col 12 | Type: LEFT_BRACE | Lexeme: '{'\n[16] Line 4, Col 5 | Type: IDENTIFIER | Lexeme: 'b'\n[17] Line 4, Col 7 | Type: ASSIGN | Lexeme: '='\n[18] Line 4, Col 9 | Type: IDENTIFIER | Lexeme: 'b'\n[19] Line 4, Col 11 | Type: PLUS | Lexeme: '+'\n[20] Line 4, Col 13 | Type: NUMBER | Lexeme: '5'\n[21] Line 4, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[22] Line 5, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[23] Line 5, Col 7 | Type: ASSIGN | Lexeme: '='\n[24] Line 5, Col 9 | Type: NUMBER | Lexeme: '99'\n[25] Line 6, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[26] Line 7, Col 1 | Type: WHILE | Lexeme: 'while'\n[27] Line 7, Col 7 | Type: LEFT_PAREN | Lexeme: '('\n[28] Line 7, Col 8 | Type: IDENTIFIER | Lexeme: 'a'\n[29] Line 7, Col 10 | Type: GREATER | Lexeme: '>'\n[30] Line 7, Col 12 | Type: NUMBER | Lexeme: '0'\n[31] Line 7, Col 13 | Type: RIGHT_PAREN | Lexeme: ')'\n[32] Line 7, Col 15 | Type: LEFT_BRACE | Lexeme: '{'\n[33] Line 8, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[34] Line 8, Col 7 | Type: ASSIGN | Lexeme: '='\n[35] Line 8, Col 9 | Type: IDENTIFIER | Lexeme: 'a'\n[36] Line 8, Col 11 | Type: MINUS | Lexeme: '-'\n[37] Line 8, Col 13 | Type: NUMBER | Lexeme: '1'\n[38] Line 8, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[39] Line 9, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[40] Line 10, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int a\n    Literal: 0\n  Declaration: float b\n    Literal: 25\n  If\n    Condition\n      Binary Expression: >\n        Identifier: b\n        Literal: 10\n    Then\n      Block\n        Assignment: b\n          Binary Expression: +\n            Identifier: b\n            Literal: 5\n        Assignment: a\n          Literal: 99\n  While\n    Condition\n      Binary Expression: >\n        Identifier: a\n        Literal: 0\n    Body\n      Block\n        Assignment: a\n          Binary Expression: -\n            Identifier: a\n            Literal: 1\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\na               int       0       L0:0        \nb               float     0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    a = 0\n    b = 25\n    _t0 = b > 10\n    ifFalse _t0 goto L1\n    _t1 = b + 5\n    b = _t1\n    a = 99\nL1:\nL2:\n    _t2 = a > 0\n    ifFalse _t2 goto L3\n    _t3 = a - 1\n    a = _t3\n    goto L2\nL3:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 1\n  Constant Operands Propagated   : 1\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    a = 0\n    b = 25\n    _t0 = 1\n    ifFalse _t0 goto L1\n    _t1 = b + 5\n    b = _t1\n    a = 99\nL1:\nL2:\n    _t2 = a > 0\n    ifFalse _t2 goto L3\n    _t3 = a - 1\n    a = _t3\n    goto L2\nL3:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   0\n0001:  STORE_VAR    a\n0002:  PUSH_CONST   25\n0003:  STORE_VAR    b\n0004:  PUSH_CONST   1\n0005:  STORE_VAR    _t0\n0006:  LOAD_VAR     _t0\n0007:  JUMP_IF_ZERO ->0016\n0008:  LOAD_VAR     b\n0009:  PUSH_CONST   5\n0010:  ADD\n0011:  STORE_VAR    _t1\n0012:  LOAD_VAR     _t1\n0013:  STORE_VAR    b\n0014:  PUSH_CONST   99\n0015:  STORE_VAR    a\n0016:  LOAD_VAR     a\n0017:  PUSH_CONST   0\n0018:  GT\n0019:  STORE_VAR    _t2\n0020:  LOAD_VAR     _t2\n0021:  JUMP_IF_ZERO ->0029\n0022:  LOAD_VAR     a\n0023:  PUSH_CONST   1\n0024:  SUB\n0025:  STORE_VAR    _t3\n0026:  LOAD_VAR     _t3\n0027:  STORE_VAR    a\n0028:  JUMP         ->0016\n0029:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\na               0           \nb               30          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
     "sections": {
       "status": "Lexer  : SUCCESS (41 tokens generated)\nParser : SUCCESS",
       "recovery": "[1] [INSERTION] Inserted missing '0' at line 1, column 9\n    Recovery Cost : 2 | Confidence: MEDIUM\n    Rationale     : Missing expression after '='; inserted default literal '0'\n[2] [DELETION] Deleted unexpected token ';' at line 2, column 14\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Deleted redundant semicolon ';'\n[3] [INSERTION] Inserted missing ')' at line 3, column 12\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ')' before block delimiter '{'\n[4] [INSERTION] Inserted missing ';' at line 6, column 1\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ';' before next statement token '}'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 5",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: SEMICOLON | Lexeme: ';'\n[4] Line 2, Col 1 | Type: FLOAT | Lexeme: 'float'\n[5] Line 2, Col 7 | Type: IDENTIFIER | Lexeme: 'b'\n[6] Line 2, Col 9 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 11 | Type: NUMBER | Lexeme: '25'\n[8] Line 2, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 2, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[10] Line 3, Col 1 | Type: IF | Lexeme: 'if'\n[11] Line 3, Col 4 | Type: LEFT_PAREN | Lexeme: '('\n[12] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'b'\n[13] Line 3, Col 7 | Type: GREATER | Lexeme: '>'\n[14] Line 3, Col 9 | Type: NUMBER | Lexeme: '10'\n[15] Line 3, Col 12 | Type: LEFT_BRACE | Lexeme: '{'\n[16] Line 4, Col 5 | Type: IDENTIFIER | Lexeme: 'b'\n[17] Line 4, Col 7 | Type: ASSIGN | Lexeme: '='\n[18] Line 4, Col 9 | Type: IDENTIFIER | Lexeme: 'b'\n[19] Line 4, Col 11 | Type: PLUS | Lexeme: '+'\n[20] Line 4, Col 13 | Type: NUMBER | Lexeme: '5'\n[21] Line 4, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[22] Line 5, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[23] Line 5, Col 7 | Type: ASSIGN | Lexeme: '='\n[24] Line 5, Col 9 | Type: NUMBER | Lexeme: '99'\n[25] Line 6, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[26] Line 7, Col 1 | Type: WHILE | Lexeme: 'while'\n[27] Line 7, Col 7 | Type: LEFT_PAREN | Lexeme: '('\n[28] Line 7, Col 8 | Type: IDENTIFIER | Lexeme: 'a'\n[29] Line 7, Col 10 | Type: GREATER | Lexeme: '>'\n[30] Line 7, Col 12 | Type: NUMBER | Lexeme: '0'\n[31] Line 7, Col 13 | Type: RIGHT_PAREN | Lexeme: ')'\n[32] Line 7, Col 15 | Type: LEFT_BRACE | Lexeme: '{'\n[33] Line 8, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[34] Line 8, Col 7 | Type: ASSIGN | Lexeme: '='\n[35] Line 8, Col 9 | Type: IDENTIFIER | Lexeme: 'a'\n[36] Line 8, Col 11 | Type: MINUS | Lexeme: '-'\n[37] Line 8, Col 13 | Type: NUMBER | Lexeme: '1'\n[38] Line 8, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[39] Line 9, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[40] Line 10, Col 1 | Type: END_OF_FILE | Lexeme: ''",
       "ast": "Program\n  Declaration: int a\n    Literal: 0\n  Declaration: float b\n    Literal: 25\n  If\n    Condition\n      Binary Expression: >\n        Identifier: b\n        Literal: 10\n    Then\n      Block\n        Assignment: b\n          Binary Expression: +\n            Identifier: b\n            Literal: 5\n        Assignment: a\n          Literal: 99\n  While\n    Condition\n      Binary Expression: >\n        Identifier: a\n        Literal: 0\n    Body\n      Block\n        Assignment: a\n          Binary Expression: -\n            Identifier: a\n            Literal: 1",
       "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\na               int       0       L0:0        \nb               float     0       L0:0",
       "tac": "a = 0\n    b = 25\n    _t0 = b > 10\n    ifFalse _t0 goto L1\n    _t1 = b + 5\n    b = _t1\n    a = 99\nL1:\nL2:\n    _t2 = a > 0\n    ifFalse _t2 goto L3\n    _t3 = a - 1\n    a = _t3\n    goto L2\nL3:",
       "opt": "Constant Operations Folded     : 1\n  Constant Operands Propagated   : 1\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    a = 0\n    b = 25\n    _t0 = 1\n    ifFalse _t0 goto L1\n    _t1 = b + 5\n    b = _t1\n    a = 99\nL1:\nL2:\n    _t2 = a > 0\n    ifFalse _t2 goto L3\n    _t3 = a - 1\n    a = _t3\n    goto L2\nL3:",
       "target": "0000:  PUSH_CONST   0\n0001:  STORE_VAR    a\n0002:  PUSH_CONST   25\n0003:  STORE_VAR    b\n0004:  PUSH_CONST   1\n0005:  STORE_VAR    _t0\n0006:  LOAD_VAR     _t0\n0007:  JUMP_IF_ZERO ->0016\n0008:  LOAD_VAR     b\n0009:  PUSH_CONST   5\n0010:  ADD\n0011:  STORE_VAR    _t1\n0012:  LOAD_VAR     _t1\n0013:  STORE_VAR    b\n0014:  PUSH_CONST   99\n0015:  STORE_VAR    a\n0016:  LOAD_VAR     a\n0017:  PUSH_CONST   0\n0018:  GT\n0019:  STORE_VAR    _t2\n0020:  LOAD_VAR     _t2\n0021:  JUMP_IF_ZERO ->0029\n0022:  LOAD_VAR     a\n0023:  PUSH_CONST   1\n0024:  SUB\n0025:  STORE_VAR    _t3\n0026:  LOAD_VAR     _t3\n0027:  STORE_VAR    a\n0028:  JUMP         ->0016\n0029:  HALT",
       "vm": "=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\na               0           \nb               30          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "a"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 4,
+          "line": 2,
+          "column": 1,
+          "type": "FLOAT",
+          "lexeme": "float"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 7,
+          "type": "IDENTIFIER",
+          "lexeme": "b"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 9,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 11,
+          "type": "NUMBER",
+          "lexeme": "25"
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 13,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 9,
+          "line": 2,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 10,
+          "line": 3,
+          "column": 1,
+          "type": "IF",
+          "lexeme": "if"
+        },
+        {
+          "index": 11,
+          "line": 3,
+          "column": 4,
+          "type": "LEFT_PAREN",
+          "lexeme": "("
+        },
+        {
+          "index": 12,
+          "line": 3,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "b"
+        },
+        {
+          "index": 13,
+          "line": 3,
+          "column": 7,
+          "type": "GREATER",
+          "lexeme": ">"
+        },
+        {
+          "index": 14,
+          "line": 3,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "10"
+        },
+        {
+          "index": 15,
+          "line": 3,
+          "column": 12,
+          "type": "LEFT_BRACE",
+          "lexeme": "{"
+        },
+        {
+          "index": 16,
+          "line": 4,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "b"
+        },
+        {
+          "index": 17,
+          "line": 4,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 18,
+          "line": 4,
+          "column": 9,
+          "type": "IDENTIFIER",
+          "lexeme": "b"
+        },
+        {
+          "index": 19,
+          "line": 4,
+          "column": 11,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 20,
+          "line": 4,
+          "column": 13,
+          "type": "NUMBER",
+          "lexeme": "5"
+        },
+        {
+          "index": 21,
+          "line": 4,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 22,
+          "line": 5,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "a"
+        },
+        {
+          "index": 23,
+          "line": 5,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 24,
+          "line": 5,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "99"
+        },
+        {
+          "index": 25,
+          "line": 6,
+          "column": 1,
+          "type": "RIGHT_BRACE",
+          "lexeme": "}"
+        },
+        {
+          "index": 26,
+          "line": 7,
+          "column": 1,
+          "type": "WHILE",
+          "lexeme": "while"
+        },
+        {
+          "index": 27,
+          "line": 7,
+          "column": 7,
+          "type": "LEFT_PAREN",
+          "lexeme": "("
+        },
+        {
+          "index": 28,
+          "line": 7,
+          "column": 8,
+          "type": "IDENTIFIER",
+          "lexeme": "a"
+        },
+        {
+          "index": 29,
+          "line": 7,
+          "column": 10,
+          "type": "GREATER",
+          "lexeme": ">"
+        },
+        {
+          "index": 30,
+          "line": 7,
+          "column": 12,
+          "type": "NUMBER",
+          "lexeme": "0"
+        },
+        {
+          "index": 31,
+          "line": 7,
+          "column": 13,
+          "type": "RIGHT_PAREN",
+          "lexeme": ")"
+        },
+        {
+          "index": 32,
+          "line": 7,
+          "column": 15,
+          "type": "LEFT_BRACE",
+          "lexeme": "{"
+        },
+        {
+          "index": 33,
+          "line": 8,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "a"
+        },
+        {
+          "index": 34,
+          "line": 8,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 35,
+          "line": 8,
+          "column": 9,
+          "type": "IDENTIFIER",
+          "lexeme": "a"
+        },
+        {
+          "index": 36,
+          "line": 8,
+          "column": 11,
+          "type": "MINUS",
+          "lexeme": "-"
+        },
+        {
+          "index": 37,
+          "line": 8,
+          "column": 13,
+          "type": "NUMBER",
+          "lexeme": "1"
+        },
+        {
+          "index": 38,
+          "line": 8,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 39,
+          "line": 9,
+          "column": 1,
+          "type": "RIGHT_BRACE",
+          "lexeme": "}"
+        },
+        {
+          "index": 40,
+          "line": 10,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [
+        {
+          "id": 1,
+          "strategy": "INSERTION",
+          "message": "Inserted missing '0'",
+          "line": 1,
+          "column": 9,
+          "cost": 2,
+          "confidence": "MEDIUM",
+          "rationale": "Missing expression after '='; inserted default literal '0'"
+        },
+        {
+          "id": 2,
+          "strategy": "DELETION",
+          "message": "Deleted unexpected token ';'",
+          "line": 2,
+          "column": 14,
+          "cost": 1,
+          "confidence": "HIGH",
+          "rationale": "Deleted redundant semicolon ';'"
+        },
+        {
+          "id": 3,
+          "strategy": "INSERTION",
+          "message": "Inserted missing ')'",
+          "line": 3,
+          "column": 12,
+          "cost": 1,
+          "confidence": "HIGH",
+          "rationale": "Inserted missing ')' before block delimiter '{'"
+        },
+        {
+          "id": 4,
+          "strategy": "INSERTION",
+          "message": "Inserted missing ';'",
+          "line": 6,
+          "column": 1,
+          "cost": 1,
+          "confidence": "HIGH",
+          "rationale": "Inserted missing ';' before next statement token '}'"
+        }
+      ],
+      "recoveryTotalCost": 5,
+      "symbolsList": [
+        {
+          "name": "a",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 1,
+        "propagated": 1,
+        "deadEliminated": 0,
+        "total": 2
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "0"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "a"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "25"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "b"
+        },
+        {
+          "address": "0004",
+          "opcode": "PUSH_CONST",
+          "arg": "1"
+        },
+        {
+          "address": "0005",
+          "opcode": "STORE_VAR",
+          "arg": "_t0"
+        },
+        {
+          "address": "0006",
+          "opcode": "LOAD_VAR",
+          "arg": "_t0"
+        },
+        {
+          "address": "0007",
+          "opcode": "JUMP_IF_ZERO",
+          "arg": "->0016"
+        },
+        {
+          "address": "0008",
+          "opcode": "LOAD_VAR",
+          "arg": "b"
+        },
+        {
+          "address": "0009",
+          "opcode": "PUSH_CONST",
+          "arg": "5"
+        },
+        {
+          "address": "0010",
+          "opcode": "ADD",
+          "arg": ""
+        },
+        {
+          "address": "0011",
+          "opcode": "STORE_VAR",
+          "arg": "_t1"
+        },
+        {
+          "address": "0012",
+          "opcode": "LOAD_VAR",
+          "arg": "_t1"
+        },
+        {
+          "address": "0013",
+          "opcode": "STORE_VAR",
+          "arg": "b"
+        },
+        {
+          "address": "0014",
+          "opcode": "PUSH_CONST",
+          "arg": "99"
+        },
+        {
+          "address": "0015",
+          "opcode": "STORE_VAR",
+          "arg": "a"
+        },
+        {
+          "address": "0016",
+          "opcode": "LOAD_VAR",
+          "arg": "a"
+        },
+        {
+          "address": "0017",
+          "opcode": "PUSH_CONST",
+          "arg": "0"
+        },
+        {
+          "address": "0018",
+          "opcode": "GT",
+          "arg": ""
+        },
+        {
+          "address": "0019",
+          "opcode": "STORE_VAR",
+          "arg": "_t2"
+        },
+        {
+          "address": "0020",
+          "opcode": "LOAD_VAR",
+          "arg": "_t2"
+        },
+        {
+          "address": "0021",
+          "opcode": "JUMP_IF_ZERO",
+          "arg": "->0029"
+        },
+        {
+          "address": "0022",
+          "opcode": "LOAD_VAR",
+          "arg": "a"
+        },
+        {
+          "address": "0023",
+          "opcode": "PUSH_CONST",
+          "arg": "1"
+        },
+        {
+          "address": "0024",
+          "opcode": "SUB",
+          "arg": ""
+        },
+        {
+          "address": "0025",
+          "opcode": "STORE_VAR",
+          "arg": "_t3"
+        },
+        {
+          "address": "0026",
+          "opcode": "LOAD_VAR",
+          "arg": "_t3"
+        },
+        {
+          "address": "0027",
+          "opcode": "STORE_VAR",
+          "arg": "a"
+        },
+        {
+          "address": "0028",
+          "opcode": "JUMP",
+          "arg": "->0016"
+        },
+        {
+          "address": "0029",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [],
+      "vmVariables": [
+        {
+          "name": "a",
+          "value": "0"
+        },
+        {
+          "name": "b",
+          "value": "30"
+        }
+      ],
       "hasRecovery": true,
       "hasSemanticErrors": false
-    }
+    },
+    "source": "int a = ;\nfloat b = 25;;\nif (b > 10 {\n    b = b + 5;\n    a = 99\n}\nwhile (a > 0) {\n    a = a - 1;\n}\n"
   },
   "missing_delimiter": {
     "success": true,
     "exitCode": 0,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\tests\\04_missing_delimiter.txt\n\n=== Source Code ===\nint x = 10;\nif (x > 5 {\n    x = x + 2;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (19 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report (1 recovery action) ===\n[1] [INSERTION] Inserted missing ')' at line 2, column 11\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ')' before block delimiter '{'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 1\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 10\n  If\n    Condition\n      Binary Expression: >\n        Identifier: x\n        Literal: 5\n    Then\n      Block\n        Assignment: x\n          Binary Expression: +\n            Identifier: x\n            Literal: 2\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 10\n    _t0 = x > 5\n    ifFalse _t0 goto L1\n    _t1 = x + 2\n    x = _t1\nL1:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 1\n  Constant Operands Propagated   : 1\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    x = 10\n    _t0 = 1\n    ifFalse _t0 goto L1\n    _t1 = x + 2\n    x = _t1\nL1:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   10\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   1\n0003:  STORE_VAR    _t0\n0004:  LOAD_VAR     _t0\n0005:  JUMP_IF_ZERO ->0012\n0006:  LOAD_VAR     x\n0007:  PUSH_CONST   2\n0008:  ADD\n0009:  STORE_VAR    _t1\n0010:  LOAD_VAR     _t1\n0011:  STORE_VAR    x\n0012:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nx               12          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/04_missing_delimiter.txt\n\n=== Source Code ===\nint x = 10;\nif (x > 5 {\n    x = x + 2;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (19 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report (1 recovery action) ===\n[1] [INSERTION] Inserted missing ')' at line 2, column 11\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ')' before block delimiter '{'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 1\n\n=== Lexical Tokens (19 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: IF | Lexeme: 'if'\n[6] Line 2, Col 4 | Type: LEFT_PAREN | Lexeme: '('\n[7] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[8] Line 2, Col 7 | Type: GREATER | Lexeme: '>'\n[9] Line 2, Col 9 | Type: NUMBER | Lexeme: '5'\n[10] Line 2, Col 11 | Type: LEFT_BRACE | Lexeme: '{'\n[11] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[12] Line 3, Col 7 | Type: ASSIGN | Lexeme: '='\n[13] Line 3, Col 9 | Type: IDENTIFIER | Lexeme: 'x'\n[14] Line 3, Col 11 | Type: PLUS | Lexeme: '+'\n[15] Line 3, Col 13 | Type: NUMBER | Lexeme: '2'\n[16] Line 3, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[17] Line 4, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[18] Line 5, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 10\n  If\n    Condition\n      Binary Expression: >\n        Identifier: x\n        Literal: 5\n    Then\n      Block\n        Assignment: x\n          Binary Expression: +\n            Identifier: x\n            Literal: 2\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 10\n    _t0 = x > 5\n    ifFalse _t0 goto L1\n    _t1 = x + 2\n    x = _t1\nL1:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 1\n  Constant Operands Propagated   : 1\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    x = 10\n    _t0 = 1\n    ifFalse _t0 goto L1\n    _t1 = x + 2\n    x = _t1\nL1:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   10\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   1\n0003:  STORE_VAR    _t0\n0004:  LOAD_VAR     _t0\n0005:  JUMP_IF_ZERO ->0012\n0006:  LOAD_VAR     x\n0007:  PUSH_CONST   2\n0008:  ADD\n0009:  STORE_VAR    _t1\n0010:  LOAD_VAR     _t1\n0011:  STORE_VAR    x\n0012:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nx               12          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
     "sections": {
       "status": "Lexer  : SUCCESS (19 tokens generated)\nParser : SUCCESS",
       "recovery": "[1] [INSERTION] Inserted missing ')' at line 2, column 11\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Inserted missing ')' before block delimiter '{'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 1",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: IF | Lexeme: 'if'\n[6] Line 2, Col 4 | Type: LEFT_PAREN | Lexeme: '('\n[7] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[8] Line 2, Col 7 | Type: GREATER | Lexeme: '>'\n[9] Line 2, Col 9 | Type: NUMBER | Lexeme: '5'\n[10] Line 2, Col 11 | Type: LEFT_BRACE | Lexeme: '{'\n[11] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[12] Line 3, Col 7 | Type: ASSIGN | Lexeme: '='\n[13] Line 3, Col 9 | Type: IDENTIFIER | Lexeme: 'x'\n[14] Line 3, Col 11 | Type: PLUS | Lexeme: '+'\n[15] Line 3, Col 13 | Type: NUMBER | Lexeme: '2'\n[16] Line 3, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[17] Line 4, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[18] Line 5, Col 1 | Type: END_OF_FILE | Lexeme: ''",
       "ast": "Program\n  Declaration: int x\n    Literal: 10\n  If\n    Condition\n      Binary Expression: >\n        Identifier: x\n        Literal: 5\n    Then\n      Block\n        Assignment: x\n          Binary Expression: +\n            Identifier: x\n            Literal: 2",
       "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0",
       "tac": "x = 10\n    _t0 = x > 5\n    ifFalse _t0 goto L1\n    _t1 = x + 2\n    x = _t1\nL1:",
       "opt": "Constant Operations Folded     : 1\n  Constant Operands Propagated   : 1\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    x = 10\n    _t0 = 1\n    ifFalse _t0 goto L1\n    _t1 = x + 2\n    x = _t1\nL1:",
       "target": "0000:  PUSH_CONST   10\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   1\n0003:  STORE_VAR    _t0\n0004:  LOAD_VAR     _t0\n0005:  JUMP_IF_ZERO ->0012\n0006:  LOAD_VAR     x\n0007:  PUSH_CONST   2\n0008:  ADD\n0009:  STORE_VAR    _t1\n0010:  LOAD_VAR     _t1\n0011:  STORE_VAR    x\n0012:  HALT",
       "vm": "=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nx               12          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "10"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 1,
+          "type": "IF",
+          "lexeme": "if"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 4,
+          "type": "LEFT_PAREN",
+          "lexeme": "("
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 7,
+          "type": "GREATER",
+          "lexeme": ">"
+        },
+        {
+          "index": 9,
+          "line": 2,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "5"
+        },
+        {
+          "index": 10,
+          "line": 2,
+          "column": 11,
+          "type": "LEFT_BRACE",
+          "lexeme": "{"
+        },
+        {
+          "index": 11,
+          "line": 3,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 12,
+          "line": 3,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 13,
+          "line": 3,
+          "column": 9,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 14,
+          "line": 3,
+          "column": 11,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 15,
+          "line": 3,
+          "column": 13,
+          "type": "NUMBER",
+          "lexeme": "2"
+        },
+        {
+          "index": 16,
+          "line": 3,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 17,
+          "line": 4,
+          "column": 1,
+          "type": "RIGHT_BRACE",
+          "lexeme": "}"
+        },
+        {
+          "index": 18,
+          "line": 5,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [
+        {
+          "id": 1,
+          "strategy": "INSERTION",
+          "message": "Inserted missing ')'",
+          "line": 2,
+          "column": 11,
+          "cost": 1,
+          "confidence": "HIGH",
+          "rationale": "Inserted missing ')' before block delimiter '{'"
+        }
+      ],
+      "recoveryTotalCost": 1,
+      "symbolsList": [
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 1,
+        "propagated": 1,
+        "deadEliminated": 0,
+        "total": 2
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "10"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "1"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "_t0"
+        },
+        {
+          "address": "0004",
+          "opcode": "LOAD_VAR",
+          "arg": "_t0"
+        },
+        {
+          "address": "0005",
+          "opcode": "JUMP_IF_ZERO",
+          "arg": "->0012"
+        },
+        {
+          "address": "0006",
+          "opcode": "LOAD_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0007",
+          "opcode": "PUSH_CONST",
+          "arg": "2"
+        },
+        {
+          "address": "0008",
+          "opcode": "ADD",
+          "arg": ""
+        },
+        {
+          "address": "0009",
+          "opcode": "STORE_VAR",
+          "arg": "_t1"
+        },
+        {
+          "address": "0010",
+          "opcode": "LOAD_VAR",
+          "arg": "_t1"
+        },
+        {
+          "address": "0011",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0012",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [],
+      "vmVariables": [
+        {
+          "name": "x",
+          "value": "12"
+        }
+      ],
       "hasRecovery": true,
       "hasSemanticErrors": false
-    }
+    },
+    "source": "int x = 10;\nif (x > 5 {\n    x = x + 2;\n}\n"
+  },
+  "missing_expression": {
+    "success": true,
+    "exitCode": 0,
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/02_missing_expression.txt\n\n=== Source Code ===\nint x = ;\nint y = 50;\ny = y + 10;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (16 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report (1 recovery action) ===\n[1] [INSERTION] Inserted missing '0' at line 1, column 9\n    Recovery Cost : 2 | Confidence: MEDIUM\n    Rationale     : Missing expression after '='; inserted default literal '0'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 2\n\n=== Lexical Tokens (16 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: SEMICOLON | Lexeme: ';'\n[4] Line 2, Col 1 | Type: INT | Lexeme: 'int'\n[5] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'y'\n[6] Line 2, Col 7 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 9 | Type: NUMBER | Lexeme: '50'\n[8] Line 2, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 3, Col 1 | Type: IDENTIFIER | Lexeme: 'y'\n[10] Line 3, Col 3 | Type: ASSIGN | Lexeme: '='\n[11] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'y'\n[12] Line 3, Col 7 | Type: PLUS | Lexeme: '+'\n[13] Line 3, Col 9 | Type: NUMBER | Lexeme: '10'\n[14] Line 3, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[15] Line 4, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 0\n  Declaration: int y\n    Literal: 50\n  Assignment: y\n    Binary Expression: +\n      Identifier: y\n      Literal: 10\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               int       0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 0\n    y = 50\n    _t0 = y + 10\n    y = _t0\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 1\n  Constant Operands Propagated   : 2\n  Dead Instructions Eliminated   : 1\n  Total Optimizations Applied    : 4\n\n=== Optimized Three-Address Code ===\n    x = 0\n    y = 50\n    y = 60\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   0\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   50\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   60\n0005:  STORE_VAR    y\n0006:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ny               60          \nx               0           \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "sections": {
+      "status": "Lexer  : SUCCESS (16 tokens generated)\nParser : SUCCESS",
+      "recovery": "[1] [INSERTION] Inserted missing '0' at line 1, column 9\n    Recovery Cost : 2 | Confidence: MEDIUM\n    Rationale     : Missing expression after '='; inserted default literal '0'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 2",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: SEMICOLON | Lexeme: ';'\n[4] Line 2, Col 1 | Type: INT | Lexeme: 'int'\n[5] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'y'\n[6] Line 2, Col 7 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 9 | Type: NUMBER | Lexeme: '50'\n[8] Line 2, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 3, Col 1 | Type: IDENTIFIER | Lexeme: 'y'\n[10] Line 3, Col 3 | Type: ASSIGN | Lexeme: '='\n[11] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'y'\n[12] Line 3, Col 7 | Type: PLUS | Lexeme: '+'\n[13] Line 3, Col 9 | Type: NUMBER | Lexeme: '10'\n[14] Line 3, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[15] Line 4, Col 1 | Type: END_OF_FILE | Lexeme: ''",
+      "ast": "Program\n  Declaration: int x\n    Literal: 0\n  Declaration: int y\n    Literal: 50\n  Assignment: y\n    Binary Expression: +\n      Identifier: y\n      Literal: 10",
+      "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               int       0       L0:0",
+      "tac": "x = 0\n    y = 50\n    _t0 = y + 10\n    y = _t0",
+      "opt": "Constant Operations Folded     : 1\n  Constant Operands Propagated   : 2\n  Dead Instructions Eliminated   : 1\n  Total Optimizations Applied    : 4\n\n=== Optimized Three-Address Code ===\n    x = 0\n    y = 50\n    y = 60",
+      "target": "0000:  PUSH_CONST   0\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   50\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   60\n0005:  STORE_VAR    y\n0006:  HALT",
+      "vm": "=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ny               60          \nx               0           \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 4,
+          "line": 2,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "50"
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 9,
+          "line": 3,
+          "column": 1,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 10,
+          "line": 3,
+          "column": 3,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 11,
+          "line": 3,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 12,
+          "line": 3,
+          "column": 7,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 13,
+          "line": 3,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "10"
+        },
+        {
+          "index": 14,
+          "line": 3,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 15,
+          "line": 4,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [
+        {
+          "id": 1,
+          "strategy": "INSERTION",
+          "message": "Inserted missing '0'",
+          "line": 1,
+          "column": 9,
+          "cost": 2,
+          "confidence": "MEDIUM",
+          "rationale": "Missing expression after '='; inserted default literal '0'"
+        }
+      ],
+      "recoveryTotalCost": 2,
+      "symbolsList": [
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 1,
+        "propagated": 2,
+        "deadEliminated": 1,
+        "total": 4
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "0"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "50"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "y"
+        },
+        {
+          "address": "0004",
+          "opcode": "PUSH_CONST",
+          "arg": "60"
+        },
+        {
+          "address": "0005",
+          "opcode": "STORE_VAR",
+          "arg": "y"
+        },
+        {
+          "address": "0006",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [],
+      "vmVariables": [
+        {
+          "name": "y",
+          "value": "60"
+        },
+        {
+          "name": "x",
+          "value": "0"
+        }
+      ],
+      "hasRecovery": true,
+      "hasSemanticErrors": false
+    },
+    "source": "int x = ;\nint y = 50;\ny = y + 10;\n"
+  },
+  "extra_semicolon": {
+    "success": true,
+    "exitCode": 0,
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/03_extra_semicolon.txt\n\n=== Source Code ===\nint x = 10;;\nfloat y = 30;;\nx = x + 1;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (19 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report (2 recovery actions) ===\n[1] [DELETION] Deleted unexpected token ';' at line 1, column 12\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Deleted redundant semicolon ';'\n[2] [DELETION] Deleted unexpected token ';' at line 2, column 14\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Deleted redundant semicolon ';'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 2\n\n=== Lexical Tokens (19 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 1, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[6] Line 2, Col 1 | Type: FLOAT | Lexeme: 'float'\n[7] Line 2, Col 7 | Type: IDENTIFIER | Lexeme: 'y'\n[8] Line 2, Col 9 | Type: ASSIGN | Lexeme: '='\n[9] Line 2, Col 11 | Type: NUMBER | Lexeme: '30'\n[10] Line 2, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[11] Line 2, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[12] Line 3, Col 1 | Type: IDENTIFIER | Lexeme: 'x'\n[13] Line 3, Col 3 | Type: ASSIGN | Lexeme: '='\n[14] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[15] Line 3, Col 7 | Type: PLUS | Lexeme: '+'\n[16] Line 3, Col 9 | Type: NUMBER | Lexeme: '1'\n[17] Line 3, Col 10 | Type: SEMICOLON | Lexeme: ';'\n[18] Line 4, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 10\n  Declaration: float y\n    Literal: 30\n  Assignment: x\n    Binary Expression: +\n      Identifier: x\n      Literal: 1\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               float     0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 10\n    y = 30\n    _t0 = x + 1\n    x = _t0\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 1\n  Constant Operands Propagated   : 2\n  Dead Instructions Eliminated   : 1\n  Total Optimizations Applied    : 4\n\n=== Optimized Three-Address Code ===\n    x = 10\n    y = 30\n    x = 11\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   10\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   30\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   11\n0005:  STORE_VAR    x\n0006:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ny               30          \nx               11          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "sections": {
+      "status": "Lexer  : SUCCESS (19 tokens generated)\nParser : SUCCESS",
+      "recovery": "[1] [DELETION] Deleted unexpected token ';' at line 1, column 12\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Deleted redundant semicolon ';'\n[2] [DELETION] Deleted unexpected token ';' at line 2, column 14\n    Recovery Cost : 1 | Confidence: HIGH\n    Rationale     : Deleted redundant semicolon ';'\n--------------------------------------------------------\nTotal Recovery Cost Incurred: 2",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 1, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[6] Line 2, Col 1 | Type: FLOAT | Lexeme: 'float'\n[7] Line 2, Col 7 | Type: IDENTIFIER | Lexeme: 'y'\n[8] Line 2, Col 9 | Type: ASSIGN | Lexeme: '='\n[9] Line 2, Col 11 | Type: NUMBER | Lexeme: '30'\n[10] Line 2, Col 13 | Type: SEMICOLON | Lexeme: ';'\n[11] Line 2, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[12] Line 3, Col 1 | Type: IDENTIFIER | Lexeme: 'x'\n[13] Line 3, Col 3 | Type: ASSIGN | Lexeme: '='\n[14] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[15] Line 3, Col 7 | Type: PLUS | Lexeme: '+'\n[16] Line 3, Col 9 | Type: NUMBER | Lexeme: '1'\n[17] Line 3, Col 10 | Type: SEMICOLON | Lexeme: ';'\n[18] Line 4, Col 1 | Type: END_OF_FILE | Lexeme: ''",
+      "ast": "Program\n  Declaration: int x\n    Literal: 10\n  Declaration: float y\n    Literal: 30\n  Assignment: x\n    Binary Expression: +\n      Identifier: x\n      Literal: 1",
+      "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               float     0       L0:0",
+      "tac": "x = 10\n    y = 30\n    _t0 = x + 1\n    x = _t0",
+      "opt": "Constant Operations Folded     : 1\n  Constant Operands Propagated   : 2\n  Dead Instructions Eliminated   : 1\n  Total Optimizations Applied    : 4\n\n=== Optimized Three-Address Code ===\n    x = 10\n    y = 30\n    x = 11",
+      "target": "0000:  PUSH_CONST   10\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   30\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   11\n0005:  STORE_VAR    x\n0006:  HALT",
+      "vm": "=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ny               30          \nx               11          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "10"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 5,
+          "line": 1,
+          "column": 12,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 1,
+          "type": "FLOAT",
+          "lexeme": "float"
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 7,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 9,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 9,
+          "line": 2,
+          "column": 11,
+          "type": "NUMBER",
+          "lexeme": "30"
+        },
+        {
+          "index": 10,
+          "line": 2,
+          "column": 13,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 11,
+          "line": 2,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 12,
+          "line": 3,
+          "column": 1,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 13,
+          "line": 3,
+          "column": 3,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 14,
+          "line": 3,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 15,
+          "line": 3,
+          "column": 7,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 16,
+          "line": 3,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "1"
+        },
+        {
+          "index": 17,
+          "line": 3,
+          "column": 10,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 18,
+          "line": 4,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [
+        {
+          "id": 1,
+          "strategy": "DELETION",
+          "message": "Deleted unexpected token ';'",
+          "line": 1,
+          "column": 12,
+          "cost": 1,
+          "confidence": "HIGH",
+          "rationale": "Deleted redundant semicolon ';'"
+        },
+        {
+          "id": 2,
+          "strategy": "DELETION",
+          "message": "Deleted unexpected token ';'",
+          "line": 2,
+          "column": 14,
+          "cost": 1,
+          "confidence": "HIGH",
+          "rationale": "Deleted redundant semicolon ';'"
+        }
+      ],
+      "recoveryTotalCost": 2,
+      "symbolsList": [
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 1,
+        "propagated": 2,
+        "deadEliminated": 1,
+        "total": 4
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "10"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "30"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "y"
+        },
+        {
+          "address": "0004",
+          "opcode": "PUSH_CONST",
+          "arg": "11"
+        },
+        {
+          "address": "0005",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0006",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [],
+      "vmVariables": [
+        {
+          "name": "y",
+          "value": "30"
+        },
+        {
+          "name": "x",
+          "value": "11"
+        }
+      ],
+      "hasRecovery": true,
+      "hasSemanticErrors": false
+    },
+    "source": "int x = 10;;\nfloat y = 30;;\nx = x + 1;\n"
   },
   "constant_folding": {
     "success": true,
     "exitCode": 0,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\tests\\11_constant_folding.txt\n\n=== Source Code ===\nint a = 2 + 3 * 4;\nint b = 100 / 4 - 5;\nint c = a + b;\nprint c;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (29 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int a\n    Binary Expression: +\n      Literal: 2\n      Binary Expression: *\n        Literal: 3\n        Literal: 4\n  Declaration: int b\n    Binary Expression: -\n      Binary Expression: /\n        Literal: 100\n        Literal: 4\n      Literal: 5\n  Declaration: int c\n    Binary Expression: +\n      Identifier: a\n      Identifier: b\n  Print\n    Identifier: c\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\na               int       0       L0:0        \nb               int       0       L0:0        \nc               int       0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    _t0 = 3 * 4\n    _t1 = 2 + _t0\n    a = _t1\n    _t2 = 100 / 4\n    _t3 = _t2 - 5\n    b = _t3\n    _t4 = a + b\n    c = _t4\n    print c\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 5\n  Constant Operands Propagated   : 8\n  Dead Instructions Eliminated   : 5\n  Total Optimizations Applied    : 18\n\n=== Optimized Three-Address Code ===\n    a = 14\n    b = 20\n    c = 34\n    print 34\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   14\n0001:  STORE_VAR    a\n0002:  PUSH_CONST   20\n0003:  STORE_VAR    b\n0004:  PUSH_CONST   34\n0005:  STORE_VAR    c\n0006:  PUSH_CONST   34\n0007:  PRINT\n0008:  HALT\n\n=== Virtual Machine Execution ===\n[VM Output] 34\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nc               34          \nb               20          \na               14          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/11_constant_folding.txt\n\n=== Source Code ===\nint a = 2 + 3 * 4;\nint b = 100 / 4 - 5;\nint c = a + b;\nprint c;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (29 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Lexical Tokens (29 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '2'\n[4] Line 1, Col 11 | Type: PLUS | Lexeme: '+'\n[5] Line 1, Col 13 | Type: NUMBER | Lexeme: '3'\n[6] Line 1, Col 15 | Type: MULTIPLY | Lexeme: '*'\n[7] Line 1, Col 17 | Type: NUMBER | Lexeme: '4'\n[8] Line 1, Col 18 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 2, Col 1 | Type: INT | Lexeme: 'int'\n[10] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'b'\n[11] Line 2, Col 7 | Type: ASSIGN | Lexeme: '='\n[12] Line 2, Col 9 | Type: NUMBER | Lexeme: '100'\n[13] Line 2, Col 13 | Type: DIVIDE | Lexeme: '/'\n[14] Line 2, Col 15 | Type: NUMBER | Lexeme: '4'\n[15] Line 2, Col 17 | Type: MINUS | Lexeme: '-'\n[16] Line 2, Col 19 | Type: NUMBER | Lexeme: '5'\n[17] Line 2, Col 20 | Type: SEMICOLON | Lexeme: ';'\n[18] Line 3, Col 1 | Type: INT | Lexeme: 'int'\n[19] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'c'\n[20] Line 3, Col 7 | Type: ASSIGN | Lexeme: '='\n[21] Line 3, Col 9 | Type: IDENTIFIER | Lexeme: 'a'\n[22] Line 3, Col 11 | Type: PLUS | Lexeme: '+'\n[23] Line 3, Col 13 | Type: IDENTIFIER | Lexeme: 'b'\n[24] Line 3, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[25] Line 4, Col 1 | Type: PRINT | Lexeme: 'print'\n[26] Line 4, Col 7 | Type: IDENTIFIER | Lexeme: 'c'\n[27] Line 4, Col 8 | Type: SEMICOLON | Lexeme: ';'\n[28] Line 5, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int a\n    Binary Expression: +\n      Literal: 2\n      Binary Expression: *\n        Literal: 3\n        Literal: 4\n  Declaration: int b\n    Binary Expression: -\n      Binary Expression: /\n        Literal: 100\n        Literal: 4\n      Literal: 5\n  Declaration: int c\n    Binary Expression: +\n      Identifier: a\n      Identifier: b\n  Print\n    Identifier: c\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\na               int       0       L0:0        \nb               int       0       L0:0        \nc               int       0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    _t0 = 3 * 4\n    _t1 = 2 + _t0\n    a = _t1\n    _t2 = 100 / 4\n    _t3 = _t2 - 5\n    b = _t3\n    _t4 = a + b\n    c = _t4\n    print c\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 5\n  Constant Operands Propagated   : 8\n  Dead Instructions Eliminated   : 5\n  Total Optimizations Applied    : 18\n\n=== Optimized Three-Address Code ===\n    a = 14\n    b = 20\n    c = 34\n    print 34\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   14\n0001:  STORE_VAR    a\n0002:  PUSH_CONST   20\n0003:  STORE_VAR    b\n0004:  PUSH_CONST   34\n0005:  STORE_VAR    c\n0006:  PUSH_CONST   34\n0007:  PRINT\n0008:  HALT\n\n=== Virtual Machine Execution ===\n[VM Output] 34\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nc               34          \nb               20          \na               14          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
     "sections": {
       "status": "Lexer  : SUCCESS (29 tokens generated)\nParser : SUCCESS",
       "recovery": "Status: Clean compilation. No recovery actions were required.",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'a'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '2'\n[4] Line 1, Col 11 | Type: PLUS | Lexeme: '+'\n[5] Line 1, Col 13 | Type: NUMBER | Lexeme: '3'\n[6] Line 1, Col 15 | Type: MULTIPLY | Lexeme: '*'\n[7] Line 1, Col 17 | Type: NUMBER | Lexeme: '4'\n[8] Line 1, Col 18 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 2, Col 1 | Type: INT | Lexeme: 'int'\n[10] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'b'\n[11] Line 2, Col 7 | Type: ASSIGN | Lexeme: '='\n[12] Line 2, Col 9 | Type: NUMBER | Lexeme: '100'\n[13] Line 2, Col 13 | Type: DIVIDE | Lexeme: '/'\n[14] Line 2, Col 15 | Type: NUMBER | Lexeme: '4'\n[15] Line 2, Col 17 | Type: MINUS | Lexeme: '-'\n[16] Line 2, Col 19 | Type: NUMBER | Lexeme: '5'\n[17] Line 2, Col 20 | Type: SEMICOLON | Lexeme: ';'\n[18] Line 3, Col 1 | Type: INT | Lexeme: 'int'\n[19] Line 3, Col 5 | Type: IDENTIFIER | Lexeme: 'c'\n[20] Line 3, Col 7 | Type: ASSIGN | Lexeme: '='\n[21] Line 3, Col 9 | Type: IDENTIFIER | Lexeme: 'a'\n[22] Line 3, Col 11 | Type: PLUS | Lexeme: '+'\n[23] Line 3, Col 13 | Type: IDENTIFIER | Lexeme: 'b'\n[24] Line 3, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[25] Line 4, Col 1 | Type: PRINT | Lexeme: 'print'\n[26] Line 4, Col 7 | Type: IDENTIFIER | Lexeme: 'c'\n[27] Line 4, Col 8 | Type: SEMICOLON | Lexeme: ';'\n[28] Line 5, Col 1 | Type: END_OF_FILE | Lexeme: ''",
       "ast": "Program\n  Declaration: int a\n    Binary Expression: +\n      Literal: 2\n      Binary Expression: *\n        Literal: 3\n        Literal: 4\n  Declaration: int b\n    Binary Expression: -\n      Binary Expression: /\n        Literal: 100\n        Literal: 4\n      Literal: 5\n  Declaration: int c\n    Binary Expression: +\n      Identifier: a\n      Identifier: b\n  Print\n    Identifier: c",
       "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\na               int       0       L0:0        \nb               int       0       L0:0        \nc               int       0       L0:0",
       "tac": "_t0 = 3 * 4\n    _t1 = 2 + _t0\n    a = _t1\n    _t2 = 100 / 4\n    _t3 = _t2 - 5\n    b = _t3\n    _t4 = a + b\n    c = _t4\n    print c",
       "opt": "Constant Operations Folded     : 5\n  Constant Operands Propagated   : 8\n  Dead Instructions Eliminated   : 5\n  Total Optimizations Applied    : 18\n\n=== Optimized Three-Address Code ===\n    a = 14\n    b = 20\n    c = 34\n    print 34",
       "target": "0000:  PUSH_CONST   14\n0001:  STORE_VAR    a\n0002:  PUSH_CONST   20\n0003:  STORE_VAR    b\n0004:  PUSH_CONST   34\n0005:  STORE_VAR    c\n0006:  PUSH_CONST   34\n0007:  PRINT\n0008:  HALT",
       "vm": "[VM Output] 34\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nc               34          \nb               20          \na               14          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
-      "hasRecovery": true,
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "a"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "2"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 11,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 5,
+          "line": 1,
+          "column": 13,
+          "type": "NUMBER",
+          "lexeme": "3"
+        },
+        {
+          "index": 6,
+          "line": 1,
+          "column": 15,
+          "type": "MULTIPLY",
+          "lexeme": "*"
+        },
+        {
+          "index": 7,
+          "line": 1,
+          "column": 17,
+          "type": "NUMBER",
+          "lexeme": "4"
+        },
+        {
+          "index": 8,
+          "line": 1,
+          "column": 18,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 9,
+          "line": 2,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 10,
+          "line": 2,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "b"
+        },
+        {
+          "index": 11,
+          "line": 2,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 12,
+          "line": 2,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "100"
+        },
+        {
+          "index": 13,
+          "line": 2,
+          "column": 13,
+          "type": "DIVIDE",
+          "lexeme": "/"
+        },
+        {
+          "index": 14,
+          "line": 2,
+          "column": 15,
+          "type": "NUMBER",
+          "lexeme": "4"
+        },
+        {
+          "index": 15,
+          "line": 2,
+          "column": 17,
+          "type": "MINUS",
+          "lexeme": "-"
+        },
+        {
+          "index": 16,
+          "line": 2,
+          "column": 19,
+          "type": "NUMBER",
+          "lexeme": "5"
+        },
+        {
+          "index": 17,
+          "line": 2,
+          "column": 20,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 18,
+          "line": 3,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 19,
+          "line": 3,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "c"
+        },
+        {
+          "index": 20,
+          "line": 3,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 21,
+          "line": 3,
+          "column": 9,
+          "type": "IDENTIFIER",
+          "lexeme": "a"
+        },
+        {
+          "index": 22,
+          "line": 3,
+          "column": 11,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 23,
+          "line": 3,
+          "column": 13,
+          "type": "IDENTIFIER",
+          "lexeme": "b"
+        },
+        {
+          "index": 24,
+          "line": 3,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 25,
+          "line": 4,
+          "column": 1,
+          "type": "PRINT",
+          "lexeme": "print"
+        },
+        {
+          "index": 26,
+          "line": 4,
+          "column": 7,
+          "type": "IDENTIFIER",
+          "lexeme": "c"
+        },
+        {
+          "index": 27,
+          "line": 4,
+          "column": 8,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 28,
+          "line": 5,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [],
+      "recoveryTotalCost": 0,
+      "symbolsList": [
+        {
+          "name": "a",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "c",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 5,
+        "propagated": 8,
+        "deadEliminated": 5,
+        "total": 18
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "14"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "a"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "20"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "b"
+        },
+        {
+          "address": "0004",
+          "opcode": "PUSH_CONST",
+          "arg": "34"
+        },
+        {
+          "address": "0005",
+          "opcode": "STORE_VAR",
+          "arg": "c"
+        },
+        {
+          "address": "0006",
+          "opcode": "PUSH_CONST",
+          "arg": "34"
+        },
+        {
+          "address": "0007",
+          "opcode": "PRINT",
+          "arg": ""
+        },
+        {
+          "address": "0008",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [
+        "34"
+      ],
+      "vmVariables": [
+        {
+          "name": "c",
+          "value": "34"
+        },
+        {
+          "name": "b",
+          "value": "20"
+        },
+        {
+          "name": "a",
+          "value": "14"
+        }
+      ],
+      "hasRecovery": false,
       "hasSemanticErrors": false
-    }
+    },
+    "source": "int a = 2 + 3 * 4;\nint b = 100 / 4 - 5;\nint c = a + b;\nprint c;\n"
   },
   "nested_scopes": {
     "success": true,
     "exitCode": 0,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\tests\\10_nested_scopes.txt\n\n=== Source Code ===\nint x = 100;\n{\n    int x = 50;\n    int y = 20;\n    print x;\n}\nprint x;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (24 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 100\n  Block\n    Declaration: int x\n      Literal: 50\n    Declaration: int y\n      Literal: 20\n    Print\n      Identifier: x\n  Print\n    Identifier: x\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \nx               int       1       L0:0        \ny               int       1       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 100\n    x = 50\n    y = 20\n    print x\n    print x\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 0\n  Constant Operands Propagated   : 2\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    x = 100\n    x = 50\n    y = 20\n    print 50\n    print 50\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   100\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   50\n0003:  STORE_VAR    x\n0004:  PUSH_CONST   20\n0005:  STORE_VAR    y\n0006:  PUSH_CONST   50\n0007:  PRINT\n0008:  PUSH_CONST   50\n0009:  PRINT\n0010:  HALT\n\n=== Virtual Machine Execution ===\n[VM Output] 50\n[VM Output] 50\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ny               20          \nx               50          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/10_nested_scopes.txt\n\n=== Source Code ===\nint x = 100;\n{\n    int x = 50;\n    int y = 20;\n    print x;\n}\nprint x;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (24 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Lexical Tokens (24 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '100'\n[4] Line 1, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: LEFT_BRACE | Lexeme: '{'\n[6] Line 3, Col 5 | Type: INT | Lexeme: 'int'\n[7] Line 3, Col 9 | Type: IDENTIFIER | Lexeme: 'x'\n[8] Line 3, Col 11 | Type: ASSIGN | Lexeme: '='\n[9] Line 3, Col 13 | Type: NUMBER | Lexeme: '50'\n[10] Line 3, Col 15 | Type: SEMICOLON | Lexeme: ';'\n[11] Line 4, Col 5 | Type: INT | Lexeme: 'int'\n[12] Line 4, Col 9 | Type: IDENTIFIER | Lexeme: 'y'\n[13] Line 4, Col 11 | Type: ASSIGN | Lexeme: '='\n[14] Line 4, Col 13 | Type: NUMBER | Lexeme: '20'\n[15] Line 4, Col 15 | Type: SEMICOLON | Lexeme: ';'\n[16] Line 5, Col 5 | Type: PRINT | Lexeme: 'print'\n[17] Line 5, Col 11 | Type: IDENTIFIER | Lexeme: 'x'\n[18] Line 5, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[19] Line 6, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[20] Line 7, Col 1 | Type: PRINT | Lexeme: 'print'\n[21] Line 7, Col 7 | Type: IDENTIFIER | Lexeme: 'x'\n[22] Line 7, Col 8 | Type: SEMICOLON | Lexeme: ';'\n[23] Line 8, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 100\n  Block\n    Declaration: int x\n      Literal: 50\n    Declaration: int y\n      Literal: 20\n    Print\n      Identifier: x\n  Print\n    Identifier: x\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \nx               int       1       L0:0        \ny               int       1       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 100\n    x = 50\n    y = 20\n    print x\n    print x\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 0\n  Constant Operands Propagated   : 2\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    x = 100\n    x = 50\n    y = 20\n    print 50\n    print 50\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   100\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   50\n0003:  STORE_VAR    x\n0004:  PUSH_CONST   20\n0005:  STORE_VAR    y\n0006:  PUSH_CONST   50\n0007:  PRINT\n0008:  PUSH_CONST   50\n0009:  PRINT\n0010:  HALT\n\n=== Virtual Machine Execution ===\n[VM Output] 50\n[VM Output] 50\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ny               20          \nx               50          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
     "sections": {
       "status": "Lexer  : SUCCESS (24 tokens generated)\nParser : SUCCESS",
       "recovery": "Status: Clean compilation. No recovery actions were required.",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '100'\n[4] Line 1, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: LEFT_BRACE | Lexeme: '{'\n[6] Line 3, Col 5 | Type: INT | Lexeme: 'int'\n[7] Line 3, Col 9 | Type: IDENTIFIER | Lexeme: 'x'\n[8] Line 3, Col 11 | Type: ASSIGN | Lexeme: '='\n[9] Line 3, Col 13 | Type: NUMBER | Lexeme: '50'\n[10] Line 3, Col 15 | Type: SEMICOLON | Lexeme: ';'\n[11] Line 4, Col 5 | Type: INT | Lexeme: 'int'\n[12] Line 4, Col 9 | Type: IDENTIFIER | Lexeme: 'y'\n[13] Line 4, Col 11 | Type: ASSIGN | Lexeme: '='\n[14] Line 4, Col 13 | Type: NUMBER | Lexeme: '20'\n[15] Line 4, Col 15 | Type: SEMICOLON | Lexeme: ';'\n[16] Line 5, Col 5 | Type: PRINT | Lexeme: 'print'\n[17] Line 5, Col 11 | Type: IDENTIFIER | Lexeme: 'x'\n[18] Line 5, Col 12 | Type: SEMICOLON | Lexeme: ';'\n[19] Line 6, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[20] Line 7, Col 1 | Type: PRINT | Lexeme: 'print'\n[21] Line 7, Col 7 | Type: IDENTIFIER | Lexeme: 'x'\n[22] Line 7, Col 8 | Type: SEMICOLON | Lexeme: ';'\n[23] Line 8, Col 1 | Type: END_OF_FILE | Lexeme: ''",
       "ast": "Program\n  Declaration: int x\n    Literal: 100\n  Block\n    Declaration: int x\n      Literal: 50\n    Declaration: int y\n      Literal: 20\n    Print\n      Identifier: x\n  Print\n    Identifier: x",
       "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \nx               int       1       L0:0        \ny               int       1       L0:0",
       "tac": "x = 100\n    x = 50\n    y = 20\n    print x\n    print x",
       "opt": "Constant Operations Folded     : 0\n  Constant Operands Propagated   : 2\n  Dead Instructions Eliminated   : 0\n  Total Optimizations Applied    : 2\n\n=== Optimized Three-Address Code ===\n    x = 100\n    x = 50\n    y = 20\n    print 50\n    print 50",
       "target": "0000:  PUSH_CONST   100\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   50\n0003:  STORE_VAR    x\n0004:  PUSH_CONST   20\n0005:  STORE_VAR    y\n0006:  PUSH_CONST   50\n0007:  PRINT\n0008:  PUSH_CONST   50\n0009:  PRINT\n0010:  HALT",
       "vm": "[VM Output] 50\n[VM Output] 50\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\ny               20          \nx               50          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
-      "hasRecovery": true,
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "100"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 12,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 1,
+          "type": "LEFT_BRACE",
+          "lexeme": "{"
+        },
+        {
+          "index": 6,
+          "line": 3,
+          "column": 5,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 7,
+          "line": 3,
+          "column": 9,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 8,
+          "line": 3,
+          "column": 11,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 9,
+          "line": 3,
+          "column": 13,
+          "type": "NUMBER",
+          "lexeme": "50"
+        },
+        {
+          "index": 10,
+          "line": 3,
+          "column": 15,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 11,
+          "line": 4,
+          "column": 5,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 12,
+          "line": 4,
+          "column": 9,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 13,
+          "line": 4,
+          "column": 11,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 14,
+          "line": 4,
+          "column": 13,
+          "type": "NUMBER",
+          "lexeme": "20"
+        },
+        {
+          "index": 15,
+          "line": 4,
+          "column": 15,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 16,
+          "line": 5,
+          "column": 5,
+          "type": "PRINT",
+          "lexeme": "print"
+        },
+        {
+          "index": 17,
+          "line": 5,
+          "column": 11,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 18,
+          "line": 5,
+          "column": 12,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 19,
+          "line": 6,
+          "column": 1,
+          "type": "RIGHT_BRACE",
+          "lexeme": "}"
+        },
+        {
+          "index": 20,
+          "line": 7,
+          "column": 1,
+          "type": "PRINT",
+          "lexeme": "print"
+        },
+        {
+          "index": 21,
+          "line": 7,
+          "column": 7,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 22,
+          "line": 7,
+          "column": 8,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 23,
+          "line": 8,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [],
+      "recoveryTotalCost": 0,
+      "symbolsList": [
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "1",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "scope": "1",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 0,
+        "propagated": 2,
+        "deadEliminated": 0,
+        "total": 2
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "100"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "50"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0004",
+          "opcode": "PUSH_CONST",
+          "arg": "20"
+        },
+        {
+          "address": "0005",
+          "opcode": "STORE_VAR",
+          "arg": "y"
+        },
+        {
+          "address": "0006",
+          "opcode": "PUSH_CONST",
+          "arg": "50"
+        },
+        {
+          "address": "0007",
+          "opcode": "PRINT",
+          "arg": ""
+        },
+        {
+          "address": "0008",
+          "opcode": "PUSH_CONST",
+          "arg": "50"
+        },
+        {
+          "address": "0009",
+          "opcode": "PRINT",
+          "arg": ""
+        },
+        {
+          "address": "0010",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [
+        "50",
+        "50"
+      ],
+      "vmVariables": [
+        {
+          "name": "y",
+          "value": "20"
+        },
+        {
+          "name": "x",
+          "value": "50"
+        }
+      ],
+      "hasRecovery": false,
       "hasSemanticErrors": false
-    }
+    },
+    "source": "int x = 100;\n{\n    int x = 50;\n    int y = 20;\n    print x;\n}\nprint x;\n"
+  },
+  "arithmetic_demo": {
+    "success": true,
+    "exitCode": 0,
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: examples/arithmetic_demo.txt\n\n=== Source Code ===\nint x = 15;\nfloat y = 4.5;\nfloat result = x + y * 2.0;\n\nif (result >= 20.0 && x != 0) {\n    result = result / 2.0;\n} else {\n    result = 0.0;\n}\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (45 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Lexical Tokens (45 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '15'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: FLOAT | Lexeme: 'float'\n[6] Line 2, Col 7 | Type: IDENTIFIER | Lexeme: 'y'\n[7] Line 2, Col 9 | Type: ASSIGN | Lexeme: '='\n[8] Line 2, Col 11 | Type: NUMBER | Lexeme: '4.5'\n[9] Line 2, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[10] Line 3, Col 1 | Type: FLOAT | Lexeme: 'float'\n[11] Line 3, Col 7 | Type: IDENTIFIER | Lexeme: 'result'\n[12] Line 3, Col 14 | Type: ASSIGN | Lexeme: '='\n[13] Line 3, Col 16 | Type: IDENTIFIER | Lexeme: 'x'\n[14] Line 3, Col 18 | Type: PLUS | Lexeme: '+'\n[15] Line 3, Col 20 | Type: IDENTIFIER | Lexeme: 'y'\n[16] Line 3, Col 22 | Type: MULTIPLY | Lexeme: '*'\n[17] Line 3, Col 24 | Type: NUMBER | Lexeme: '2.0'\n[18] Line 3, Col 27 | Type: SEMICOLON | Lexeme: ';'\n[19] Line 5, Col 1 | Type: IF | Lexeme: 'if'\n[20] Line 5, Col 4 | Type: LEFT_PAREN | Lexeme: '('\n[21] Line 5, Col 5 | Type: IDENTIFIER | Lexeme: 'result'\n[22] Line 5, Col 12 | Type: GREATER_EQUAL | Lexeme: '>='\n[23] Line 5, Col 15 | Type: NUMBER | Lexeme: '20.0'\n[24] Line 5, Col 20 | Type: AND | Lexeme: '&&'\n[25] Line 5, Col 23 | Type: IDENTIFIER | Lexeme: 'x'\n[26] Line 5, Col 25 | Type: NOT_EQUAL | Lexeme: '!='\n[27] Line 5, Col 28 | Type: NUMBER | Lexeme: '0'\n[28] Line 5, Col 29 | Type: RIGHT_PAREN | Lexeme: ')'\n[29] Line 5, Col 31 | Type: LEFT_BRACE | Lexeme: '{'\n[30] Line 6, Col 5 | Type: IDENTIFIER | Lexeme: 'result'\n[31] Line 6, Col 12 | Type: ASSIGN | Lexeme: '='\n[32] Line 6, Col 14 | Type: IDENTIFIER | Lexeme: 'result'\n[33] Line 6, Col 21 | Type: DIVIDE | Lexeme: '/'\n[34] Line 6, Col 23 | Type: NUMBER | Lexeme: '2.0'\n[35] Line 6, Col 26 | Type: SEMICOLON | Lexeme: ';'\n[36] Line 7, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[37] Line 7, Col 3 | Type: ELSE | Lexeme: 'else'\n[38] Line 7, Col 8 | Type: LEFT_BRACE | Lexeme: '{'\n[39] Line 8, Col 5 | Type: IDENTIFIER | Lexeme: 'result'\n[40] Line 8, Col 12 | Type: ASSIGN | Lexeme: '='\n[41] Line 8, Col 14 | Type: NUMBER | Lexeme: '0.0'\n[42] Line 8, Col 17 | Type: SEMICOLON | Lexeme: ';'\n[43] Line 9, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[44] Line 10, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 15\n  Declaration: float y\n    Literal: 4.5\n  Declaration: float result\n    Binary Expression: +\n      Identifier: x\n      Binary Expression: *\n        Identifier: y\n        Literal: 2.0\n  If\n    Condition\n      Binary Expression: &&\n        Binary Expression: >=\n          Identifier: result\n          Literal: 20.0\n        Binary Expression: !=\n          Identifier: x\n          Literal: 0\n    Then\n      Block\n        Assignment: result\n          Binary Expression: /\n            Identifier: result\n            Literal: 2.0\n    Else\n      Block\n        Assignment: result\n          Literal: 0.0\n\n=== Semantic Analysis Report ===\nStatus: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               float     0       L0:0        \nresult          float     0       L0:0        \n\n=== Three-Address Code (TAC) ===\n    x = 15\n    y = 4.5\n    _t0 = y * 2.0\n    _t1 = x + _t0\n    result = _t1\n    _t2 = result >= 20.0\n    _t3 = x != 0\n    _t4 = _t2 && _t3\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:\n\n=== Optimization Summary ===\n  Constant Operations Folded     : 5\n  Constant Operands Propagated   : 8\n  Dead Instructions Eliminated   : 4\n  Total Optimizations Applied    : 17\n\n=== Optimized Three-Address Code ===\n    x = 15\n    y = 4.5\n    result = 24.0\n    _t4 = 1\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:\n\n=== Target Bytecode Instructions ===\n0000:  PUSH_CONST   15\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   4.5\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   24\n0005:  STORE_VAR    result\n0006:  PUSH_CONST   1\n0007:  STORE_VAR    _t4\n0008:  LOAD_VAR     _t4\n0009:  JUMP_IF_ZERO ->0017\n0010:  LOAD_VAR     result\n0011:  PUSH_CONST   2\n0012:  DIV\n0013:  STORE_VAR    _t5\n0014:  LOAD_VAR     _t5\n0015:  STORE_VAR    result\n0016:  JUMP         ->0019\n0017:  PUSH_CONST   0\n0018:  STORE_VAR    result\n0019:  HALT\n\n=== Virtual Machine Execution ===\n\n=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nx               15          \ny               4.5         \nresult          12          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)\n",
+    "sections": {
+      "status": "Lexer  : SUCCESS (45 tokens generated)\nParser : SUCCESS",
+      "recovery": "Status: Clean compilation. No recovery actions were required.",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '15'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: FLOAT | Lexeme: 'float'\n[6] Line 2, Col 7 | Type: IDENTIFIER | Lexeme: 'y'\n[7] Line 2, Col 9 | Type: ASSIGN | Lexeme: '='\n[8] Line 2, Col 11 | Type: NUMBER | Lexeme: '4.5'\n[9] Line 2, Col 14 | Type: SEMICOLON | Lexeme: ';'\n[10] Line 3, Col 1 | Type: FLOAT | Lexeme: 'float'\n[11] Line 3, Col 7 | Type: IDENTIFIER | Lexeme: 'result'\n[12] Line 3, Col 14 | Type: ASSIGN | Lexeme: '='\n[13] Line 3, Col 16 | Type: IDENTIFIER | Lexeme: 'x'\n[14] Line 3, Col 18 | Type: PLUS | Lexeme: '+'\n[15] Line 3, Col 20 | Type: IDENTIFIER | Lexeme: 'y'\n[16] Line 3, Col 22 | Type: MULTIPLY | Lexeme: '*'\n[17] Line 3, Col 24 | Type: NUMBER | Lexeme: '2.0'\n[18] Line 3, Col 27 | Type: SEMICOLON | Lexeme: ';'\n[19] Line 5, Col 1 | Type: IF | Lexeme: 'if'\n[20] Line 5, Col 4 | Type: LEFT_PAREN | Lexeme: '('\n[21] Line 5, Col 5 | Type: IDENTIFIER | Lexeme: 'result'\n[22] Line 5, Col 12 | Type: GREATER_EQUAL | Lexeme: '>='\n[23] Line 5, Col 15 | Type: NUMBER | Lexeme: '20.0'\n[24] Line 5, Col 20 | Type: AND | Lexeme: '&&'\n[25] Line 5, Col 23 | Type: IDENTIFIER | Lexeme: 'x'\n[26] Line 5, Col 25 | Type: NOT_EQUAL | Lexeme: '!='\n[27] Line 5, Col 28 | Type: NUMBER | Lexeme: '0'\n[28] Line 5, Col 29 | Type: RIGHT_PAREN | Lexeme: ')'\n[29] Line 5, Col 31 | Type: LEFT_BRACE | Lexeme: '{'\n[30] Line 6, Col 5 | Type: IDENTIFIER | Lexeme: 'result'\n[31] Line 6, Col 12 | Type: ASSIGN | Lexeme: '='\n[32] Line 6, Col 14 | Type: IDENTIFIER | Lexeme: 'result'\n[33] Line 6, Col 21 | Type: DIVIDE | Lexeme: '/'\n[34] Line 6, Col 23 | Type: NUMBER | Lexeme: '2.0'\n[35] Line 6, Col 26 | Type: SEMICOLON | Lexeme: ';'\n[36] Line 7, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[37] Line 7, Col 3 | Type: ELSE | Lexeme: 'else'\n[38] Line 7, Col 8 | Type: LEFT_BRACE | Lexeme: '{'\n[39] Line 8, Col 5 | Type: IDENTIFIER | Lexeme: 'result'\n[40] Line 8, Col 12 | Type: ASSIGN | Lexeme: '='\n[41] Line 8, Col 14 | Type: NUMBER | Lexeme: '0.0'\n[42] Line 8, Col 17 | Type: SEMICOLON | Lexeme: ';'\n[43] Line 9, Col 1 | Type: RIGHT_BRACE | Lexeme: '}'\n[44] Line 10, Col 1 | Type: END_OF_FILE | Lexeme: ''",
+      "ast": "Program\n  Declaration: int x\n    Literal: 15\n  Declaration: float y\n    Literal: 4.5\n  Declaration: float result\n    Binary Expression: +\n      Identifier: x\n      Binary Expression: *\n        Identifier: y\n        Literal: 2.0\n  If\n    Condition\n      Binary Expression: &&\n        Binary Expression: >=\n          Identifier: result\n          Literal: 20.0\n        Binary Expression: !=\n          Identifier: x\n          Literal: 0\n    Then\n      Block\n        Assignment: result\n          Binary Expression: /\n            Identifier: result\n            Literal: 2.0\n    Else\n      Block\n        Assignment: result\n          Literal: 0.0",
+      "semantics": "Status: SUCCESS (0 semantic errors)\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \ny               float     0       L0:0        \nresult          float     0       L0:0",
+      "tac": "x = 15\n    y = 4.5\n    _t0 = y * 2.0\n    _t1 = x + _t0\n    result = _t1\n    _t2 = result >= 20.0\n    _t3 = x != 0\n    _t4 = _t2 && _t3\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:",
+      "opt": "Constant Operations Folded     : 5\n  Constant Operands Propagated   : 8\n  Dead Instructions Eliminated   : 4\n  Total Optimizations Applied    : 17\n\n=== Optimized Three-Address Code ===\n    x = 15\n    y = 4.5\n    result = 24.0\n    _t4 = 1\n    ifFalse _t4 goto L0\n    _t5 = result / 2.0\n    result = _t5\n    goto L1\nL0:\n    result = 0.0\nL1:",
+      "target": "0000:  PUSH_CONST   15\n0001:  STORE_VAR    x\n0002:  PUSH_CONST   4.5\n0003:  STORE_VAR    y\n0004:  PUSH_CONST   24\n0005:  STORE_VAR    result\n0006:  PUSH_CONST   1\n0007:  STORE_VAR    _t4\n0008:  LOAD_VAR     _t4\n0009:  JUMP_IF_ZERO ->0017\n0010:  LOAD_VAR     result\n0011:  PUSH_CONST   2\n0012:  DIV\n0013:  STORE_VAR    _t5\n0014:  LOAD_VAR     _t5\n0015:  STORE_VAR    result\n0016:  JUMP         ->0019\n0017:  PUSH_CONST   0\n0018:  STORE_VAR    result\n0019:  HALT",
+      "vm": "=== VM Execution State (Final Variable Store) ===\nVariable        Final Value \n----------------------------\nx               15          \ny               4.5         \nresult          12          \n\n[Compilation Status]: SUCCESS (Pipeline Completed Successfully)",
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "15"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 1,
+          "type": "FLOAT",
+          "lexeme": "float"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 7,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 9,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 11,
+          "type": "NUMBER",
+          "lexeme": "4.5"
+        },
+        {
+          "index": 9,
+          "line": 2,
+          "column": 14,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 10,
+          "line": 3,
+          "column": 1,
+          "type": "FLOAT",
+          "lexeme": "float"
+        },
+        {
+          "index": 11,
+          "line": 3,
+          "column": 7,
+          "type": "IDENTIFIER",
+          "lexeme": "result"
+        },
+        {
+          "index": 12,
+          "line": 3,
+          "column": 14,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 13,
+          "line": 3,
+          "column": 16,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 14,
+          "line": 3,
+          "column": 18,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 15,
+          "line": 3,
+          "column": 20,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 16,
+          "line": 3,
+          "column": 22,
+          "type": "MULTIPLY",
+          "lexeme": "*"
+        },
+        {
+          "index": 17,
+          "line": 3,
+          "column": 24,
+          "type": "NUMBER",
+          "lexeme": "2.0"
+        },
+        {
+          "index": 18,
+          "line": 3,
+          "column": 27,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 19,
+          "line": 5,
+          "column": 1,
+          "type": "IF",
+          "lexeme": "if"
+        },
+        {
+          "index": 20,
+          "line": 5,
+          "column": 4,
+          "type": "LEFT_PAREN",
+          "lexeme": "("
+        },
+        {
+          "index": 21,
+          "line": 5,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "result"
+        },
+        {
+          "index": 22,
+          "line": 5,
+          "column": 12,
+          "type": "GREATER_EQUAL",
+          "lexeme": ">="
+        },
+        {
+          "index": 23,
+          "line": 5,
+          "column": 15,
+          "type": "NUMBER",
+          "lexeme": "20.0"
+        },
+        {
+          "index": 24,
+          "line": 5,
+          "column": 20,
+          "type": "AND",
+          "lexeme": "&&"
+        },
+        {
+          "index": 25,
+          "line": 5,
+          "column": 23,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 26,
+          "line": 5,
+          "column": 25,
+          "type": "NOT_EQUAL",
+          "lexeme": "!="
+        },
+        {
+          "index": 27,
+          "line": 5,
+          "column": 28,
+          "type": "NUMBER",
+          "lexeme": "0"
+        },
+        {
+          "index": 28,
+          "line": 5,
+          "column": 29,
+          "type": "RIGHT_PAREN",
+          "lexeme": ")"
+        },
+        {
+          "index": 29,
+          "line": 5,
+          "column": 31,
+          "type": "LEFT_BRACE",
+          "lexeme": "{"
+        },
+        {
+          "index": 30,
+          "line": 6,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "result"
+        },
+        {
+          "index": 31,
+          "line": 6,
+          "column": 12,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 32,
+          "line": 6,
+          "column": 14,
+          "type": "IDENTIFIER",
+          "lexeme": "result"
+        },
+        {
+          "index": 33,
+          "line": 6,
+          "column": 21,
+          "type": "DIVIDE",
+          "lexeme": "/"
+        },
+        {
+          "index": 34,
+          "line": 6,
+          "column": 23,
+          "type": "NUMBER",
+          "lexeme": "2.0"
+        },
+        {
+          "index": 35,
+          "line": 6,
+          "column": 26,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 36,
+          "line": 7,
+          "column": 1,
+          "type": "RIGHT_BRACE",
+          "lexeme": "}"
+        },
+        {
+          "index": 37,
+          "line": 7,
+          "column": 3,
+          "type": "ELSE",
+          "lexeme": "else"
+        },
+        {
+          "index": 38,
+          "line": 7,
+          "column": 8,
+          "type": "LEFT_BRACE",
+          "lexeme": "{"
+        },
+        {
+          "index": 39,
+          "line": 8,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "result"
+        },
+        {
+          "index": 40,
+          "line": 8,
+          "column": 12,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 41,
+          "line": 8,
+          "column": 14,
+          "type": "NUMBER",
+          "lexeme": "0.0"
+        },
+        {
+          "index": 42,
+          "line": 8,
+          "column": 17,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 43,
+          "line": 9,
+          "column": 1,
+          "type": "RIGHT_BRACE",
+          "lexeme": "}"
+        },
+        {
+          "index": 44,
+          "line": 10,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [],
+      "recoveryTotalCost": 0,
+      "symbolsList": [
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        },
+        {
+          "name": "result",
+          "type": "float",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 5,
+        "propagated": 8,
+        "deadEliminated": 4,
+        "total": 17
+      },
+      "targetList": [
+        {
+          "address": "0000",
+          "opcode": "PUSH_CONST",
+          "arg": "15"
+        },
+        {
+          "address": "0001",
+          "opcode": "STORE_VAR",
+          "arg": "x"
+        },
+        {
+          "address": "0002",
+          "opcode": "PUSH_CONST",
+          "arg": "4.5"
+        },
+        {
+          "address": "0003",
+          "opcode": "STORE_VAR",
+          "arg": "y"
+        },
+        {
+          "address": "0004",
+          "opcode": "PUSH_CONST",
+          "arg": "24"
+        },
+        {
+          "address": "0005",
+          "opcode": "STORE_VAR",
+          "arg": "result"
+        },
+        {
+          "address": "0006",
+          "opcode": "PUSH_CONST",
+          "arg": "1"
+        },
+        {
+          "address": "0007",
+          "opcode": "STORE_VAR",
+          "arg": "_t4"
+        },
+        {
+          "address": "0008",
+          "opcode": "LOAD_VAR",
+          "arg": "_t4"
+        },
+        {
+          "address": "0009",
+          "opcode": "JUMP_IF_ZERO",
+          "arg": "->0017"
+        },
+        {
+          "address": "0010",
+          "opcode": "LOAD_VAR",
+          "arg": "result"
+        },
+        {
+          "address": "0011",
+          "opcode": "PUSH_CONST",
+          "arg": "2"
+        },
+        {
+          "address": "0012",
+          "opcode": "DIV",
+          "arg": ""
+        },
+        {
+          "address": "0013",
+          "opcode": "STORE_VAR",
+          "arg": "_t5"
+        },
+        {
+          "address": "0014",
+          "opcode": "LOAD_VAR",
+          "arg": "_t5"
+        },
+        {
+          "address": "0015",
+          "opcode": "STORE_VAR",
+          "arg": "result"
+        },
+        {
+          "address": "0016",
+          "opcode": "JUMP",
+          "arg": "->0019"
+        },
+        {
+          "address": "0017",
+          "opcode": "PUSH_CONST",
+          "arg": "0"
+        },
+        {
+          "address": "0018",
+          "opcode": "STORE_VAR",
+          "arg": "result"
+        },
+        {
+          "address": "0019",
+          "opcode": "HALT",
+          "arg": ""
+        }
+      ],
+      "vmOutputLines": [],
+      "vmVariables": [
+        {
+          "name": "x",
+          "value": "15"
+        },
+        {
+          "name": "y",
+          "value": "4.5"
+        },
+        {
+          "name": "result",
+          "value": "12"
+        }
+      ],
+      "hasRecovery": false,
+      "hasSemanticErrors": false
+    },
+    "source": "int x = 15;\nfloat y = 4.5;\nfloat result = x + y * 2.0;\n\nif (result >= 20.0 && x != 0) {\n    result = result / 2.0;\n} else {\n    result = 0.0;\n}\n"
   },
   "semantic_undeclared": {
     "success": false,
     "exitCode": 1,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\tests\\07_undeclared_variable.txt\n\n=== Source Code ===\nint x = 10;\ny = x + 5;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (12 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 10\n  Assignment: y\n    Binary Expression: +\n      Identifier: x\n      Literal: 5\n\n=== Semantic Analysis Report ===\nStatus: FAILED (1 semantic error)\n[1] [Semantic Error] Assignment to undeclared variable 'y'\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \n\n\n[Compilation Stopped]: Code contains semantic errors. IR and Code Generation skipped.\n",
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/07_undeclared_variable.txt\n\n=== Source Code ===\nint x = 10;\ny = x + 5;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (12 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Lexical Tokens (12 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: IDENTIFIER | Lexeme: 'y'\n[6] Line 2, Col 3 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[8] Line 2, Col 7 | Type: PLUS | Lexeme: '+'\n[9] Line 2, Col 9 | Type: NUMBER | Lexeme: '5'\n[10] Line 2, Col 10 | Type: SEMICOLON | Lexeme: ';'\n[11] Line 3, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 10\n  Assignment: y\n    Binary Expression: +\n      Identifier: x\n      Literal: 5\n\n=== Semantic Analysis Report ===\nStatus: FAILED (1 semantic error)\n[1] [Semantic Error] Assignment to undeclared variable 'y'\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \n\n\n[Compilation Stopped]: Code contains semantic errors. IR and Code Generation skipped.\n",
     "sections": {
       "status": "Lexer  : SUCCESS (12 tokens generated)\nParser : SUCCESS",
       "recovery": "Status: Clean compilation. No recovery actions were required.",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: IDENTIFIER | Lexeme: 'y'\n[6] Line 2, Col 3 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[8] Line 2, Col 7 | Type: PLUS | Lexeme: '+'\n[9] Line 2, Col 9 | Type: NUMBER | Lexeme: '5'\n[10] Line 2, Col 10 | Type: SEMICOLON | Lexeme: ';'\n[11] Line 3, Col 1 | Type: END_OF_FILE | Lexeme: ''",
       "ast": "Program\n  Declaration: int x\n    Literal: 10\n  Assignment: y\n    Binary Expression: +\n      Identifier: x\n      Literal: 5",
       "semantics": "Status: FAILED (1 semantic error)\n[1] [Semantic Error] Assignment to undeclared variable 'y'\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0\n\n[Compilation Stopped]: Code contains semantic errors. IR and Code Generation skipped.\n",
       "tac": "",
       "opt": "",
       "target": "",
       "vm": "",
-      "hasRecovery": true,
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "10"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 1,
+          "type": "IDENTIFIER",
+          "lexeme": "y"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 3,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 7,
+          "type": "PLUS",
+          "lexeme": "+"
+        },
+        {
+          "index": 9,
+          "line": 2,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "5"
+        },
+        {
+          "index": 10,
+          "line": 2,
+          "column": 10,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 11,
+          "line": 3,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [],
+      "recoveryTotalCost": 0,
+      "symbolsList": [
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 0,
+        "propagated": 0,
+        "deadEliminated": 0,
+        "total": 0
+      },
+      "targetList": [],
+      "vmOutputLines": [],
+      "vmVariables": [],
+      "hasRecovery": false,
       "hasSemanticErrors": true
-    }
+    },
+    "source": "int x = 10;\ny = x + 5;\n"
   },
   "semantic_type_mismatch": {
     "success": false,
     "exitCode": 1,
-    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: C:\\Users\\Steven\\OneDrive\\Desktop\\ResilientCompiler\\tests\\09_type_mismatch.txt\n\n=== Source Code ===\nint x = 10;\nx = 3.14;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (10 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 10\n  Assignment: x\n    Literal: 3.14\n\n=== Semantic Analysis Report ===\nStatus: FAILED (1 semantic error)\n[1] [Semantic Error] Type mismatch in assignment to 'x': cannot assign 'float' to 'int'\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \n\n\n[Compilation Stopped]: Code contains semantic errors. IR and Code Generation skipped.\n",
+    "rawOutput": "========================================================\n Resilient Compiler with Intelligent Error Recovery   \n========================================================\n\n[Input Source File]: tests/09_type_mismatch.txt\n\n=== Source Code ===\nint x = 10;\nx = 3.14;\n\n=== Resilient Compiler Status ===\nLexer  : SUCCESS (10 tokens generated)\nParser : SUCCESS\n\n=== Error Recovery Report ===\nStatus: Clean compilation. No recovery actions were required.\n\n=== Lexical Tokens (10 tokens) ===\n[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: IDENTIFIER | Lexeme: 'x'\n[6] Line 2, Col 3 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 5 | Type: NUMBER | Lexeme: '3.14'\n[8] Line 2, Col 9 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 3, Col 1 | Type: END_OF_FILE | Lexeme: ''\n\n=== Abstract Syntax Tree (AST) ===\n\nProgram\n  Declaration: int x\n    Literal: 10\n  Assignment: x\n    Literal: 3.14\n\n=== Semantic Analysis Report ===\nStatus: FAILED (1 semantic error)\n[1] [Semantic Error] Type mismatch in assignment to 'x': cannot assign 'float' to 'int'\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0        \n\n\n[Compilation Stopped]: Code contains semantic errors. IR and Code Generation skipped.\n",
     "sections": {
       "status": "Lexer  : SUCCESS (10 tokens generated)\nParser : SUCCESS",
       "recovery": "Status: Clean compilation. No recovery actions were required.",
+      "tokens": "[0] Line 1, Col 1 | Type: INT | Lexeme: 'int'\n[1] Line 1, Col 5 | Type: IDENTIFIER | Lexeme: 'x'\n[2] Line 1, Col 7 | Type: ASSIGN | Lexeme: '='\n[3] Line 1, Col 9 | Type: NUMBER | Lexeme: '10'\n[4] Line 1, Col 11 | Type: SEMICOLON | Lexeme: ';'\n[5] Line 2, Col 1 | Type: IDENTIFIER | Lexeme: 'x'\n[6] Line 2, Col 3 | Type: ASSIGN | Lexeme: '='\n[7] Line 2, Col 5 | Type: NUMBER | Lexeme: '3.14'\n[8] Line 2, Col 9 | Type: SEMICOLON | Lexeme: ';'\n[9] Line 3, Col 1 | Type: END_OF_FILE | Lexeme: ''",
       "ast": "Program\n  Declaration: int x\n    Literal: 10\n  Assignment: x\n    Literal: 3.14",
       "semantics": "Status: FAILED (1 semantic error)\n[1] [Semantic Error] Type mismatch in assignment to 'x': cannot assign 'float' to 'int'\n\n=== Symbol Table Audit ===\nIdentifier      Type      Scope   Declared At \n----------------------------------------------\nx               int       0       L0:0\n\n[Compilation Stopped]: Code contains semantic errors. IR and Code Generation skipped.\n",
       "tac": "",
       "opt": "",
       "target": "",
       "vm": "",
-      "hasRecovery": true,
+      "tokensList": [
+        {
+          "index": 0,
+          "line": 1,
+          "column": 1,
+          "type": "INT",
+          "lexeme": "int"
+        },
+        {
+          "index": 1,
+          "line": 1,
+          "column": 5,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 2,
+          "line": 1,
+          "column": 7,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 3,
+          "line": 1,
+          "column": 9,
+          "type": "NUMBER",
+          "lexeme": "10"
+        },
+        {
+          "index": 4,
+          "line": 1,
+          "column": 11,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 5,
+          "line": 2,
+          "column": 1,
+          "type": "IDENTIFIER",
+          "lexeme": "x"
+        },
+        {
+          "index": 6,
+          "line": 2,
+          "column": 3,
+          "type": "ASSIGN",
+          "lexeme": "="
+        },
+        {
+          "index": 7,
+          "line": 2,
+          "column": 5,
+          "type": "NUMBER",
+          "lexeme": "3.14"
+        },
+        {
+          "index": 8,
+          "line": 2,
+          "column": 9,
+          "type": "SEMICOLON",
+          "lexeme": ";"
+        },
+        {
+          "index": 9,
+          "line": 3,
+          "column": 1,
+          "type": "END_OF_FILE",
+          "lexeme": ""
+        }
+      ],
+      "recoveryActions": [],
+      "recoveryTotalCost": 0,
+      "symbolsList": [
+        {
+          "name": "x",
+          "type": "int",
+          "scope": "0",
+          "declaredAt": "L0:0"
+        }
+      ],
+      "optSummary": {
+        "folded": 0,
+        "propagated": 0,
+        "deadEliminated": 0,
+        "total": 0
+      },
+      "targetList": [],
+      "vmOutputLines": [],
+      "vmVariables": [],
+      "hasRecovery": false,
       "hasSemanticErrors": true
-    }
+    },
+    "source": "int x = 10;\nx = 3.14;\n"
   }
 }
