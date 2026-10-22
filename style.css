@@ -1397,87 +1397,615 @@ html, body {
 .token-del { background-color: rgba(255, 255, 255, 0.08); color: #cbd5e1; }
 
 /* ==========================================================================
-   Tab 3: AST Explorer (Interactive Hierarchical Tree)
+   Tab 3: AST Explorer (Visual Graph Diagram & Hierarchical Tree)
    ========================================================================== */
-.tree-controls {
+.ast-toolbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 12px;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.ast-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ast-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* View Mode Selector */
+.ast-view-switcher {
+    display: inline-flex;
+    background-color: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 2px;
+    gap: 2px;
+}
+
+.ast-view-switcher .btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.ast-view-switcher .btn:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.ast-view-switcher .btn.active {
+    background-color: var(--accent-indigo);
+    color: #ffffff;
+    box-shadow: 0 2px 8px var(--accent-indigo-glow);
+}
+
+.ast-btn-divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--border-base);
+    margin: 0 4px;
+}
+
+.ast-tree-actions, .ast-graph-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Search Box */
+.ast-search-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-sm);
+    padding: 2px 8px;
+    gap: 6px;
+    transition: border-color 0.15s ease;
+}
+
+.ast-search-wrapper:focus-within {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 2px var(--accent-cyan-glow);
+}
+
+.ast-search-icon {
+    font-size: 11px;
+    opacity: 0.6;
+}
+
+.ast-search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 11px;
+    width: 150px;
+}
+
+.ast-meta-badges {
     display: flex;
     gap: 6px;
 }
 
+.ast-pill-badge {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-family: var(--font-code);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* Main Container */
 .ast-wrapper {
     flex: 1;
-    overflow-y: auto;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
-    background-color: var(--bg-surface);
-    padding: 12px;
-}
-
-.ast-interactive-tree {
-    font-family: var(--font-code);
-    font-size: 12px;
-    line-height: 1.8;
-}
-
-.tree-node {
-    margin-left: 18px;
     position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    background-color: var(--bg-base);
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
 }
 
-.tree-node::before {
-    content: '';
+/* ==========================================================================
+   1. Visual 2D Graph Diagram View
+   ========================================================================== */
+.ast-graph-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+    background-color: #080a10;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    user-select: none;
+}
+
+.ast-graph-container:active {
+    cursor: grabbing;
+}
+
+.ast-graph-viewport {
     position: absolute;
     top: 0;
-    left: -12px;
-    bottom: 0;
-    width: 1px;
-    background-color: var(--border-subtle);
+    left: 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 100%;
 }
 
-.node-header {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
+.ast-graph-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6000px;
+    height: 4000px;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.ast-graph-svg path {
+    fill: none;
+    stroke: #334155;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    transition: stroke 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+}
+
+.ast-graph-svg path.path-highlight {
+    stroke: var(--accent-cyan);
+    stroke-width: 2.8px;
+    filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.6));
+}
+
+.ast-graph-nodes-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6000px;
+    height: 4000px;
+    pointer-events: auto;
+}
+
+/* Node Card in Visual Graph */
+.graph-node-card {
+    position: absolute;
+    width: 175px;
+    background: rgba(18, 22, 34, 0.92);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-base);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    padding: 7px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     cursor: pointer;
-    transition: background-color 0.1s ease;
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, border-color 0.15s ease;
+    z-index: 2;
 }
 
-.node-header:hover {
-    background-color: var(--bg-surface-elevated);
+.graph-node-card:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    z-index: 10;
 }
 
-.node-caret {
+.graph-node-card.selected {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 2px #ffffff, 0 8px 25px rgba(255, 255, 255, 0.2) !important;
+    z-index: 20;
+}
+
+.graph-node-card.search-matched {
+    box-shadow: 0 0 0 3px var(--color-warning), 0 0 16px rgba(245, 158, 11, 0.6) !important;
+    border-color: var(--color-warning) !important;
+    animation: pulseSearch 1.8s infinite;
+}
+
+@keyframes pulseSearch {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+/* Category Accent Borders */
+.graph-node-card.cat-root {
+    border-left: 4px solid var(--accent-indigo);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(18, 22, 34, 0.95));
+}
+.graph-node-card.cat-control {
+    border-left: 4px solid #f43f5e;
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(18, 22, 34, 0.95));
+}
+.graph-node-card.cat-statement {
+    border-left: 4px solid var(--accent-cyan);
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(18, 22, 34, 0.95));
+}
+.graph-node-card.cat-branch {
+    border-left: 4px solid #14b8a6;
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.10), rgba(18, 22, 34, 0.95));
+}
+.graph-node-card.cat-binary-expr {
+    border-left: 4px solid var(--accent-violet);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(18, 22, 34, 0.95));
+}
+.graph-node-card.cat-identifier {
+    border-left: 4px solid var(--color-success);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(18, 22, 34, 0.95));
+}
+.graph-node-card.cat-literal {
+    border-left: 4px solid var(--color-warning);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(18, 22, 34, 0.95));
+}
+.graph-node-card.cat-print {
+    border-left: 4px solid #38bdf8;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(18, 22, 34, 0.95));
+}
+
+.node-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.node-card-badge {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+}
+
+.node-card-icon {
+    font-size: 13px;
+}
+
+.node-card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.node-card-title {
+    font-family: var(--font-code);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.node-card-details {
+    font-family: var(--font-code);
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.node-card-children-count {
     font-size: 9px;
     color: var(--text-muted);
-    width: 12px;
-    display: inline-block;
-    transition: transform 0.15s ease;
+    align-self: flex-end;
 }
 
-.node-caret.open {
+/* Floating Zoom Controls */
+.ast-graph-floating-controls {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(18, 21, 31, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-base);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    z-index: 30;
+}
+
+.btn-zoom-icon {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-zoom-icon:last-child {
+    border-bottom: none;
+}
+
+.btn-zoom-icon:hover {
+    background: var(--bg-surface-elevated);
+    color: var(--text-primary);
+}
+
+/* Legend in Graph */
+.ast-graph-legend {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(18, 21, 31, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 30;
+    pointer-events: none;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.legend-dot.root { background: var(--accent-indigo); }
+.legend-dot.control { background: #f43f5e; }
+.legend-dot.statement { background: var(--accent-cyan); }
+.legend-dot.expr { background: var(--accent-violet); }
+.legend-dot.id { background: var(--color-success); }
+.legend-dot.literal { background: var(--color-warning); }
+
+/* ==========================================================================
+   2. Hierarchical Collapsible Tree View (with Real Branch Lines)
+   ========================================================================== */
+.ast-interactive-tree {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    font-family: var(--font-code);
+    font-size: 12px;
+    line-height: 1.6;
+    background-color: var(--bg-surface);
+}
+
+.tree-root-list, .tree-sub-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tree-sub-list {
+    margin-left: 20px;
+    position: relative;
+    padding-left: 14px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tree-item {
+    position: relative;
+    margin: 3px 0;
+}
+
+.tree-item::before {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: -14px;
+    width: 12px;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tree-item:last-child > .tree-sub-list {
+    border-left-color: transparent;
+}
+
+.tree-node-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+}
+
+.tree-node-row:hover {
+    background-color: var(--bg-surface-elevated);
+    border-color: var(--border-subtle);
+}
+
+.tree-node-row.selected {
+    background-color: var(--bg-active);
+    border-color: var(--accent-indigo);
+}
+
+.tree-node-row.search-matched {
+    background-color: rgba(245, 158, 11, 0.15);
+    border-color: var(--color-warning);
+}
+
+.tree-caret {
+    font-size: 10px;
+    color: var(--text-muted);
+    width: 14px;
+    text-align: center;
+    display: inline-block;
+    transition: transform 0.18s ease;
+    cursor: pointer;
+}
+
+.tree-caret.open {
     transform: rotate(90deg);
 }
 
-.node-title {
-    color: #e2e8f0;
+.tree-caret.empty {
+    opacity: 0.2;
+    cursor: default;
 }
 
-.node-type-program { color: #818cf8; font-weight: 700; }
-.node-type-decl { color: #38bdf8; }
-.node-type-while { color: #f472b6; }
-.node-type-if { color: #fb7185; }
-.node-type-assign { color: #fbbf24; }
-.node-type-expr { color: #34d399; }
-.node-type-literal { color: #a7f3d0; }
+.tree-node-icon {
+    font-size: 12px;
+}
+
+.tree-node-label {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.tree-node-badge {
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+}
+
+.tree-node-badge.children-count {
+    color: var(--accent-cyan);
+    background: var(--accent-cyan-glow);
+}
+
+.tree-sub-list.collapsed {
+    display: none;
+}
+
+/* ==========================================================================
+   3. Node Inspector Drawer
+   ========================================================================== */
+.ast-node-inspector {
+    background-color: var(--bg-surface-elevated);
+    border-top: 1px solid var(--border-base);
+    padding: 12px 18px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: slideUp 0.18s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.inspector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inspector-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+.inspector-badge {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: var(--accent-indigo);
+    color: #fff;
+}
+
+.inspector-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.inspector-prop {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.inspector-prop-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.inspector-prop-value {
+    font-family: var(--font-code);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.btn-close-sm {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.btn-close-sm:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.08);
+}
 
 .ast-raw {
+    flex: 1;
     font-family: var(--font-code);
     font-size: 12px;
     line-height: 1.6;
     color: #94a3b8;
     white-space: pre;
+    padding: 16px;
+    overflow: auto;
+    background-color: var(--bg-surface);
 }
 
 .hidden {

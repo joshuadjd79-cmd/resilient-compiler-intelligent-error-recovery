@@ -530,19 +530,89 @@
 
                             <!-- 3. AST Explorer Tab -->
                             <div class="tab-panel" id="tab-ast">
-                                <div class="panel-toolbar">
-                                    <div class="tree-controls">
-                                        <button class="btn btn-secondary btn-sm" id="astExpandAllBtn">Expand All</button>
-                                        <button class="btn btn-secondary btn-sm" id="astCollapseAllBtn">Collapse All</button>
-                                        <button class="btn btn-secondary btn-sm" id="astToggleRawBtn">Toggle Indented View</button>
+                                <div class="panel-toolbar ast-toolbar-wrapper">
+                                    <div class="ast-toolbar-left">
+                                        <!-- View Mode Selector -->
+                                        <div class="ast-view-switcher" role="group" aria-label="AST View Mode">
+                                            <button class="btn btn-secondary btn-sm active" id="astModeGraphBtn" title="Interactive 2D Graph Layout">
+                                                <span class="btn-icon">📊</span> Visual Graph
+                                            </button>
+                                            <button class="btn btn-secondary btn-sm" id="astModeTreeBtn" title="Collapsible Hierarchical Tree">
+                                                <span class="btn-icon">🌳</span> Hierarchy Tree
+                                            </button>
+                                            <button class="btn btn-secondary btn-sm" id="astModeRawBtn" title="Preformatted Indented Text">
+                                                <span class="btn-icon">💻</span> Indented Text
+                                            </button>
+                                        </div>
+
+                                        <div class="ast-btn-divider"></div>
+
+                                        <div class="ast-tree-actions hidden" id="astTreeActions">
+                                            <button class="btn btn-secondary btn-sm" id="astExpandAllBtn" title="Expand All Nodes">Expand All</button>
+                                            <button class="btn btn-secondary btn-sm" id="astCollapseAllBtn" title="Collapse All Subtrees">Collapse All</button>
+                                        </div>
+
+                                        <div class="ast-graph-actions" id="astGraphActions">
+                                            <button class="btn btn-secondary btn-sm" id="astFitZoomBtn" title="Fit to Viewport">⛶ Fit Graph</button>
+                                        </div>
+
+                                        <button class="btn btn-secondary btn-sm" id="astCopyRawBtn" title="Copy AST Text">📋 Copy AST</button>
                                     </div>
-                                    <div class="toolbar-stats" id="astNodeCountLabel">AST Tree View</div>
+
+                                    <div class="ast-toolbar-right">
+                                        <div class="ast-search-wrapper">
+                                            <span class="ast-search-icon">🔍</span>
+                                            <input type="text" id="astSearchInput" class="ast-search-input" placeholder="Search node or variable..." />
+                                        </div>
+                                        <div class="ast-meta-badges">
+                                            <span class="ast-pill-badge" id="astNodeCountStat">0 Nodes</span>
+                                            <span class="ast-pill-badge" id="astDepthStat">Depth: 0</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="ast-wrapper">
-                                    <div id="astTreeInteractive" class="ast-interactive-tree">
+
+                                <div class="ast-wrapper" id="astMainWrapper">
+                                    <!-- 1. Visual 2D Graph Diagram View -->
+                                    <div id="astGraphContainer" class="ast-graph-container">
+                                        <div class="ast-graph-viewport" id="astGraphViewport">
+                                            <svg id="astGraphSvg" class="ast-graph-svg"></svg>
+                                            <div id="astGraphNodesLayer" class="ast-graph-nodes-layer"></div>
+                                        </div>
+                                        <div class="ast-graph-floating-controls">
+                                            <button class="btn-zoom-icon" id="astZoomInBtn" title="Zoom In">+</button>
+                                            <button class="btn-zoom-icon" id="astZoomResetBtn" title="Reset Scale">1:1</button>
+                                            <button class="btn-zoom-icon" id="astZoomOutBtn" title="Zoom Out">−</button>
+                                        </div>
+                                        <div class="ast-graph-legend">
+                                            <span class="legend-item"><span class="legend-dot root"></span> Program</span>
+                                            <span class="legend-item"><span class="legend-dot control"></span> Control</span>
+                                            <span class="legend-item"><span class="legend-dot statement"></span> Statement</span>
+                                            <span class="legend-item"><span class="legend-dot expr"></span> Expression</span>
+                                            <span class="legend-item"><span class="legend-dot id"></span> Identifier</span>
+                                            <span class="legend-item"><span class="legend-dot literal"></span> Literal</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 2. Hierarchical Collapsible Tree View -->
+                                    <div id="astTreeInteractive" class="ast-interactive-tree hidden">
                                         <p class="placeholder-text">Compile source code to explore the hierarchical Abstract Syntax Tree.</p>
                                     </div>
+
+                                    <!-- 3. Raw Preformatted Text View -->
                                     <pre id="astTreeRaw" class="code-output ast-raw hidden"></pre>
+                                </div>
+
+                                <!-- Node Inspector Drawer -->
+                                <div id="astNodeInspector" class="ast-node-inspector hidden">
+                                    <div class="inspector-header">
+                                        <div class="inspector-title">
+                                            <span id="inspectorNodeIcon">📄</span>
+                                            <strong id="inspectorNodeTitle">Node Details</strong>
+                                            <span class="inspector-badge" id="inspectorNodeBadge">General</span>
+                                        </div>
+                                        <button class="btn-close-sm" id="astCloseInspectorBtn" title="Close Inspector">✕</button>
+                                    </div>
+                                    <div class="inspector-content" id="inspectorNodeContent"></div>
                                 </div>
                             </div>
 
