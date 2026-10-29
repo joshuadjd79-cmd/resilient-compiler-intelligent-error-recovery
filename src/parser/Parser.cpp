@@ -189,10 +189,10 @@ ASTNodePtr Parser::parseStatement() {
 }
 
 ASTNodePtr Parser::parsePrint() {
-    consume(TokenType::PRINT, "print");
+    Token printTok = consume(TokenType::PRINT, "print");
     ASTNodePtr expression = parseExpression();
     consume(TokenType::SEMICOLON, ";");
-    return std::make_unique<PrintNode>(std::move(expression));
+    return std::make_unique<PrintNode>(std::move(expression), printTok.line, printTok.column);
 }
 
 ASTNodePtr Parser::parseDeclaration() {
@@ -227,7 +227,7 @@ ASTNodePtr Parser::parseDeclaration() {
                 "MEDIUM",
                 "Missing expression after '='; inserted default literal '0'"
             );
-            initializer = std::make_unique<LiteralNode>("0");
+            initializer = std::make_unique<LiteralNode>("0", errToken.line, errToken.column);
             if (!check(TokenType::SEMICOLON)) {
                 synchronize();
             }
@@ -242,7 +242,9 @@ ASTNodePtr Parser::parseDeclaration() {
     return std::make_unique<DeclarationNode>(
         type,
         name.lexeme,
-        std::move(initializer)
+        std::move(initializer),
+        name.line,
+        name.column
     );
 }
 
@@ -269,7 +271,7 @@ ASTNodePtr Parser::parseAssignment() {
             "MEDIUM",
             "Missing expression in assignment; inserted default literal '0'"
         );
-        value = std::make_unique<LiteralNode>("0");
+        value = std::make_unique<LiteralNode>("0", errToken.line, errToken.column);
         if (!check(TokenType::SEMICOLON)) {
             synchronize();
         }
@@ -282,12 +284,14 @@ ASTNodePtr Parser::parseAssignment() {
 
     return std::make_unique<AssignmentNode>(
         name.lexeme,
-        std::move(value)
+        std::move(value),
+        name.line,
+        name.column
     );
 }
 
 ASTNodePtr Parser::parseIf() {
-    consume(
+    Token ifTok = consume(
         TokenType::IF,
         "if"
     );
@@ -309,7 +313,7 @@ ASTNodePtr Parser::parseIf() {
             "MEDIUM",
             "Missing condition in if statement; inserted default condition '1'"
         );
-        condition = std::make_unique<LiteralNode>("1");
+        condition = std::make_unique<LiteralNode>("1", errToken.line, errToken.column);
     }
 
     consume(
@@ -328,12 +332,14 @@ ASTNodePtr Parser::parseIf() {
     return std::make_unique<IfNode>(
         std::move(condition),
         std::move(thenBranch),
-        std::move(elseBranch)
+        std::move(elseBranch),
+        ifTok.line,
+        ifTok.column
     );
 }
 
 ASTNodePtr Parser::parseWhile() {
-    consume(
+    Token whileTok = consume(
         TokenType::WHILE,
         "while"
     );
@@ -355,7 +361,7 @@ ASTNodePtr Parser::parseWhile() {
             "MEDIUM",
             "Missing condition in while loop; inserted default condition '1'"
         );
-        condition = std::make_unique<LiteralNode>("1");
+        condition = std::make_unique<LiteralNode>("1", errToken.line, errToken.column);
     }
 
     consume(
@@ -367,17 +373,19 @@ ASTNodePtr Parser::parseWhile() {
 
     return std::make_unique<WhileNode>(
         std::move(condition),
-        std::move(body)
+        std::move(body),
+        whileTok.line,
+        whileTok.column
     );
 }
 
 ASTNodePtr Parser::parseBlock() {
-    consume(
+    Token braceTok = consume(
         TokenType::LEFT_BRACE,
         "{"
     );
 
-    auto block = std::make_unique<BlockNode>();
+    auto block = std::make_unique<BlockNode>(braceTok.line, braceTok.column);
 
     while (!check(TokenType::RIGHT_BRACE) &&
            !isAtEnd()) {
@@ -427,7 +435,9 @@ ASTNodePtr Parser::parseLogicalOr() {
         expression = std::make_unique<BinaryExpressionNode>(
             operation.lexeme,
             std::move(expression),
-            std::move(right)
+            std::move(right),
+            operation.line,
+            operation.column
         );
     }
 
@@ -444,7 +454,9 @@ ASTNodePtr Parser::parseLogicalAnd() {
         expression = std::make_unique<BinaryExpressionNode>(
             operation.lexeme,
             std::move(expression),
-            std::move(right)
+            std::move(right),
+            operation.line,
+            operation.column
         );
     }
 
@@ -462,7 +474,9 @@ ASTNodePtr Parser::parseEquality() {
         expression = std::make_unique<BinaryExpressionNode>(
             operation.lexeme,
             std::move(expression),
-            std::move(right)
+            std::move(right),
+            operation.line,
+            operation.column
         );
     }
 
@@ -482,7 +496,9 @@ ASTNodePtr Parser::parseRelational() {
         expression = std::make_unique<BinaryExpressionNode>(
             operation.lexeme,
             std::move(expression),
-            std::move(right)
+            std::move(right),
+            operation.line,
+            operation.column
         );
     }
 
@@ -500,7 +516,9 @@ ASTNodePtr Parser::parseAdditive() {
         expression = std::make_unique<BinaryExpressionNode>(
             operation.lexeme,
             std::move(expression),
-            std::move(right)
+            std::move(right),
+            operation.line,
+            operation.column
         );
     }
 
@@ -520,7 +538,9 @@ ASTNodePtr Parser::parseTerm() {
         expression = std::make_unique<BinaryExpressionNode>(
             operation.lexeme,
             std::move(expression),
-            std::move(right)
+            std::move(right),
+            operation.line,
+            operation.column
         );
     }
 
@@ -529,12 +549,15 @@ ASTNodePtr Parser::parseTerm() {
 
 ASTNodePtr Parser::parseFactor() {
     if (match(TokenType::MINUS)) {
+        Token minusTok = previous();
         ASTNodePtr operand = parseFactor();
 
         return std::make_unique<BinaryExpressionNode>(
             "unary-",
-            std::make_unique<LiteralNode>("0"),
-            std::move(operand)
+            std::make_unique<LiteralNode>("0", minusTok.line, minusTok.column),
+            std::move(operand),
+            minusTok.line,
+            minusTok.column
         );
     }
 
@@ -542,15 +565,19 @@ ASTNodePtr Parser::parseFactor() {
 }
 
 ASTNodePtr Parser::parsePrimary() {
-    if (match(TokenType::NUMBER)) {
+    if (match(TokenType::NUMBER) || match(TokenType::TRUE) || match(TokenType::FALSE)) {
         return std::make_unique<LiteralNode>(
-            previous().lexeme
+            previous().lexeme,
+            previous().line,
+            previous().column
         );
     }
 
     if (match(TokenType::IDENTIFIER)) {
         return std::make_unique<IdentifierNode>(
-            previous().lexeme
+            previous().lexeme,
+            previous().line,
+            previous().column
         );
     }
 
@@ -589,6 +616,10 @@ int Parser::synchronize() {
             check(TokenType::WHILE) ||
             check(TokenType::PRINT) ||
             check(TokenType::RIGHT_BRACE)) {
+            if (skipped == 0) {
+                current++;
+                skipped++;
+            }
             return skipped;
         }
 

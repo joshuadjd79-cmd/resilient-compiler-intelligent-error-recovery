@@ -9,6 +9,7 @@ struct OptimizationStats {
     int foldedConstants;
     int propagatedConstants;
     int eliminatedDeadInstructions;
+    int algebraicSimplifications;
 };
 
 class Optimizer {

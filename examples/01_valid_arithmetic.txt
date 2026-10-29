@@ -1,0 +1,14 @@
+// Category A: Valid Arithmetic Program
+int a = 15;
+int b = 4;
+int sum = a + b;
+int diff = a - b;
+int prod = a * b;
+int quot = a / b;
+int rem = a % b;
+print sum;
+print diff;
+print prod;
+print quot;
+print rem;
+

@@ -1,0 +1,5 @@
+// Category J: Semantic Analysis - Static Type Mismatch
+int total = 100;
+total = 3.14159;
+print total;
+

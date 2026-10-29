@@ -1,0 +1,6 @@
+// Category M: Source to Three-Address Code (TAC) and Target Assembly
+int a = 10;
+int b = 20;
+int c = a + b * 2;
+print c;
+

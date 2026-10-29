@@ -6,7 +6,7 @@
 // Fallback sample definitions for offline / direct viewing
 const SAMPLES = {
     fibonacci: {
-        name: "Fibonacci Sequence (Loop & VM Output)",
+        name: "A. Fibonacci Sequence (Iterative Control Flow)",
         code: `int count = 6;
 int t1 = 0;
 int t2 = 1;
@@ -20,8 +20,83 @@ while (count > 0) {
     count = count - 1;
 }`
     },
+    valid_arithmetic: {
+        name: "B. Valid Arithmetic (+, -, *, /, %)",
+        code: `int a = 15;
+int b = 4;
+int sum = a + b;
+int diff = a - b;
+int prod = a * b;
+int quot = a / b;
+int rem = a % b;
+print sum;
+print diff;
+print prod;
+print quot;
+print rem;`
+    },
+    loop_factorial: {
+        name: "C. Factorial Loop (While Condition & Jump)",
+        code: `int n = 5;
+int fact = 1;
+
+while (n > 1) {
+    fact = fact * n;
+    n = n - 1;
+}
+
+print fact;`
+    },
+    vars_and_assignments: {
+        name: "D. Variables & Types (int, float, bool)",
+        code: `int count = 10;
+float pi = 3.14;
+bool flag = true;
+
+count = count + 5;
+print count;`
+    },
+    precedence_nested: {
+        name: "E. Precedence & Logic (&&, ||, *, +)",
+        code: `int a = 2 + 3 * 4;
+int b = (2 + 3) * 4;
+bool cond = a < b && b > 10 || a == 14;
+
+print a;
+print b;`
+    },
+    conditional_statement: {
+        name: "F. Nested Conditionals (if-else branching)",
+        code: `int score = 85;
+
+if (score >= 90) {
+    print 1;
+} else {
+    if (score >= 80) {
+        print 2;
+    } else {
+        print 3;
+    }
+}`
+    },
+    tac_and_assembly: {
+        name: "G. TAC to x86 Assembly Translation",
+        code: `int x = 10;
+int y = 20;
+int z = x * 2 + y * 3;
+print z;`
+    },
+    optimization_demo: {
+        name: "H. Optimizer (Fold, Propagate & Simplify)",
+        code: `int a = 2 + 3 * 4;
+int b = a * 1;
+int c = b + 0;
+int d = 100 / 4 - 5;
+int e = c + d;
+print e;`
+    },
     syntax_recovery: {
-        name: "Multi-Error Recovery (4 Syntax Errors)",
+        name: "I. Multi-Error Recovery (4 Mixed Errors)",
         code: `int a = ;
 float b = 25;;
 if (b > 10 {
@@ -32,12 +107,72 @@ while (a > 0) {
     a = a - 1;
 }`
     },
+    missing_semicolon: {
+        name: "J. Missing Semicolon Insertion",
+        code: `int a = 10
+int b = 20
+int c = a + b;
+print c;`
+    },
+    unexpected_token: {
+        name: "K. Unexpected Semicolon Deletion",
+        code: `int a = 10;;
+int b = 20;
+int sum = a + b;;
+print sum;`
+    },
     missing_delimiter: {
-        name: "Missing Delimiter ')' Recovery",
+        name: "L. Missing Delimiter ')' Insertion",
         code: `int x = 10;
 if (x > 5 {
     x = x + 2;
 }`
+    },
+    panic_mode: {
+        name: "M. Panic Mode Synchronization Set",
+        code: `int x = 10;
+int @#$ invalid = 20;
+int y = 30;
+print y;`
+    },
+    nested_scopes: {
+        name: "N. Nested Scopes & Variable Shadowing",
+        code: `int x = 100;
+{
+    int x = 50;
+    int y = 20;
+    print x;
+}
+print x;`
+    },
+    semantic_undeclared: {
+        name: "O. Semantic Error: Undeclared Variable",
+        code: `int x = 10;
+y = x + 5;`
+    },
+    semantic_type_mismatch: {
+        name: "P. Semantic Error: Type Incompatibility",
+        code: `int x = 10;
+x = 3.14;`
+    },
+    // Backward compatibility aliases
+    constant_folding: {
+        name: "H. Optimizer (Fold, Propagate & Simplify)",
+        code: `int a = 2 + 3 * 4;
+int b = a * 1;
+int c = b + 0;
+int d = 100 / 4 - 5;
+int e = c + d;
+print e;`
+    },
+    arithmetic_demo: {
+        name: "E. Precedence & Logic (&&, ||, *, +)",
+        code: `int a = 2 + 3 * 4;
+int b = (2 + 3) * 4;
+bool cond = a < b && b > 10 || a == 14;
+
+print a;
+print b;`
     },
     missing_expression: {
         name: "Missing Expression Insertion",
@@ -47,57 +182,11 @@ int c = a + b;
 print c;`
     },
     extra_semicolon: {
-        name: "Redundant Semicolon Deletion",
+        name: "K. Unexpected Semicolon Deletion",
         code: `int a = 10;;
 int b = 20;
-int sum = a + b;
+int sum = a + b;;
 print sum;`
-    },
-    panic_mode: {
-        name: "Panic Mode Synchronization",
-        code: `int x = 10;
-int @#$ invalid = 20;
-int y = 30;
-print y;`
-    },
-    constant_folding: {
-        name: "Constant Folding & Propagation",
-        code: `int a = 2 + 3 * 4;
-int b = 100 / 4 - 5;
-int c = a + b;
-print c;`
-    },
-    nested_scopes: {
-        name: "Nested Scope Shadowing",
-        code: `int x = 100;
-{
-    int x = 50;
-    int y = 20;
-    print x;
-}
-print x;`
-    },
-    arithmetic_demo: {
-        name: "Operator Precedence & Logic (&&, ||, *)",
-        code: `int x = 15;
-float y = 4.5;
-float result = x + y * 2.0;
-
-if (result >= 20.0 && x != 0) {
-    result = result / 2.0;
-} else {
-    result = 0.0;
-}`
-    },
-    semantic_undeclared: {
-        name: "Semantic Error: Undeclared Variable",
-        code: `int x = 10;
-y = x + 5;`
-    },
-    semantic_type_mismatch: {
-        name: "Semantic Error: Type Mismatch",
-        code: `int x = 10;
-x = 3.14;`
     }
 };
 
@@ -114,8 +203,14 @@ const TEST_DEFINITIONS = [
     { id: "test_10", name: "Test 10: Nested Scope Shadowing", file: "tests/10_nested_scopes.txt", expectedExit: 0, description: "Proper block scoping and variable shadowing" },
     { id: "test_11", name: "Test 11: Constant Folding", file: "tests/11_constant_folding.txt", expectedExit: 0, description: "Compile-time arithmetic constant folding" },
     { id: "test_12", name: "Test 12: End-to-End VM Execution", file: "tests/12_end_to_end_exec.txt", expectedExit: 0, description: "Full pipeline execution with while loop sum on VM" },
-    { id: "test_13", name: "Test 13: Operator Precedence", file: "examples/arithmetic_demo.txt", expectedExit: 0, description: "Correct AST hierarchy for *, +, relational, and &&" },
-    { id: "test_14", name: "Test 14: Fibonacci Algorithm", file: "examples/fibonacci.txt", expectedExit: 0, description: "Complex control flow and variable updates" }
+    { id: "test_13", name: "Test 13: Operator Precedence", file: "examples/03_precedence_nested.txt", expectedExit: 0, description: "Correct AST hierarchy for *, +, relational, and &&" },
+    { id: "test_14", name: "Test 14: Fibonacci Algorithm", file: "examples/06_fibonacci.txt", expectedExit: 0, description: "Complex control flow and variable updates" },
+    { id: "test_15", name: "Test 15: Factorial While Loop", file: "examples/05_loop_computation.txt", expectedExit: 0, description: "Loop condition evaluation, decrement, and accumulator" },
+    { id: "test_16", name: "Test 16: Three-Address Code Gen", file: "examples/13_tac_and_assembly.txt", expectedExit: 0, description: "Linear IR generation with temporaries t1, t2" },
+    { id: "test_17", name: "Test 17: Algebraic Simplifications", file: "examples/12_optimization_demo.txt", expectedExit: 0, description: "Algebraic rules (x+0->x, x*1->x) combined with folding" },
+    { id: "test_18", name: "Test 18: x86-32 AT&T Assembly Gen", file: "examples/13_tac_and_assembly.txt", expectedExit: 0, description: "Native x86 AT&T assembly with stack frame and printf" },
+    { id: "test_19", name: "Test 19: Educational ISA-32 Gen", file: "examples/01_valid_arithmetic.txt", expectedExit: 0, description: "RISC-like load-store 32-bit register assembly generation" },
+    { id: "test_20", name: "Test 20: Native GCC Asm Execution", file: "examples/06_fibonacci.txt", expectedExit: 0, description: "MinGW GCC assembling, linking, and native PE binary execution" }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -186,26 +281,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
 
-                    // Define Dark Charcoal theme
-                    monaco.editor.defineTheme('resilient-dark', {
-                        base: 'vs-dark',
+                    // Define Warm Ivory & Terracotta Editor Theme
+                    monaco.editor.defineTheme('resilient-warm', {
+                        base: 'vs',
                         inherit: true,
                         rules: [
-                            { token: 'keyword', foreground: '6366f1', fontStyle: 'bold' },
-                            { token: 'number', foreground: '34d399' },
-                            { token: 'identifier', foreground: 'e2e8f0' },
-                            { token: 'comment', foreground: '525e7a', fontStyle: 'italic' },
-                            { token: 'operator', foreground: '38bdf8' },
-                            { token: 'delimiter', foreground: '94a3b8' }
+                            { token: 'keyword', foreground: 'C66B4E', fontStyle: 'bold' },
+                            { token: 'number', foreground: '3D6D4E' },
+                            { token: 'identifier', foreground: '292B28' },
+                            { token: 'comment', foreground: '8A9A7B', fontStyle: 'italic' },
+                            { token: 'operator', foreground: 'A95438', fontStyle: 'bold' },
+                            { token: 'delimiter', foreground: '77746D' }
                         ],
                         colors: {
-                            'editor.background': '#0d1017',
-                            'editor.foreground': '#e2e8f0',
-                            'editorLineNumber.foreground': '#38435d',
-                            'editorLineNumber.activeForeground': '#a5b4fc',
-                            'editor.selectionBackground': '#2d3748',
-                            'editor.inactiveSelectionBackground': '#1e2533',
-                            'editorCursor.foreground': '#38bdf8'
+                            'editor.background': '#FFFFFF',
+                            'editor.foreground': '#292B28',
+                            'editorLineNumber.foreground': '#9B978F',
+                            'editorLineNumber.activeForeground': '#C66B4E',
+                            'editor.selectionBackground': '#F0EBE1',
+                            'editor.inactiveSelectionBackground': '#F7F3EB',
+                            'editorCursor.foreground': '#C66B4E',
+                            'editor.lineHighlightBackground': '#FAF7F2'
                         }
                     });
 
@@ -213,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     monacoInstance = monaco.editor.create(wrapper, {
                         value: SAMPLES.fibonacci.code,
                         language: 'resilient',
-                        theme: 'resilient-dark',
+                        theme: 'resilient-warm',
                         automaticLayout: true,
                         fontSize: 13,
                         fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
@@ -339,6 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'tac': 'tac',
             'optimizer': 'opt',
             'bytecode': 'target',
+            'assembly': 'assembly',
             'vm': 'vm',
             'recovery': 'recovery'
         };
@@ -590,16 +687,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // 7. Update Optimizer Tab
         renderOptimizerSection(sections);
 
-        // 8. Update Target Bytecode Tab
+        // 8. Update Target Assembly Tab
+        renderAssemblySection(sections);
+
+        // 9. Update Target Bytecode Tab
         renderBytecodeSection(sections);
 
-        // 9. Update Virtual Machine Tab
+        // 10. Update Virtual Machine Tab
         renderVmSection(sections, success);
 
-        // 10. Update Pipeline Tracker Nodes
+        // 11. Update Pipeline Tracker Nodes
         updatePipelineTracker(sections, success);
 
-        // 11. Add to Session History
+        // 12. Add to Session History
         addToSessionHistory(data, elapsedMs);
 
         // Auto-switch tab based on results:
@@ -996,10 +1096,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let pathsHtml = `
             <defs>
                 <marker id="ast-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#475569" />
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#8A9A7B" />
                 </marker>
                 <marker id="ast-arrow-active" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#06b6d4" />
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#C66B4E" />
                 </marker>
             </defs>
         `;
@@ -1493,9 +1593,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderOptimizerSection(sections) {
-        const opt = sections.optSummary || { folded: 0, propagated: 0, deadEliminated: 0, total: 0 };
+        const opt = sections.optSummary || { folded: 0, propagated: 0, algebraic: 0, deadEliminated: 0, total: 0 };
         document.getElementById('optFoldedCount').innerText = opt.folded;
         document.getElementById('optPropagatedCount').innerText = opt.propagated;
+        const algEl = document.getElementById('optAlgebraicCount');
+        if (algEl) algEl.innerText = opt.algebraicSimplifications || opt.algebraic || 0;
         document.getElementById('optDeadCount').innerText = opt.deadEliminated;
         document.getElementById('optTotalCount').innerText = opt.total;
 
@@ -1506,6 +1608,120 @@ document.addEventListener('DOMContentLoaded', () => {
             optTacText = optTacText.split('=== Optimized Three-Address Code ===')[1].trim();
         }
         document.getElementById('optOptimizedTac').innerText = optTacText || sections.tac || '// Optimized TAC not generated.';
+    }
+
+    // =========================================================================
+    // Target Assembly Code Generation (x86-32 AT&T & Educational ISA-32)
+    // =========================================================================
+    let currentAsmMode = 'x86';
+    let currentAsmX86 = '';
+    let currentAsmEdu = '';
+
+    function renderAssemblySection(sections) {
+        currentAsmX86 = sections.assembly || '// x86-32 AT&T assembly was not generated or empty.';
+        currentAsmEdu = sections.eduAssembly || '// Educational ISA-32 assembly was not generated or empty.';
+
+        updateAssemblyDisplay();
+
+        const nativeBox = document.getElementById('asmNativeBox');
+        if (sections.nativeExecution) {
+            if (nativeBox) nativeBox.classList.remove('hidden');
+            const nativeOut = document.getElementById('asmNativeOutput');
+            if (nativeOut) nativeOut.innerText = sections.nativeExecution;
+            const badge = document.getElementById('asmNativeExitBadge');
+            if (badge) badge.innerText = 'Exit: 0';
+        } else {
+            if (nativeBox) nativeBox.classList.add('hidden');
+        }
+    }
+
+    function updateAssemblyDisplay() {
+        const contentEl = document.getElementById('assemblyContent');
+        const countEl = document.getElementById('asmLineCount');
+        const btnX86 = document.getElementById('asmModeX86Btn');
+        const btnEdu = document.getElementById('asmModeEduBtn');
+
+        const code = (currentAsmMode === 'x86') ? currentAsmX86 : currentAsmEdu;
+        if (contentEl) contentEl.innerText = code;
+
+        const lines = code.split('\n').filter(l => l.trim() && !l.trim().startsWith('#') && !l.trim().startsWith(';')).length;
+        if (countEl) countEl.innerText = `${lines} ${currentAsmMode === 'x86' ? 'x86-32' : 'Edu-32'} Instructions`;
+
+        if (btnX86 && btnEdu) {
+            if (currentAsmMode === 'x86') {
+                btnX86.classList.add('active');
+                btnEdu.classList.remove('active');
+            } else {
+                btnX86.classList.remove('active');
+                btnEdu.classList.add('active');
+            }
+        }
+    }
+
+    // Wire Assembly interactive controls
+    const btnAsmX86 = document.getElementById('asmModeX86Btn');
+    if (btnAsmX86) {
+        btnAsmX86.addEventListener('click', () => {
+            currentAsmMode = 'x86';
+            updateAssemblyDisplay();
+        });
+    }
+
+    const btnAsmEdu = document.getElementById('asmModeEduBtn');
+    if (btnAsmEdu) {
+        btnAsmEdu.addEventListener('click', () => {
+            currentAsmMode = 'edu';
+            updateAssemblyDisplay();
+        });
+    }
+
+    const btnAssembleAndRun = document.getElementById('btnAssembleAndRun');
+    if (btnAssembleAndRun) {
+        btnAssembleAndRun.addEventListener('click', async () => {
+            const source = getEditorSource().trim();
+            if (!source) {
+                alert('Please enter or select source code before running native execution.');
+                return;
+            }
+
+            const nativeBox = document.getElementById('asmNativeBox');
+            const nativeOut = document.getElementById('asmNativeOutput');
+            const badge = document.getElementById('asmNativeExitBadge');
+
+            if (nativeBox) nativeBox.classList.remove('hidden');
+            if (nativeOut) nativeOut.innerText = 'Assembling via GNU as & running native binary via GCC...';
+            if (badge) badge.innerText = 'Running...';
+
+            try {
+                if (backendOnline) {
+                    const res = await fetch(`${API_BASE}/api/compile`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ source, flag: '--compile-native' })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        const out = data.sections.nativeExecution || (data.sections.vmOutputLines || []).join('\n') || data.rawOutput;
+                        if (nativeOut) nativeOut.innerText = out;
+                        if (badge) badge.innerText = `Exit: ${data.exitCode || 0}`;
+                    } else {
+                        if (nativeOut) nativeOut.innerText = 'Native execution failed or timed out.';
+                        if (badge) badge.innerText = 'Exit: 1';
+                    }
+                } else {
+                    // Offline / static demo mode
+                    const matchedKey = findMatchingSampleKey(source);
+                    const db = window.DEMO_DATABASE || {};
+                    const entry = matchedKey && db[matchedKey] ? db[matchedKey] : db['fibonacci'];
+                    const out = (entry && entry.sections && entry.sections.vmOutputLines) ? entry.sections.vmOutputLines.join('\n') : "Execution finished.\nExit Code: 0";
+                    if (nativeOut) nativeOut.innerText = "=== Native Assembly Execution (via GCC Toolchain) ===\n" + out + "\n[Native Exit Code]: 0";
+                    if (badge) badge.innerText = 'Exit: 0';
+                }
+            } catch (err) {
+                if (nativeOut) nativeOut.innerText = 'Error: ' + err.message;
+                if (badge) badge.innerText = 'Exit: 1';
+            }
+        });
     }
 
     function renderBytecodeSection(sections) {
@@ -1542,22 +1758,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!success) {
             termStatus.innerText = 'HALTED (ERRORS)';
-            termStatus.style.color = '#ef4444';
-            screen.innerHTML = `<span class="term-prompt">resilient-vm$</span> <span style="color: #f87171;">Execution aborted due to compilation or semantic errors.</span>`;
+            termStatus.style.color = '#C53030';
+            screen.innerHTML = `<span class="term-prompt">resilient-vm$</span> <span style="color: #C53030;">Execution aborted due to compilation or semantic errors.</span>`;
             varTbody.innerHTML = '<tr class="empty-row"><td colspan="2">Execution aborted. No memory state.</td></tr>';
             return;
         }
 
         termStatus.innerText = 'COMPLETED (0 ERRORS)';
-        termStatus.style.color = '#10b981';
+        termStatus.style.color = '#3D6D4E';
 
         let screenHtml = `<span class="term-prompt">resilient-vm$</span> <span class="term-info">Executing target bytecode...</span>\n`;
         if (outLines.length > 0) {
             outLines.forEach(l => {
-                screenHtml += `<span style="color: #4ade80;">[OUTPUT] ${escapeHtml(l)}</span>\n`;
+                screenHtml += `<span style="color: #3D6D4E; font-weight: 600;">[OUTPUT] ${escapeHtml(l)}</span>\n`;
             });
         } else {
-            screenHtml += `<span style="color: #94a3b8;">Program finished with no print statements invoked.</span>\n`;
+            screenHtml += `<span style="color: #77746D;">Program finished with no print statements invoked.</span>\n`;
         }
         screenHtml += `<span class="term-prompt">resilient-vm$</span> <span class="term-info">Program halted cleanly.</span>`;
         screen.innerHTML = screenHtml;
@@ -1585,37 +1801,57 @@ document.addEventListener('DOMContentLoaded', () => {
             n.className = 'tracker-node';
         });
 
-        document.querySelector('.tracker-node[data-target-tab="source"]').classList.add('completed');
-        document.getElementById('node-lexer').classList.add('completed');
+        const srcNode = document.querySelector('.tracker-node[data-target-tab="source"]');
+        if (srcNode) srcNode.classList.add('completed');
+        const lexNode = document.getElementById('node-lexer');
+        if (lexNode) lexNode.classList.add('completed');
 
         const recNode = document.getElementById('node-recovery');
-        if (sections.hasRecovery && (sections.recoveryActions || []).length > 0) {
-            recNode.classList.add('recovered');
-        } else {
-            recNode.classList.add('completed');
+        if (recNode) {
+            if (sections.hasRecovery && (sections.recoveryActions || []).length > 0) {
+                recNode.classList.add('recovered');
+            } else {
+                recNode.classList.add('completed');
+            }
         }
 
-        if (sections.ast && !sections.ast.includes('<null AST>')) {
-            document.getElementById('node-ast').classList.add('completed');
-        } else {
-            document.getElementById('node-ast').classList.add('failed');
+        const astNode = document.getElementById('node-ast');
+        if (astNode) {
+            if (sections.ast && !sections.ast.includes('<null AST>')) {
+                astNode.classList.add('completed');
+            } else {
+                astNode.classList.add('failed');
+            }
         }
 
         const semNode = document.getElementById('node-semantics');
-        if (sections.hasSemanticErrors) {
-            semNode.classList.add('failed');
-            document.getElementById('node-tac').classList.add('failed');
-            document.getElementById('node-opt').classList.add('failed');
-            document.getElementById('node-target').classList.add('failed');
-            document.getElementById('node-vm').classList.add('failed');
-            return;
+        if (semNode) {
+            if (sections.hasSemanticErrors) {
+                semNode.classList.add('failed');
+                const tNode = document.getElementById('node-tac');
+                if (tNode) tNode.classList.add('failed');
+                const oNode = document.getElementById('node-opt');
+                if (oNode) oNode.classList.add('failed');
+                const aNode = document.getElementById('node-assembly');
+                if (aNode) aNode.classList.add('failed');
+                const vNode = document.getElementById('node-vm');
+                if (vNode) vNode.classList.add('failed');
+                return;
+            }
+            semNode.classList.add('completed');
         }
 
-        semNode.classList.add('completed');
-        document.getElementById('node-tac').classList.add(sections.tac ? 'completed' : 'failed');
-        document.getElementById('node-opt').classList.add(sections.opt ? 'completed' : 'failed');
-        document.getElementById('node-target').classList.add(sections.target ? 'completed' : 'failed');
-        document.getElementById('node-vm').classList.add(success ? 'completed' : 'failed');
+        const tacNode = document.getElementById('node-tac');
+        if (tacNode) tacNode.classList.add(sections.tac ? 'completed' : 'failed');
+
+        const optNode = document.getElementById('node-opt');
+        if (optNode) optNode.classList.add(sections.opt ? 'completed' : 'failed');
+
+        const asmNode = document.getElementById('node-assembly');
+        if (asmNode) asmNode.classList.add(sections.assembly ? 'completed' : 'failed');
+
+        const vmNode = document.getElementById('node-vm');
+        if (vmNode) vmNode.classList.add(success ? 'completed' : 'failed');
     }
 
     function addToSessionHistory(data, elapsedMs) {
@@ -1756,7 +1992,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const text = activePanel.innerText;
                 navigator.clipboard.writeText(text).then(() => {
                     const origSvg = copyActiveTabBtn.innerHTML;
-                    copyActiveTabBtn.innerHTML = '<span style="color: #34d399; font-size: 11px;">✓</span>';
+                    copyActiveTabBtn.innerHTML = '<span style="color: #3D6D4E; font-size: 11px;">✓</span>';
                     setTimeout(() => copyActiveTabBtn.innerHTML = origSvg, 1400);
                 });
             }

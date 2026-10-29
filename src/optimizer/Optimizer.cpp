@@ -5,7 +5,7 @@
 #include <unordered_set>
 #include <iostream>
 
-Optimizer::Optimizer() : stats{0, 0, 0} {}
+Optimizer::Optimizer() : stats{0, 0, 0, 0} {}
 
 bool Optimizer::isNumber(const std::string& str) const {
     if (str.empty()) return false;
@@ -35,7 +35,6 @@ double Optimizer::parseNumber(const std::string& str) const {
 std::string Optimizer::formatNumber(double val, bool asFloat) const {
     if (asFloat) {
         std::string s = std::to_string(val);
-        // Trim trailing zeros after decimal point if present
         s.erase(s.find_last_not_of('0') + 1, std::string::npos);
         if (s.back() == '.') s += "0";
         return s;
@@ -44,10 +43,10 @@ std::string Optimizer::formatNumber(double val, bool asFloat) const {
 }
 
 std::vector<TACInstruction> Optimizer::optimize(const std::vector<TACInstruction>& input) {
-    stats = {0, 0, 0};
+    stats = {0, 0, 0, 0};
     std::vector<TACInstruction> current = input;
 
-    // Pass 1: Constant Folding & Simple Constant Propagation in basic blocks
+    // Pass 1: Constant Folding, Propagation, and Algebraic Simplification
     std::vector<TACInstruction> pass1;
     std::unordered_map<std::string, std::string> knownConstants;
 
@@ -119,6 +118,54 @@ std::vector<TACInstruction> Optimizer::optimize(const std::vector<TACInstruction
                 folded.arg2 = "";
                 stats.foldedConstants++;
             }
+        } else {
+            // Algebraic Simplification (Identity Laws & Zero Laws)
+            if (folded.op == TACOp::ADD) {
+                if (folded.arg1 == "0" || folded.arg1 == "0.0") {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg1 = folded.arg2;
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                } else if (folded.arg2 == "0" || folded.arg2 == "0.0") {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                }
+            } else if (folded.op == TACOp::SUB) {
+                if (folded.arg2 == "0" || folded.arg2 == "0.0") {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                } else if (folded.arg1 == folded.arg2) {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg1 = "0";
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                }
+            } else if (folded.op == TACOp::MUL) {
+                if (folded.arg1 == "1" || folded.arg1 == "1.0") {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg1 = folded.arg2;
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                } else if (folded.arg2 == "1" || folded.arg2 == "1.0") {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                } else if (folded.arg1 == "0" || folded.arg1 == "0.0" ||
+                           folded.arg2 == "0" || folded.arg2 == "0.0") {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg1 = "0";
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                }
+            } else if (folded.op == TACOp::DIV) {
+                if (folded.arg2 == "1" || folded.arg2 == "1.0") {
+                    folded.op = TACOp::ASSIGN;
+                    folded.arg2 = "";
+                    stats.algebraicSimplifications++;
+                }
+            }
         }
 
         // Track constants for downstream propagation
@@ -132,7 +179,6 @@ std::vector<TACInstruction> Optimizer::optimize(const std::vector<TACInstruction
     }
 
     // Pass 2: Dead Temporary Elimination & Identity Assignment Removal
-    // Identify all variables and temporaries that are read
     std::unordered_set<std::string> readVariables;
     for (const auto& inst : pass1) {
         if (!inst.arg1.empty() && !isNumber(inst.arg1)) {
@@ -172,8 +218,9 @@ void Optimizer::printReport() const {
     std::cout << "\n=== Optimization Summary ===\n";
     std::cout << "  Constant Operations Folded     : " << stats.foldedConstants << "\n";
     std::cout << "  Constant Operands Propagated   : " << stats.propagatedConstants << "\n";
+    std::cout << "  Algebraic Simplifications      : " << stats.algebraicSimplifications << "\n";
     std::cout << "  Dead Instructions Eliminated   : " << stats.eliminatedDeadInstructions << "\n";
     std::cout << "  Total Optimizations Applied    : "
-              << (stats.foldedConstants + stats.propagatedConstants + stats.eliminatedDeadInstructions)
+              << (stats.foldedConstants + stats.propagatedConstants + stats.algebraicSimplifications + stats.eliminatedDeadInstructions)
               << "\n";
 }

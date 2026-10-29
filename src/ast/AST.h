@@ -7,6 +7,8 @@
 
 class ASTNode {
 public:
+    int line = 0;
+    int column = 0;
     virtual ~ASTNode() = default;
     virtual void print(int indent = 0) const = 0;
 };
@@ -24,7 +26,7 @@ class LiteralNode : public ASTNode {
 public:
     std::string value;
 
-    explicit LiteralNode(const std::string& value);
+    explicit LiteralNode(const std::string& value, int line = 0, int column = 0);
 
     void print(int indent = 0) const override;
 };
@@ -33,7 +35,7 @@ class IdentifierNode : public ASTNode {
 public:
     std::string name;
 
-    explicit IdentifierNode(const std::string& name);
+    explicit IdentifierNode(const std::string& name, int line = 0, int column = 0);
 
     void print(int indent = 0) const override;
 };
@@ -47,7 +49,9 @@ public:
     BinaryExpressionNode(
         const std::string& operatorSymbol,
         ASTNodePtr left,
-        ASTNodePtr right
+        ASTNodePtr right,
+        int line = 0,
+        int column = 0
     );
 
     void print(int indent = 0) const override;
@@ -62,7 +66,9 @@ public:
     DeclarationNode(
         const std::string& type,
         const std::string& name,
-        ASTNodePtr initializer
+        ASTNodePtr initializer,
+        int line = 0,
+        int column = 0
     );
 
     void print(int indent = 0) const override;
@@ -75,7 +81,9 @@ public:
 
     AssignmentNode(
         const std::string& name,
-        ASTNodePtr value
+        ASTNodePtr value,
+        int line = 0,
+        int column = 0
     );
 
     void print(int indent = 0) const override;
@@ -84,6 +92,8 @@ public:
 class BlockNode : public ASTNode {
 public:
     std::vector<ASTNodePtr> statements;
+
+    explicit BlockNode(int line = 0, int column = 0);
 
     void print(int indent = 0) const override;
 };
@@ -97,7 +107,9 @@ public:
     IfNode(
         ASTNodePtr condition,
         ASTNodePtr thenBranch,
-        ASTNodePtr elseBranch
+        ASTNodePtr elseBranch,
+        int line = 0,
+        int column = 0
     );
 
     void print(int indent = 0) const override;
@@ -110,7 +122,9 @@ public:
 
     WhileNode(
         ASTNodePtr condition,
-        ASTNodePtr body
+        ASTNodePtr body,
+        int line = 0,
+        int column = 0
     );
 
     void print(int indent = 0) const override;
@@ -120,7 +134,7 @@ class PrintNode : public ASTNode {
 public:
     ASTNodePtr expression;
 
-    explicit PrintNode(ASTNodePtr expression);
+    explicit PrintNode(ASTNodePtr expression, int line = 0, int column = 0);
 
     void print(int indent = 0) const override;
 };

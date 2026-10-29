@@ -1,0 +1,12 @@
+// Category K: Multi-Strategy Error Recovery on Malformed Source
+int a = ;
+float b = 25;;
+if (b > 10 {
+    b = b + 5;
+    a = 99
+}
+while (a > 0) {
+    a = a - 1;
+}
+print a;
+

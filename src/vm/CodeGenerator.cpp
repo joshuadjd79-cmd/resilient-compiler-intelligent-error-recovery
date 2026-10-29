@@ -29,7 +29,17 @@ std::vector<VMInstruction> CodeGenerator::generate(const std::vector<TACInstruct
     std::vector<std::pair<int, std::string>> pendingJumps; // <bytecodeIndex, labelName>
 
     auto pushOperand = [&](const std::string& operand) {
-        if (isNumber(operand)) {
+        if (operand == "true") {
+            VMInstruction inst;
+            inst.op = OpCode::PUSH_CONST;
+            inst.constVal = 1.0;
+            bytecode.push_back(inst);
+        } else if (operand == "false") {
+            VMInstruction inst;
+            inst.op = OpCode::PUSH_CONST;
+            inst.constVal = 0.0;
+            bytecode.push_back(inst);
+        } else if (isNumber(operand)) {
             VMInstruction inst;
             inst.op = OpCode::PUSH_CONST;
             inst.constVal = parseNumber(operand);

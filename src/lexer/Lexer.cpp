@@ -42,6 +42,17 @@ void Lexer::skipComment() {
         while (currentChar() != '\n' && currentChar() != '\0') {
             advance();
         }
+    } else if (currentChar() == '/' && peekChar() == '*') {
+        advance(); // skip '/'
+        advance(); // skip '*'
+        while (currentChar() != '\0') {
+            if (currentChar() == '*' && peekChar() == '/') {
+                advance(); // skip '*'
+                advance(); // skip '/'
+                break;
+            }
+            advance();
+        }
     }
 }
 
@@ -63,7 +74,9 @@ Token Lexer::readIdentifierOrKeyword() {
         {"if", TokenType::IF},
         {"else", TokenType::ELSE},
         {"while", TokenType::WHILE},
-        {"print", TokenType::PRINT}
+        {"print", TokenType::PRINT},
+        {"true", TokenType::TRUE},
+        {"false", TokenType::FALSE}
     };
 
     auto it = keywords.find(value);
@@ -170,7 +183,7 @@ std::vector<Token> Lexer::tokenize() {
             continue;
         }
 
-        if (currentChar() == '/' && peekChar() == '/') {
+        if (currentChar() == '/' && (peekChar() == '/' || peekChar() == '*')) {
             skipComment();
             continue;
         }

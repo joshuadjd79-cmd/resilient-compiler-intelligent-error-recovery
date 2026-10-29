@@ -1,0 +1,6 @@
+// Category G: Syntax Recovery - Missing Semicolon
+int a = 100
+int b = 200;
+int sum = a + b;
+print sum;
+

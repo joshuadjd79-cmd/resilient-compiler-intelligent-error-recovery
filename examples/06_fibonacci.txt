@@ -1,0 +1,14 @@
+// Category F: Fibonacci Sequence Iterative Algorithm
+int count = 6;
+int t1 = 0;
+int t2 = 1;
+int next = 0;
+
+while (count > 0) {
+    print t1;
+    next = t1 + t2;
+    t1 = t2;
+    t2 = next;
+    count = count - 1;
+}
+

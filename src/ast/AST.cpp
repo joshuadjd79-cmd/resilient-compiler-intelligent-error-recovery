@@ -16,16 +16,22 @@ void ProgramNode::print(int indent) const {
     }
 }
 
-LiteralNode::LiteralNode(const std::string& value)
-    : value(value) {}
+LiteralNode::LiteralNode(const std::string& value, int line, int column)
+    : value(value) {
+    this->line = line;
+    this->column = column;
+}
 
 void LiteralNode::print(int indent) const {
     printIndent(indent);
     std::cout << "Literal: " << value << "\n";
 }
 
-IdentifierNode::IdentifierNode(const std::string& name)
-    : name(name) {}
+IdentifierNode::IdentifierNode(const std::string& name, int line, int column)
+    : name(name) {
+    this->line = line;
+    this->column = column;
+}
 
 void IdentifierNode::print(int indent) const {
     printIndent(indent);
@@ -35,11 +41,16 @@ void IdentifierNode::print(int indent) const {
 BinaryExpressionNode::BinaryExpressionNode(
     const std::string& operatorSymbol,
     ASTNodePtr left,
-    ASTNodePtr right
+    ASTNodePtr right,
+    int line,
+    int column
 )
     : operatorSymbol(operatorSymbol),
       left(std::move(left)),
-      right(std::move(right)) {}
+      right(std::move(right)) {
+    this->line = line;
+    this->column = column;
+}
 
 void BinaryExpressionNode::print(int indent) const {
     printIndent(indent);
@@ -63,11 +74,16 @@ void BinaryExpressionNode::print(int indent) const {
 DeclarationNode::DeclarationNode(
     const std::string& type,
     const std::string& name,
-    ASTNodePtr initializer
+    ASTNodePtr initializer,
+    int line,
+    int column
 )
     : type(type),
       name(name),
-      initializer(std::move(initializer)) {}
+      initializer(std::move(initializer)) {
+    this->line = line;
+    this->column = column;
+}
 
 void DeclarationNode::print(int indent) const {
     printIndent(indent);
@@ -80,10 +96,15 @@ void DeclarationNode::print(int indent) const {
 
 AssignmentNode::AssignmentNode(
     const std::string& name,
-    ASTNodePtr value
+    ASTNodePtr value,
+    int line,
+    int column
 )
     : name(name),
-      value(std::move(value)) {}
+      value(std::move(value)) {
+    this->line = line;
+    this->column = column;
+}
 
 void AssignmentNode::print(int indent) const {
     printIndent(indent);
@@ -95,6 +116,11 @@ void AssignmentNode::print(int indent) const {
         printIndent(indent + 1);
         std::cout << "<null expression>\n";
     }
+}
+
+BlockNode::BlockNode(int line, int column) {
+    this->line = line;
+    this->column = column;
 }
 
 void BlockNode::print(int indent) const {
@@ -111,32 +137,31 @@ void BlockNode::print(int indent) const {
 IfNode::IfNode(
     ASTNodePtr condition,
     ASTNodePtr thenBranch,
-    ASTNodePtr elseBranch
+    ASTNodePtr elseBranch,
+    int line,
+    int column
 )
     : condition(std::move(condition)),
       thenBranch(std::move(thenBranch)),
-      elseBranch(std::move(elseBranch)) {}
+      elseBranch(std::move(elseBranch)) {
+    this->line = line;
+    this->column = column;
+}
 
 void IfNode::print(int indent) const {
     printIndent(indent);
     std::cout << "If\n";
 
-    printIndent(indent + 1);
-    std::cout << "Condition\n";
     if (condition) {
+        printIndent(indent + 1);
+        std::cout << "Condition\n";
         condition->print(indent + 2);
-    } else {
-        printIndent(indent + 2);
-        std::cout << "<null condition>\n";
     }
 
-    printIndent(indent + 1);
-    std::cout << "Then\n";
     if (thenBranch) {
+        printIndent(indent + 1);
+        std::cout << "Then\n";
         thenBranch->print(indent + 2);
-    } else {
-        printIndent(indent + 2);
-        std::cout << "<null branch>\n";
     }
 
     if (elseBranch) {
@@ -148,40 +173,43 @@ void IfNode::print(int indent) const {
 
 WhileNode::WhileNode(
     ASTNodePtr condition,
-    ASTNodePtr body
+    ASTNodePtr body,
+    int line,
+    int column
 )
     : condition(std::move(condition)),
-      body(std::move(body)) {}
+      body(std::move(body)) {
+    this->line = line;
+    this->column = column;
+}
 
 void WhileNode::print(int indent) const {
     printIndent(indent);
     std::cout << "While\n";
 
-    printIndent(indent + 1);
-    std::cout << "Condition\n";
     if (condition) {
+        printIndent(indent + 1);
+        std::cout << "Condition\n";
         condition->print(indent + 2);
-    } else {
-        printIndent(indent + 2);
-        std::cout << "<null condition>\n";
     }
 
-    printIndent(indent + 1);
-    std::cout << "Body\n";
     if (body) {
+        printIndent(indent + 1);
+        std::cout << "Body\n";
         body->print(indent + 2);
-    } else {
-        printIndent(indent + 2);
-        std::cout << "<null body>\n";
     }
 }
 
-PrintNode::PrintNode(ASTNodePtr expression)
-    : expression(std::move(expression)) {}
+PrintNode::PrintNode(ASTNodePtr expression, int line, int column)
+    : expression(std::move(expression)) {
+    this->line = line;
+    this->column = column;
+}
 
 void PrintNode::print(int indent) const {
     printIndent(indent);
     std::cout << "Print\n";
+
     if (expression) {
         expression->print(indent + 1);
     } else {

@@ -1,0 +1,9 @@
+// Category E: Loop / Repeated Computation (Factorial)
+int n = 5;
+int fact = 1;
+while (n > 1) {
+    fact = fact * n;
+    n = n - 1;
+}
+print fact;
+

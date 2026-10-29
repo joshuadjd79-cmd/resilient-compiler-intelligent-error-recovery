@@ -1,0 +1,5 @@
+// Category I: Semantic Analysis - Undeclared Identifier Rejection
+int a = 10;
+a = b + 5;
+print a;
+

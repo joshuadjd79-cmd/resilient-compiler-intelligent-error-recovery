@@ -1,0 +1,8 @@
+// Category L: Constant Folding, Propagation & Algebraic Simplification
+int base = 10 + 20 * 2;
+int mult = base * 1;
+int zero = mult * 0;
+int addZero = base + 0;
+int unused = 999;
+print addZero;
+

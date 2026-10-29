@@ -41,24 +41,31 @@
                     <span>Sample:</span>
                 </label>
                 <select id="sampleSelect" class="select-input" title="Choose a pre-configured sample program">
-                    <optgroup label="Algorithms &amp; VM Execution">
-                        <option value="fibonacci" selected>Fibonacci Sequence (Loop &amp; VM Output)</option>
-                        <option value="arithmetic_demo">Operator Precedence &amp; Logic (&&, ||, *)</option>
+                    <optgroup label="Algorithms &amp; Native Execution">
+                        <option value="fibonacci" selected>A. Fibonacci Sequence (Iterative Control Flow)</option>
+                        <option value="valid_arithmetic">B. Valid Arithmetic (+, -, *, /, %)</option>
+                        <option value="loop_factorial">C. Factorial Loop (While Condition &amp; Jump)</option>
+                    </optgroup>
+                    <optgroup label="Language Constructs &amp; Precedence">
+                        <option value="vars_and_assignments">D. Variables &amp; Types (int, float, bool)</option>
+                        <option value="precedence_nested">E. Precedence &amp; Logic (&amp;&amp;, ||, *, +)</option>
+                        <option value="conditional_statement">F. Nested Conditionals (if-else branching)</option>
+                    </optgroup>
+                    <optgroup label="Intermediate Code &amp; Target Assembly">
+                        <option value="tac_and_assembly">G. TAC to x86 Assembly Translation</option>
+                        <option value="optimization_demo">H. Optimizer (Fold, Propagate &amp; Simplify)</option>
                     </optgroup>
                     <optgroup label="Intelligent Error Recovery Demos">
-                        <option value="syntax_recovery">Multi-Error Recovery (4 Syntax Errors)</option>
-                        <option value="missing_delimiter">Missing Delimiter ')' Recovery</option>
-                        <option value="missing_expression">Missing Expression Insertion</option>
-                        <option value="extra_semicolon">Redundant Semicolon Deletion</option>
-                        <option value="panic_mode">Panic Mode Synchronization</option>
-                    </optgroup>
-                    <optgroup label="Optimization &amp; Intermediate Code">
-                        <option value="constant_folding">Constant Folding &amp; Propagation</option>
+                        <option value="syntax_recovery">I. Multi-Error Recovery (4 Mixed Errors)</option>
+                        <option value="missing_semicolon">J. Missing Semicolon Insertion</option>
+                        <option value="unexpected_token">K. Unexpected Semicolon Deletion</option>
+                        <option value="missing_delimiter">L. Missing Delimiter ')' Insertion</option>
+                        <option value="panic_mode">M. Panic Mode Synchronization Set</option>
                     </optgroup>
                     <optgroup label="Semantics &amp; Scope Diagnostics">
-                        <option value="nested_scopes">Nested Scope Shadowing</option>
-                        <option value="semantic_undeclared">Semantic Error: Undeclared Variable</option>
-                        <option value="semantic_type_mismatch">Semantic Error: Type Mismatch</option>
+                        <option value="nested_scopes">N. Nested Scopes &amp; Variable Shadowing</option>
+                        <option value="semantic_undeclared">O. Semantic Error: Undeclared Variable</option>
+                        <option value="semantic_type_mismatch">P. Semantic Error: Type Incompatibility</option>
                     </optgroup>
                 </select>
             </div>
@@ -258,14 +265,14 @@
                         <span class="node-label">Optimizer</span>
                     </div>
                     <div class="tracker-line"></div>
-                    <div class="tracker-node" id="node-target" data-target-tab="target" title="Target Bytecode Generation">
+                    <div class="tracker-node highlight-asm" id="node-assembly" data-target-tab="assembly" title="Target Assembly Code Generation">
                         <span class="node-step">08</span>
-                        <span class="node-label">Bytecode</span>
+                        <span class="node-label">Assembly</span>
                     </div>
                     <div class="tracker-line"></div>
-                    <div class="tracker-node" id="node-vm" data-target-tab="vm" title="Virtual Machine Execution">
+                    <div class="tracker-node" id="node-vm" data-target-tab="vm" title="VM Bytecode &amp; Native Execution">
                         <span class="node-step">09</span>
-                        <span class="node-label">VM</span>
+                        <span class="node-label">Execution</span>
                     </div>
                 </div>
             </section>
@@ -347,6 +354,11 @@
                                 <button class="tab-btn" data-tab="opt" role="tab">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                                     <span>Optimizer</span>
+                                </button>
+                                <button class="tab-btn highlight-asm" data-tab="assembly" role="tab">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    <span>Assembly</span>
+                                    <span class="tab-badge warm-badge">x86</span>
                                 </button>
                                 <button class="tab-btn" data-tab="target" role="tab">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/></svg>
@@ -660,7 +672,7 @@
 
                             <!-- 6. Optimizer Comparison Tab -->
                             <div class="tab-panel" id="tab-opt">
-                                <div class="opt-metrics-grid">
+                                <div class="opt-metrics-grid" style="grid-template-columns: repeat(5, 1fr);">
                                     <div class="opt-metric-card">
                                         <span class="opt-metric-val" id="optFoldedCount">0</span>
                                         <span class="opt-metric-name">Constant Ops Folded</span>
@@ -668,6 +680,10 @@
                                     <div class="opt-metric-card">
                                         <span class="opt-metric-val" id="optPropagatedCount">0</span>
                                         <span class="opt-metric-name">Operands Propagated</span>
+                                    </div>
+                                    <div class="opt-metric-card">
+                                        <span class="opt-metric-val" id="optAlgebraicCount">0</span>
+                                        <span class="opt-metric-name">Algebraic Simplifications</span>
                                     </div>
                                     <div class="opt-metric-card">
                                         <span class="opt-metric-val" id="optDeadCount">0</span>
@@ -687,6 +703,38 @@
                                     <div class="diff-col">
                                         <div class="diff-col-header">Optimized Three-Address Code</div>
                                         <pre id="optOptimizedTac" class="code-output diff-code">Optimized TAC instructions</pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. Target Assembly Code Tab -->
+                            <div class="tab-panel" id="tab-assembly">
+                                <div class="assembly-layout">
+                                    <div class="assembly-toolbar">
+                                        <div class="asm-mode-group">
+                                            <button class="btn btn-secondary btn-sm active" id="asmModeX86Btn">x86-32 AT&amp;T (MinGW GCC)</button>
+                                            <button class="btn btn-secondary btn-sm" id="asmModeEduBtn">Educational ISA-32</button>
+                                        </div>
+                                        <div style="display: flex; gap: 8px; align-items: center;">
+                                            <span class="toolbar-stats" id="asmLineCount">0 assembly instructions</span>
+                                            <button class="btn btn-primary btn-sm" id="btnAssembleAndRun">
+                                                <span>⚡ Assemble &amp; Run Native (GCC)</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="asm-run-banner hidden" id="asmNativeBox">
+                                        <div class="asm-run-header">
+                                            <div class="asm-run-title">
+                                                <span>🖥️ Native Machine Execution Output (via MinGW GCC Assembler)</span>
+                                            </div>
+                                            <span class="meta-badge" id="asmNativeExitBadge">Exit: 0</span>
+                                        </div>
+                                        <pre class="asm-run-output" id="asmNativeOutput">Standby.</pre>
+                                    </div>
+
+                                    <div class="code-output-container" style="flex: 1; display: flex;">
+                                        <pre id="assemblyContent" class="code-output asm-output" style="flex: 1;">// Target Assembly code will appear here after compilation.</pre>
                                     </div>
                                 </div>
                             </div>
@@ -883,7 +931,7 @@ while (a > 0) {
 
                     <div class="test-dashboard-header">
                         <div class="test-stat-box">
-                            <span class="stat-number" id="testPassCount">14</span>
+                            <span class="stat-number" id="testPassCount">20</span>
                             <span class="stat-title">Tests Passing</span>
                         </div>
                         <div class="test-stat-box">
@@ -896,7 +944,7 @@ while (a > 0) {
                         </div>
                         <button class="btn btn-primary" id="btnExecuteAllTests">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            Run All 14 Tests Live
+                            Run All 20 Tests Live
                         </button>
                     </div>
 
