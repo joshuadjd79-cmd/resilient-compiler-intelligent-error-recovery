@@ -6,7 +6,7 @@ echo.
 echo Checking compiler executable...
 if not exist "resilientc.exe" (
     echo Building resilientc.exe with g++...
-    g++ -std=c++17 -Wall -Wextra src/main.cpp src/lexer/Lexer.cpp src/ast/AST.cpp src/parser/Parser.cpp src/recovery/RecoveryManager.cpp src/recovery/RecoveryScorer.cpp src/semantics/SymbolTable.cpp src/semantics/SemanticAnalyzer.cpp src/ir/TAC.cpp src/ir/IRGenerator.cpp src/optimizer/Optimizer.cpp src/vm/VM.cpp src/vm/CodeGenerator.cpp -o resilientc.exe
+    g++ -std=c++17 -Wall -Wextra src/main.cpp src/lexer/Lexer.cpp src/ast/AST.cpp src/parser/Parser.cpp src/recovery/RecoveryManager.cpp src/recovery/RecoveryScorer.cpp src/semantics/SymbolTable.cpp src/semantics/SemanticAnalyzer.cpp src/ir/TAC.cpp src/ir/IRGenerator.cpp src/optimizer/Optimizer.cpp src/codegen/AssemblyGenerator.cpp src/vm/VM.cpp src/vm/CodeGenerator.cpp -o resilientc.exe
     if errorlevel 1 (
         echo [ERROR] Compilation failed!
         pause
