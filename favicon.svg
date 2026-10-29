@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="rcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97A5C"/>
+      <stop offset="100%" stop-color="#B25539"/>
+    </linearGradient>
+  </defs>
+  <!-- Terracotta Squircle -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#rcGrad)" stroke="#8F3F27" stroke-width="1.5"/>
+  <!-- Top Layer (Diamond) -->
+  <polygon points="32,15 50,23 32,31 14,23" fill="#FFFFFF" stroke="#F7F3EB" stroke-width="1"/>
+  <!-- Resilient Recovery Node (Sage dot) -->
+  <circle cx="32" cy="23" r="3.2" fill="#8A9A7B"/>
+  <!-- Middle Layer Chevron -->
+  <polyline points="14,33 32,41 50,33" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bottom Layer Chevron -->
+  <polyline points="14,43 32,51 50,43" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
