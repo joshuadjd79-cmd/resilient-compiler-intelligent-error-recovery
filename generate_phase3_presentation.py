@@ -173,12 +173,17 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
         c.drawImage(vit_logo, 50, h_pts - 70, width=220, height=45, preserveAspectRatio=True, mask='auto')
 
     # Project Category Pill
+    pill_w = 430
+    pill_h = 26
+    pill_x = 50
+    pill_y = h_pts - 114
     c.setFillColor(C_CARD_DARK)
     c.setStrokeColor(C_ACCENT_TERRA)
-    c.roundRect(50, h_pts - 110, 360, 26, 4, fill=1, stroke=1)
-    p_pill = Paragraph("<b>COMPILER DESIGN LABORATORY (CSE3002) — PHASE 3 FINAL DEFENSE</b>", s_dark['kicker'])
-    p_pill.wrapOn(c, 350, 20)
-    p_pill.drawOn(c, 58, h_pts - 104)
+    c.setLineWidth(1.2)
+    c.roundRect(pill_x, pill_y, pill_w, pill_h, 4, fill=1, stroke=1)
+    p_pill = Paragraph("<b>COMPILER DESIGN LABORATORY (CSE3002) &nbsp;|&nbsp; PHASE 3 FINAL DEFENSE</b>", s_dark['kicker'])
+    pw, ph = p_pill.wrap(pill_w - 20, pill_h)
+    p_pill.drawOn(c, pill_x + 14, pill_y + (pill_h - ph) / 2)
 
     # Main Title
     p_main_title = Paragraph("Resilient Compiler with<br/>Intelligent Error Recovery", ParagraphStyle('MTitle', fontName='Helvetica-Bold', fontSize=32, leading=38, textColor=C_TEXT_LIGHT))
