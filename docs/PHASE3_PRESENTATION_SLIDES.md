@@ -1,5 +1,5 @@
 # Resilient Compiler — Phase 3: Final Project Review & Defense
-**Compiler Design Laboratory Capstone Evaluation (CSE3002)**  
+**Compiler Design Laboratory Capstone Evaluation (BCSE302L)**  
 **Presenter:** D JOSHUA DANIEL | **Registration Number:** 24BCE0436  
 **Institution:** Vellore Institute of Technology (VIT), Vellore  
 **Repository:** [GitHub Repository](https://github.com/joshuadjd79-cmd/resilient-compiler-intelligent-error-recovery)  

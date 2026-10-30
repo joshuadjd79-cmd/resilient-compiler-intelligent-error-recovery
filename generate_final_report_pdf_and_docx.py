@@ -65,7 +65,7 @@ class AcademicReportCanvas(canvas.Canvas):
             # Subtle top running header
             self.setFont("Times-Italic", 8.5)
             self.drawString(BORDER_MARGIN + 12, PAGE_HEIGHT - BORDER_MARGIN + 6, "Resilient Compiler with Intelligent Error Recovery — Final Project Report")
-            self.drawRightString(PAGE_WIDTH - BORDER_MARGIN - 12, PAGE_HEIGHT - BORDER_MARGIN + 6, "VIT — BCSE307P")
+            self.drawRightString(PAGE_WIDTH - BORDER_MARGIN - 12, PAGE_HEIGHT - BORDER_MARGIN + 6, "VIT — BCSE302L")
         self.restoreState()
 
 def build_pdf_report(filename="Resilient_Compiler_Final_Project_Report.pdf"):
@@ -157,7 +157,7 @@ def build_pdf_report(filename="Resilient_Compiler_Final_Project_Report.pdf"):
     story.append(Paragraph("VELLORE INSTITUTE OF TECHNOLOGY", title_style))
     story.append(Paragraph("SCHOOL OF COMPUTER SCIENCE AND ENGINEERING", subtitle_style))
     story.append(Spacer(1, 30))
-    story.append(Paragraph("COMPILER DESIGN LABORATORY (BCSE307P)", subtitle_style))
+    story.append(Paragraph("COMPILER DESIGN LABORATORY (BCSE302L)", subtitle_style))
     story.append(Spacer(1, 15))
     story.append(Paragraph("FINAL PROJECT REPORT", title_style))
     story.append(Paragraph("RESILIENT COMPILER WITH INTELLIGENT ERROR RECOVERY", subtitle_style))
@@ -167,7 +167,7 @@ def build_pdf_report(filename="Resilient_Compiler_Final_Project_Report.pdf"):
         [Paragraph("<b>STUDENT NAME:</b>", table_cell_bold), Paragraph("D JOSHUA DANIEL", table_cell)],
         [Paragraph("<b>REGISTER NUMBER:</b>", table_cell_bold), Paragraph("24BCE0436", table_cell)],
         [Paragraph("<b>DEGREE & BRANCH:</b>", table_cell_bold), Paragraph("B.Tech Computer Science and Engineering", table_cell)],
-        [Paragraph("<b>COURSE CODE & TITLE:</b>", table_cell_bold), Paragraph("BCSE307P — Compiler Design Laboratory", table_cell)],
+        [Paragraph("<b>COURSE CODE & TITLE:</b>", table_cell_bold), Paragraph("BCSE302L — Compiler Design Laboratory", table_cell)],
         [Paragraph("<b>LAB SLOT:</b>", table_cell_bold), Paragraph("L25 + L26", table_cell)],
         [Paragraph("<b>FACULTY IN-CHARGE:</b>", table_cell_bold), Paragraph("Prof. RANJITH KUMAR S", table_cell)],
         [Paragraph("<b>SUBMISSION DATE:</b>", table_cell_bold), Paragraph("OCTOBER 2026", table_cell)],
@@ -196,7 +196,7 @@ def build_pdf_report(filename="Resilient_Compiler_Final_Project_Report.pdf"):
         "submitted by <b>D JOSHUA DANIEL (Reg. No: 24BCE0436)</b> to the School of Computer Science and Engineering, "
         "Vellore Institute of Technology, Vellore, is a bonafide record of the authentic work carried out by him under "
         "my guidance and supervision for the partial fulfillment of the requirements for the award of the degree of "
-        "<b>Bachelor of Technology in Computer Science and Engineering</b> in the course <b>BCSE307P — Compiler Design Laboratory</b> "
+        "<b>Bachelor of Technology in Computer Science and Engineering</b> in the course <b>BCSE302L — Compiler Design Laboratory</b> "
         "during the academic year 2026-2027.<br/><br/>"
         "The project implements a complete 9-stage compiler pipeline in ISO C++17 encompassing lexical analysis, "
         "recursive-descent parsing with 1-token lookahead heuristic error recovery, Abstract Syntax Tree construction, "
@@ -225,7 +225,7 @@ def build_pdf_report(filename="Resilient_Compiler_Final_Project_Report.pdf"):
     story.append(Paragraph("DECLARATION", chapter_style))
     decl_text = (
         "I hereby declare that the project entitled <b>'Resilient Compiler with Intelligent Error Recovery'</b> is an original work "
-        "developed and submitted by me in partial fulfillment of the requirements for the Compiler Design Laboratory (BCSE307P) "
+        "developed and submitted by me in partial fulfillment of the requirements for the Compiler Design Laboratory (BCSE302L) "
         "at Vellore Institute of Technology. I affirm that this project incorporates authentic compiler construction algorithms, "
         "that all benchmarks and regression test results reported herein are produced by running the actual C++17 compiler and "
         "GCC toolchain, and that no output has been simulated or fabricated.<br/><br/>"
@@ -807,7 +807,7 @@ def build_docx_report(filename="Resilient_Compiler_Final_Project_Report.docx"):
     
     p_sub = doc.add_paragraph()
     p_sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r_sub = p_sub.add_run("COMPILER DESIGN LABORATORY (BCSE307P)\nFINAL PROJECT REPORT\nRESILIENT COMPILER WITH INTELLIGENT ERROR RECOVERY")
+    r_sub = p_sub.add_run("COMPILER DESIGN LABORATORY (BCSE302L)\nFINAL PROJECT REPORT\nRESILIENT COMPILER WITH INTELLIGENT ERROR RECOVERY")
     r_sub.bold = True
     r_sub.font.name = 'Times New Roman'
     r_sub.font.size = Pt(13)
@@ -836,7 +836,7 @@ def build_docx_report(filename="Resilient_Compiler_Final_Project_Report.docx"):
         "submitted by D JOSHUA DANIEL (Reg. No: 24BCE0436) to the School of Computer Science and Engineering, "
         "Vellore Institute of Technology, Vellore, is a bonafide record of the authentic work carried out by him under "
         "my guidance and supervision for the partial fulfillment of the requirements for the award of the degree of "
-        "Bachelor of Technology in Computer Science and Engineering in the course BCSE307P — Compiler Design Laboratory "
+        "Bachelor of Technology in Computer Science and Engineering in the course BCSE302L — Compiler Design Laboratory "
         "during the academic year 2026-2027."
     )
     add_body(

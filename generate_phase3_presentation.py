@@ -131,7 +131,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
         p_foot1.wrapOn(c, 600, 15)
         p_foot1.drawOn(c, 40, 15)
 
-        p_foot2 = Paragraph("CSE3002 Final Academic Review &amp; Demonstration", s['small'])
+        p_foot2 = Paragraph("BCSE302L Final Academic Review &amp; Demonstration", s['small'])
         p_foot2.wrapOn(c, 300, 15)
         p_foot2.drawOn(c, w_pts - 260, 15)
 
@@ -188,7 +188,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     c.setStrokeColor(C_ACCENT_TERRA)
     c.setLineWidth(1.2)
     c.roundRect(pill_x, pill_y, pill_w, pill_h, 4, fill=1, stroke=1)
-    p_pill = Paragraph("<b>COMPILER DESIGN LABORATORY (CSE3002) &nbsp;|&nbsp; PHASE 3 FINAL DEFENSE</b>", s_dark['kicker'])
+    p_pill = Paragraph("<b>COMPILER DESIGN (BCSE302L) &nbsp;|&nbsp; PHASE 3 FINAL DEFENSE</b>", s_dark['kicker'])
     pw, ph = p_pill.wrap(pill_w - 20, pill_h)
     p_pill.drawOn(c, pill_x + 14, pill_y + (pill_h - ph) / 2)
 
@@ -1171,7 +1171,7 @@ def build_pptx_presentation(pptx_filename="Resilient_Compiler_Phase3_Presentatio
         "Registration No: 24BCE0436",
         "Degree: B.Tech Computer Science & Engineering",
         "Institution: Vellore Institute of Technology, Vellore",
-        "Course: Compiler Design Laboratory (CSE3002)"
+        "Course: Compiler Design (BCSE302L)"
     ]:
         p = tfc.add_paragraph()
         p.text = l
@@ -1243,7 +1243,7 @@ def build_pptx_presentation(pptx_filename="Resilient_Compiler_Phase3_Presentatio
 def build_markdown_notes(md_filename="docs/PHASE3_PRESENTATION_SLIDES.md"):
     print(f"Writing Presentation Speaker Notes: {md_filename}...")
     content = """# Resilient Compiler — Phase 3: Final Project Review & Defense
-**Compiler Design Laboratory Capstone Evaluation (CSE3002)**  
+**Compiler Design Laboratory Capstone Evaluation (BCSE302L)**  
 **Presenter:** D JOSHUA DANIEL | **Registration Number:** 24BCE0436  
 **Institution:** Vellore Institute of Technology (VIT), Vellore  
 **Repository:** [GitHub Repository](https://github.com/joshuadjd79-cmd/resilient-compiler-intelligent-error-recovery)  

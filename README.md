@@ -8,7 +8,7 @@
 **Student:** D JOSHUA DANIEL  
 **Registration Number:** 24BCE0436  
 **Institution:** Vellore Institute of Technology (VIT), Vellore  
-**Course:** BCSE307P — Compiler Design Laboratory  
+**Course:** BCSE302L — Compiler Design Laboratory  
 **Faculty In-Charge:** Prof. RANJITH KUMAR S  
 
 An end-to-end, resilient compiler and developer IDE implemented from first principles in **ISO C++17** and **Vanilla Web Technologies**. The system features deterministic lexical scanning, recursive-descent parsing with a **1-Token Lookahead Heuristic Error Recovery Engine**, scope-aware semantic analysis with coordinate tracking, linear Three-Address Code (TAC) intermediate representation, multi-pass optimization with algebraic simplifications, authentic **x86-32 AT&T target assembly generation**, native **MinGW GCC assembling and execution verification (`--compile-native`)**, and an educational RISC load-store ISA-32 simulator.
@@ -241,4 +241,4 @@ The repository includes the complete documentation and presentation suite:
 
 ## 10. License & Attribution
 
-This project is open-source under the [MIT License](LICENSE). Developed by **D JOSHUA DANIEL (24BCE0436)** at **Vellore Institute of Technology (VIT)** for academic evaluation in **Compiler Design Laboratory (BCSE307P)**.
+This project is open-source under the [MIT License](LICENSE). Developed by **D JOSHUA DANIEL (24BCE0436)** at **Vellore Institute of Technology (VIT)** for academic evaluation in **Compiler Design Laboratory (BCSE302L)**.
