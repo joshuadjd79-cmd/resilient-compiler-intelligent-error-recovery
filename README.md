@@ -216,13 +216,16 @@ Open **`http://localhost:8080`** in any browser.
 
 ---
 
-## 8. Academic Deliverables
+## 8. Academic Deliverables & Presentation Deck
 
-The repository includes the complete documentation suite:
+The repository includes the complete documentation and presentation suite:
 
-1. **Complete Technical Explanation PDF:** [`Resilient_Compiler_Complete_Explanation.pdf`](Resilient_Compiler_Complete_Explanation.pdf) (14 pages, 36 chapters, viva voce Q&A, presentation script, glossary).
-2. **Final Project Academic Report PDF:** [`Resilient_Compiler_Final_Project_Report.pdf`](Resilient_Compiler_Final_Project_Report.pdf) (15 pages, 37 academic sections, VIT cover page, certificate, Phase 1/2/3 audit matrices, 20 test results).
-3. **Final Project Academic Report DOCX:** [`Resilient_Compiler_Final_Project_Report.docx`](Resilient_Compiler_Final_Project_Report.docx) (Editable Microsoft Word format).
+1. **Phase 3 Presentation Deck PDF (16:9 Widescreen):** [`Resilient_Compiler_Phase3_Presentation.pdf`](Resilient_Compiler_Phase3_Presentation.pdf) (18 slides, full 9-stage architecture, diagrams, test benchmarks, and viva defense).
+2. **Phase 3 Presentation Deck PPTX (PowerPoint):** [`Resilient_Compiler_Phase3_Presentation.pptx`](Resilient_Compiler_Phase3_Presentation.pptx) (18 editable widescreen slides).
+3. **Phase 3 Speaker Script & Slide Notes:** [`docs/PHASE3_PRESENTATION_SLIDES.md`](docs/PHASE3_PRESENTATION_SLIDES.md) (Slide-by-slide presenter guide and script).
+4. **Complete Technical Explanation PDF:** [`Resilient_Compiler_Complete_Explanation.pdf`](Resilient_Compiler_Complete_Explanation.pdf) (14 pages, 36 chapters, viva voce Q&A, presentation script, glossary).
+5. **Final Project Academic Report PDF:** [`Resilient_Compiler_Final_Project_Report.pdf`](Resilient_Compiler_Final_Project_Report.pdf) (15 pages, 37 academic sections, VIT cover page, certificate, Phase 1/2/3 audit matrices, 20 test results).
+6. **Final Project Academic Report DOCX:** [`Resilient_Compiler_Final_Project_Report.docx`](Resilient_Compiler_Final_Project_Report.docx) (Editable Microsoft Word format).
 
 ---
 
