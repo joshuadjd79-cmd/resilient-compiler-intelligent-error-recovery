@@ -1040,17 +1040,51 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     Resilient compilation transforms language processors from rigid gatekeepers that crash at the first syntax error into intelligent, developer-friendly analysis engines capable of real-time program repair.<br/><br/>
     <b>Academic Significance:</b><br/>
     Directly reflects principles utilized in production IDE language servers (LSP), rustc, and modern Clang diagnostic recovery systems.<br/><br/>
-    <b>Presenter Information:</b><br/>
-    • <b>Presenter:</b> D JOSHUA DANIEL<br/>
-    • <b>Registration Number:</b> 24BCE0436<br/>
-    • <b>Institution:</b> Vellore Institute of Technology (VIT)<br/><br/>
-    <b>GitHub Repository:</b><br/>
-    <code>https://github.com/joshuadjd79-cmd/resilient-compiler-intelligent-error-recovery</code><br/><br/>
-    <i>Thank you, respected faculty and examiners! Ready for viva voce examination.</i>
+    <b>Project Presenter &amp; Academic Details:</b><br/>
+    • <b>Presenter:</b> D JOSHUA DANIEL &nbsp;|&nbsp; <b>Reg No:</b> 24BCE0436<br/>
+    • <b>Degree:</b> B.Tech in Computer Science &amp; Engineering<br/>
+    • <b>Institution:</b> Vellore Institute of Technology (VIT), Vellore
     """
     p_take_body = Paragraph(take_body, s_dark['small'])
-    p_take_body.wrapOn(c, 390, 310)
-    p_take_body.drawOn(c, 500, 95)
+    p_take_body.wrapOn(c, 390, 200)
+    p_take_body.drawOn(c, 500, 220)
+
+    # Dedicated GitHub Repository Callout Box
+    gh_box_y = 110
+    c.setFillColor(HexColor("#1A1D21"))
+    c.setStrokeColor(C_ACCENT_TERRA)
+    c.setLineWidth(1.2)
+    c.roundRect(500, gh_box_y, 390, 85, 6, fill=1, stroke=1)
+
+    c.setFillColor(C_ACCENT_TERRA)
+    c.roundRect(500, gh_box_y + 81, 390, 4, 2, fill=1, stroke=0)
+
+    p_gh_label = Paragraph("<b>OFFICIAL OPEN-SOURCE GITHUB REPOSITORY</b>", s_dark['kicker'])
+    p_gh_label.wrapOn(c, 370, 15)
+    p_gh_label.drawOn(c, 514, gh_box_y + 60)
+
+    gh_url = "https://github.com/joshuadjd79-cmd/resilient-compiler-intelligent-error-recovery"
+    p_gh_link = Paragraph(f'<a href="{gh_url}"><font color="#38BDF8"><b><u>{gh_url}</u></b></font></a>', ParagraphStyle('GHLink', fontName='Helvetica-Bold', fontSize=8, leading=11, textColor=HexColor('#38BDF8')))
+    p_gh_link.wrapOn(c, 370, 25)
+    p_gh_link.drawOn(c, 514, gh_box_y + 35)
+
+    p_gh_sub = Paragraph("✔ Full C++17 Pipeline &nbsp;·&nbsp; 20/20 Test Harness &nbsp;·&nbsp; Web Studio IDE", s_dark['small'])
+    p_gh_sub.wrapOn(c, 370, 15)
+    p_gh_sub.drawOn(c, 514, gh_box_y + 12)
+
+    # Examination ready sign-off
+    p_ready = Paragraph("<i>Thank you, respected faculty and examiners! Ready for viva voce examination.</i>", ParagraphStyle('Ready', fontName='Helvetica-Oblique', fontSize=9.5, leading=13, textColor=C_ACCENT_SAGE))
+    p_ready.wrapOn(c, 390, 20)
+    p_ready.drawOn(c, 500, 80)
+
+    # Slide 18 bottom footer link
+    c.setStrokeColor(C_BORDER_DARK)
+    c.setLineWidth(1)
+    c.line(50, 42, w_pts - 50, 42)
+
+    p_slide18_foot = Paragraph(f"<b>GitHub Repository:</b> <a href='{gh_url}'><font color='#C66B4E'><u>{gh_url}</u></font></a> &nbsp;|&nbsp; <b>D JOSHUA DANIEL (24BCE0436)</b> &nbsp;|&nbsp; VIT Vellore", s_dark['small'])
+    p_slide18_foot.wrapOn(c, 860, 20)
+    p_slide18_foot.drawOn(c, 50, 20)
 
     c.showPage()
     c.save()
@@ -1182,7 +1216,7 @@ def build_pptx_presentation(pptx_filename="Resilient_Compiler_Phase3_Presentatio
         ("Developer Web Studio: Warm Editorial IDE & Diagnostics", "Warm ivory palette, Monaco code editor, interactive 2D AST graph, and live pipeline status tracker."),
         ("Phase 1 & Phase 2 Audit Reconciliation Matrix", "Formal audit reconciliation proving every original claim has been implemented and tested."),
         ("Viva Voce Defense: Key Technical Questions & Answers", "In-depth defense on recovery heuristics, scope stack traversal, TAC vs AST, and dual backend targets."),
-        ("Project Conclusion & Final Academic Deliverables", "Complete deliverables: resilientc.exe, academic report, complete explanation, web studio, 20/20 test suite.")
+        ("Project Conclusion & Final Academic Deliverables", "Complete deliverables: resilientc.exe, academic report, complete explanation, web studio, 20/20 test suite.\n\nOfficial GitHub Repository:\nhttps://github.com/joshuadjd79-cmd/resilient-compiler-intelligent-error-recovery")
     ]
 
     for idx, (stitle, sdesc) in enumerate(slide_defs, start=2):
