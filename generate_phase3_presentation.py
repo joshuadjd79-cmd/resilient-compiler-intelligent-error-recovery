@@ -11,6 +11,7 @@ Generates:
 """
 
 import os
+import re
 import shutil
 import pptx
 from pptx.util import Inches, Pt
@@ -146,15 +147,21 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
             c.roundRect(x, y + h - 4, w, 4, 2, fill=1, stroke=0)
 
         if title:
-            # Header strip
-            c.setFillColor(HexColor("#2C323B") if dark else HexColor("#FAF7F2"))
-            c.rect(x + 1, y + h - 28, w - 2, 27, fill=1, stroke=0)
-            c.setStrokeColor(C_BORDER_DARK if dark else C_BORDER)
-            c.line(x, y + h - 28, x + w, y + h - 28)
+            # Clean title if it contains .png or file paths
+            clean_title = re.sub(r'\s*\([^)]*\.[pP][nN][gG][^)]*\)', '', title).strip()
+            clean_title = clean_title.replace('.png', '').replace('.PNG', '')
 
-            pt = Paragraph(f"<b>{title.upper()}</b>", s['h2'])
-            pt.wrapOn(c, w - 20, 20)
-            pt.drawOn(c, x + 12, y + h - 22)
+            header_h = 28
+            strip_y = y + h - header_h
+            c.setFillColor(HexColor("#2C323B") if dark else HexColor("#FAF7F2"))
+            c.rect(x + 1, strip_y, w - 2, header_h - 1, fill=1, stroke=0)
+            c.setStrokeColor(C_BORDER_DARK if dark else C_BORDER)
+            c.line(x, strip_y, x + w, strip_y)
+
+            pt = Paragraph(f"<b>{clean_title.upper()}</b>", s['h2'])
+            pw, ph = pt.wrap(w - 24, header_h)
+            text_y = strip_y + (header_h - ph) / 2
+            pt.drawOn(c, x + 12, text_y)
 
     # ---------------------------------------------------------------------
     # SLIDE 1: TITLE SLIDE (Dark Executive Theme)
@@ -440,7 +447,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     draw_slide_header("End-to-End 9-Stage Compiler Pipeline Architecture", slide_num=5)
 
     draw_card(40, 60, 400, 390, "Pipeline Execution Flow", accent_top=True)
-    draw_card(460, 60, 460, 390, "Pipeline Diagram (assets/fig_pipeline_9stage.png)", accent_top=True)
+    draw_card(460, 60, 460, 390, "9-Stage Pipeline Architecture Diagram", accent_top=True)
 
     pipe_text = """
     <b>1. Lexical Analysis (Lexer.cpp):</b><br/>
@@ -476,7 +483,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     draw_slide_header("Intelligent Error Recovery Engine: 4-Stage Healing Cycle", slide_num=6)
 
     draw_card(40, 60, 400, 390, "Automated Stream Healing Cycle", accent_top=True)
-    draw_card(460, 60, 460, 390, "Recovery Decision Tree (assets/fig_recovery_decision_tree.png)", accent_top=True)
+    draw_card(460, 60, 460, 390, "Recovery Decision Tree Flowchart", accent_top=True)
 
     rec_cycle_text = """
     <b>Phase 1: Mismatch Detection</b><br/>
@@ -577,7 +584,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     draw_slide_header("Polymorphic Abstract Syntax Tree (AST) & Visitor Pattern", slide_num=8)
 
     draw_card(40, 60, 420, 390, "AST Architecture & Class Hierarchy", accent_top=True)
-    draw_card(500, 60, 420, 390, "AST Node Graph (assets/fig_ast.png)", accent_top=True)
+    draw_card(500, 60, 420, 390, "Abstract Syntax Tree Hierarchy", accent_top=True)
 
     ast_text = """
     <b>Polymorphic C++17 Class Hierarchy:</b><br/>
@@ -611,7 +618,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     draw_slide_header("Hierarchical Symbol Table & Semantic Analysis", slide_num=9)
 
     draw_card(40, 60, 420, 390, "Scope Stack & Semantic Checks", accent_top=True)
-    draw_card(500, 60, 420, 390, "Scoped Symbol Table (assets/fig_symbol_table.png)", accent_top=True)
+    draw_card(500, 60, 420, 390, "Hierarchical Scoped Symbol Table", accent_top=True)
 
     sem_text = """
     <b>Hierarchical Scope Stack (SymbolTable.cpp):</b><br/>
@@ -729,7 +736,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     draw_slide_header("Target Code Generation: Real x86-32 AT&T Assembly", slide_num=12)
 
     draw_card(40, 60, 420, 390, "Target Code Generation Architecture", accent_top=True)
-    draw_card(500, 60, 420, 390, "x86-32 Stack Frame (assets/fig_x86_stack_frame.png)", accent_top=True)
+    draw_card(500, 60, 420, 390, "x86-32 AT&T Stack Frame Layout", accent_top=True)
 
     asm_text = """
     <b>Standard cdecl Runtime ABI Compliance:</b><br/>
@@ -803,7 +810,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     draw_slide_header("Comprehensive 20/20 Automated Regression Test Suite", slide_num=14)
 
     draw_card(40, 60, 420, 390, "Verification Methodology & Test Categories", accent_top=True)
-    draw_card(500, 60, 420, 390, "Test Suite Dashboard (assets/fig_test_suite_20.png)", accent_top=True)
+    draw_card(500, 60, 420, 390, "Automated Regression Test Dashboard", accent_top=True)
 
     test_cat_text = """
     <b>Automated Test Harness (run_tests.ps1):</b><br/>
@@ -830,7 +837,7 @@ def build_pdf_presentation(pdf_filename="Resilient_Compiler_Phase3_Presentation.
     draw_slide_header("Developer Web Studio: Warm Editorial IDE & Diagnostics", slide_num=15)
 
     draw_card(40, 60, 420, 390, "Studio Capabilities & Design Tokens", accent_top=True)
-    draw_card(500, 60, 420, 390, "Rendered Studio UI (assets/fig_web_studio_warm.png)", accent_top=True)
+    draw_card(500, 60, 420, 390, "Developer Web Studio Interface", accent_top=True)
 
     ui_text = """
     <b>Warm Editorial Developer Palette:</b><br/>
